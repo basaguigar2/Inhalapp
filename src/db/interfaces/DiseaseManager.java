@@ -14,4 +14,5 @@ import pojos.Disease;
 public interface DiseaseManager {
     public void addDisease(Disease d) throws SQLException;
     public Disease selectDisease(Integer disease_id);
+    public Disease getDiseaseFromPatient(Integer patientId);
 }

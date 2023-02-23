@@ -11,23 +11,20 @@ package pojos;
 public class Treatment {
     private Integer tid;
     private String drug;
-    private Integer dose; //in miligrams
-    private Integer duration; //in weeks
+    private String dose; //in miligrams
 
     public Treatment() {
     }
 
-    public Treatment(Integer tid, String drug, Integer dose, Integer duration) {
+    public Treatment(Integer tid, String drug, String dose) {
         this.tid = tid;
         this.drug = drug;
         this.dose = dose;
-        this.duration = duration;
     }
 
-    public Treatment(String drug, Integer dose, Integer duration) {
+    public Treatment(String drug, String dose) {
         this.drug = drug;
         this.dose = dose;
-        this.duration = duration;
     }
 
     public Integer getTreatmentId() {
@@ -46,24 +43,16 @@ public class Treatment {
         this.drug = drug;
     }
 
-    public Integer getDose() {
+    public String getDose() {
         return dose;
     }
 
-    public void setDose(Integer dose) {
+    public void setDose(String dose) {
         this.dose = dose;
-    }
-
-    public Integer getDuration() {
-        return duration;
-    }
-
-    public void setDuration(Integer duration) {
-        this.duration = duration;
     }
     
     @Override
     public String toString() {
-        return "Treatment{" + "drug=" + drug + ", dose=" + dose + ", duration=" + duration + '}';
+        return "Treatment{" + "drug=" + drug + ", dose=" + dose + '}';
     }
 }

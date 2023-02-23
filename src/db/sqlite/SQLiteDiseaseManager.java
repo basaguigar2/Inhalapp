@@ -9,7 +9,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import pojos.Disease;
+import pojos.Treatment;
 
 /**
  *
@@ -66,6 +68,28 @@ public class SQLiteDiseaseManager implements DiseaseManager{
             return disease;
         } catch (SQLException ex) {
             ex.printStackTrace();
+            return null;
+        }
+    }
+    
+    /**
+     * Select the disease related to the patient
+     * @param patientId
+     * @return - [Disese] Disease assoiated to the patient.
+     */
+    @Override
+    public Disease getDiseaseFromPatient(Integer patientId) {
+        try {
+            String sql = "SELECT * FROM disease_patient WHERE patient_id = ?";
+            PreparedStatement p = c.prepareStatement(sql);
+            p.setInt(1, patientId);
+            ResultSet rs = p.executeQuery();
+            Disease d  = selectDisease(rs.getInt("disease_id"));
+            p.close();
+            rs.close();
+            return d;
+        } catch (SQLException e) {
+            e.printStackTrace();
             return null;
         }
     }

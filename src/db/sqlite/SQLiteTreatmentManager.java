@@ -36,11 +36,10 @@ public class SQLiteTreatmentManager implements TreatmentManager {
     @Override
     public void addTreatment(Treatment t) throws SQLException {
         try{
-            String sq1 = "INSERT INTO treatment (drug, dose, duration) VALUES (?,?,?)";
+            String sq1 = "INSERT INTO treatment (drug, dose) VALUES (?,?)";
             PreparedStatement preparedStatement = c.prepareStatement(sq1);
             preparedStatement.setString(1, t.getDrug());
-            preparedStatement.setInt(2, t.getDose());
-            preparedStatement.setInt(3, t.getDuration());
+            preparedStatement.setString(2, t.getDose());
             preparedStatement.executeUpdate();	
             preparedStatement.close();
         } catch (SQLException ex) {
@@ -62,7 +61,7 @@ public class SQLiteTreatmentManager implements TreatmentManager {
             ResultSet rs = p.executeQuery();
             Treatment treatment = null;
             if(rs.next()){
-                treatment = new Treatment(rs.getInt("tid"),rs.getString("drug"),rs.getInt("dose"),rs.getInt("duration"));
+                treatment = new Treatment(rs.getInt("tid"),rs.getString("drug"),rs.getString("dose"));
             }
             p.close();
             rs.close();
