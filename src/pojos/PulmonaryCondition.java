@@ -13,6 +13,5 @@ public enum PulmonaryCondition {
     BULLA,
     SEVERE_HETEROGENEOUS_EMPHYSEMA_IN_UPPER_LOBES,
     ADVANCED_EMPHYSEMA,
-    SEVERE_COPD,
-    NONE
+    SEVERE_COPD
 }

@@ -18,7 +18,8 @@ public interface DBManager {
     public DoctorManager getDoctorManager();
     public TreatmentManager getTreatmentManager();
     public ComorbidityManager getComorbidityManager();
-    public DiseaseManager getDiseaseManager();
+    public EpocManager getEPOCManager();
+    public AsthmaManager getAsthmaManager();
     public AllergyManager getAllergyManager();
     public Connection getConnection();
     public boolean createTables();

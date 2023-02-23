@@ -17,11 +17,11 @@ public interface PatientManager {
     public void addPatient(Patient p) throws SQLException; 
     public void introduceComorbidity(int medCardNumber, int comorbidityId); 
     public void introduceTreatment(int medCardNumber, int treatmentId);
-    public void introduceAllergy(int medCardNumber, int allergyId);
-    public void introduceDisease (int medCardNumber, int diseaseId);
+    public void introduceEPOC(int medCardNumber, int EPOCId);
+    public void introduceAsthma(int medCardNumber, int asthmaId);
     public Patient selectPatient(int medCardNumber);
     public ArrayList<Patient> selectAllPatients();
-    public boolean editPatient(Integer medCardNum, String name, String surname, Integer age, String gender, boolean pregnancy);
+    public boolean editPatient(Integer medCardNum, String name, String surname, Integer age, String gender, boolean pregnancy, boolean smoker, boolean symptoms_controlled, boolean hospitalization, String respiratorydisease, Integer treatment_stage);
     public void createLinkUserPatient(int userId, int medCardNumber);
     public void createLinkDoctorPatient(int medCardNumber, int doctorId);
 }

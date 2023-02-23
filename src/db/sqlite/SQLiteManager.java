@@ -5,9 +5,9 @@
 package db.sqlite;
 
 import db.interfaces.AllergyManager;
+import db.interfaces.AsthmaManager;
 import db.interfaces.ComorbidityManager;
 import db.interfaces.DBManager;
-import db.interfaces.DiseaseManager;
 import db.interfaces.DoctorManager;
 import db.interfaces.PatientManager;
 import db.interfaces.RoleManager;
@@ -17,6 +17,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import db.interfaces.EpocManager;
 
 /**
  *
@@ -28,7 +29,8 @@ public class SQLiteManager implements DBManager{
     private PatientManager patient;
     private DoctorManager doctor;
     private TreatmentManager treatment;
-    private DiseaseManager disease;
+    private EpocManager epoc;
+    private AsthmaManager asthma;
     private ComorbidityManager comorbidity;
     private AllergyManager allergy;
     private UserManager user;
@@ -47,7 +49,8 @@ public class SQLiteManager implements DBManager{
             patient = new SQLitePatientManager(c);
             doctor = new SQLiteDoctorManager(c);
             treatment = new SQLiteTreatmentManager(c);
-            disease = new SQLiteDiseaseManager(c);
+            epoc = new SQLiteEpocManager(c);
+            asthma = new SQLiteAsthmaManager(c);
             comorbidity = new SQLiteComorbidityManager(c);
             allergy = new SQLiteAllergyManager(c);
             user = new SQLiteUserManager(c);
@@ -89,8 +92,13 @@ public class SQLiteManager implements DBManager{
     }
 
     @Override
-    public DiseaseManager getDiseaseManager() {
-        return disease;
+    public EpocManager getEPOCManager() {
+        return epoc;
+    }
+    
+    @Override
+    public AsthmaManager getAsthmaManager() {
+        return asthma;
     }
 
     @Override
@@ -131,6 +139,11 @@ public class SQLiteManager implements DBManager{
                     + "age INTEGER, "
                     + "gender TEXT NOT NULL, "
                     + "pregnancy BOOLEAN, "
+                    + "smoker BOOLEAN, "
+                    + "symptoms_controlled BOOLEAN, "
+                    + "hospitalization BOOLEAN, "
+                    + "respiratorydisease TEXT NOT NULL, "
+                    + "treatment_stage INTEGER, "
                     + "userId FOREING KEY REFERENCES users(userid) ON UPDATE RESTRICT ON DELETE CASCADE)";
             stmt3.executeUpdate(sql3);
             stmt3.close();
@@ -154,70 +167,98 @@ public class SQLiteManager implements DBManager{
             stmt5.close();
             
             Statement stmt6 = c.createStatement();
-            String sql6 = "CREATE TABLE disease " 
-                    + "(disease_id INTEGER PRIMARY KEY AUTOINCREMENT, " 
-                    + "disease_name TEXT NOT NULL, " 
-                    + "stage TEXT NOT NULL, " 
+            String sql6 = "CREATE TABLE EPOC " 
+                    + "(EPOC_id INTEGER PRIMARY KEY AUTOINCREMENT, " 
+                    + "condition TEXT, " 
+                    + "mMRC INTEGER, "
+                    + "EOS INTEGER, "
+                    + "exacerbations BOOLEAN, "
+                    + "FEV INTEGER, "
                     + "id_patient FOREING KEY REFERENCES patient(medical_card_number) ON UPDATE CASCADE ON DELETE SET NULL)";
             stmt6.executeUpdate(sql6);
             stmt6.close();
             
             Statement stmt7 = c.createStatement();
-            String sql7 = "CREATE TABLE comorbidity " 
-                    + "(cid INTEGER PRIMARY KEY AUTOINCREMENT, " 
-                    + "cname TEXT NOT NULL, "
+            String sql7 = "CREATE TABLE asthma " 
+                    + "(asthma_id INTEGER PRIMARY KEY AUTOINCREMENT, " 
+                    + "stage TEXT, " 
+                    + "PS INTEGER, "
+                    + "PEF INTEGER, "
+                    + "SAT_O2 INTEGER, "
+                    + "dayTimeSymptoms INTEGER, "
+                    + "rescueMedication INTEGER, "
+                    + "nocturnalSymptoms INTEGER, "
+                    + "limitations INTEGER, "
+                    + "pulmonar_function INTEGER, "
+                    + "exacerbations INTEGER, "
                     + "id_patient FOREING KEY REFERENCES patient(medical_card_number) ON UPDATE CASCADE ON DELETE SET NULL)";
             stmt7.executeUpdate(sql7);
             stmt7.close();
             
             Statement stmt8 = c.createStatement();
-            String sql8 = "CREATE TABLE allergy " 
-                    + "(aid INTEGER PRIMARY KEY AUTOINCREMENT, " 
-                    + "aname TEXT NOT NULL, "
-                    + "type TEXT NOT NULL, "
+            String sql8 = "CREATE TABLE comorbidity " 
+                    + "(cid INTEGER PRIMARY KEY AUTOINCREMENT, " 
+                    + "cname TEXT NOT NULL, "
                     + "id_patient FOREING KEY REFERENCES patient(medical_card_number) ON UPDATE CASCADE ON DELETE SET NULL)";
             stmt8.executeUpdate(sql8);
             stmt8.close();
             
             Statement stmt9 = c.createStatement();
-            String sql9 = "CREATE TABLE doctor_patient "
-                               + "(patient_id REFERENCES patient(medical_card_number) ON UPDATE RESTRICT ON DELETE CASCADE,"
-                               + " doctor_id REFERENCES doctor(doctorId) ON UPDATE RESTRICT ON DELETE CASCADE, "
-                               + " PRIMARY KEY (patient_id,doctor_id))";
+            String sql9 = "CREATE TABLE allergy " 
+                    + "(aid INTEGER PRIMARY KEY AUTOINCREMENT, " 
+                    + "aname TEXT NOT NULL, "
+                    + "type TEXT NOT NULL, "
+                    + "id_patient FOREING KEY REFERENCES patient(medical_card_number) ON UPDATE CASCADE ON DELETE SET NULL)";
             stmt9.executeUpdate(sql9);
             stmt9.close();
             
             Statement stmt10 = c.createStatement();
-            String sql10 = "CREATE TABLE treatment_patient "
+            String sql10 = "CREATE TABLE doctor_patient "
                                + "(patient_id REFERENCES patient(medical_card_number) ON UPDATE RESTRICT ON DELETE CASCADE,"
-                               + " treatment_id REFERENCES treatment(tid) ON UPDATE RESTRICT ON DELETE CASCADE, "
-                               + " PRIMARY KEY (patient_id,treatment_id))";
+                               + " doctor_id REFERENCES doctor(doctorId) ON UPDATE RESTRICT ON DELETE CASCADE, "
+                               + " PRIMARY KEY (patient_id,doctor_id))";
             stmt10.executeUpdate(sql10);
             stmt10.close();
             
             Statement stmt11 = c.createStatement();
-            String sql11 = "CREATE TABLE disease_patient "
+            String sql11 = "CREATE TABLE treatment_patient "
                                + "(patient_id REFERENCES patient(medical_card_number) ON UPDATE RESTRICT ON DELETE CASCADE,"
-                               + " disease_id REFERENCES disease(disease_id) ON UPDATE RESTRICT ON DELETE CASCADE, "
-                               + " PRIMARY KEY (patient_id,disease_id))";
+                               + " treatment_id REFERENCES treatment(tid) ON UPDATE RESTRICT ON DELETE CASCADE, "
+                               + " PRIMARY KEY (patient_id,treatment_id))";
             stmt11.executeUpdate(sql11);
             stmt11.close();
             
             Statement stmt12 = c.createStatement();
-            String sql12 = "CREATE TABLE comorbidity_patient "
+            String sql12 = "CREATE TABLE EPOC_patient "
                                + "(patient_id REFERENCES patient(medical_card_number) ON UPDATE RESTRICT ON DELETE CASCADE,"
-                               + " comorbidity_id REFERENCES comorbidity(cid) ON UPDATE RESTRICT ON DELETE CASCADE, "
-                               + " PRIMARY KEY (patient_id,comorbidity_id))";
+                               + " EPOC_id REFERENCES EPOC(EPOC_id) ON UPDATE RESTRICT ON DELETE CASCADE, "
+                               + " PRIMARY KEY (patient_id,EPOC_id))";
             stmt12.executeUpdate(sql12);
             stmt12.close();
             
             Statement stmt13 = c.createStatement();
-            String sql13 = "CREATE TABLE allergy_patient_patient "
+            String sql13 = "CREATE TABLE asthma_patient "
+                               + "(patient_id REFERENCES patient(medical_card_number) ON UPDATE RESTRICT ON DELETE CASCADE,"
+                               + " asthma_id REFERENCES asthma(asthma_id) ON UPDATE RESTRICT ON DELETE CASCADE, "
+                               + " PRIMARY KEY (patient_id,asthma_id))";
+            stmt13.executeUpdate(sql13);
+            stmt13.close();
+            
+            Statement stmt14 = c.createStatement();
+            String sql14 = "CREATE TABLE comorbidity_patient "
+                               + "(patient_id REFERENCES patient(medical_card_number) ON UPDATE RESTRICT ON DELETE CASCADE,"
+                               + " comorbidity_id REFERENCES comorbidity(cid) ON UPDATE RESTRICT ON DELETE CASCADE, "
+                               + " PRIMARY KEY (patient_id,comorbidity_id))";
+            stmt14.executeUpdate(sql14);
+            stmt14.close();
+            
+            Statement stmt15 = c.createStatement();
+            String sql15 = "CREATE TABLE allergy_patient_patient "
                                + "(patient_id REFERENCES patient(medical_card_number) ON UPDATE RESTRICT ON DELETE CASCADE,"
                                + " allergy_id REFERENCES allergy(aid) ON UPDATE RESTRICT ON DELETE CASCADE, "
                                + " PRIMARY KEY (patient_id,allergy_id))";
-            stmt13.executeUpdate(sql13);
-            stmt13.close();
+            stmt15.executeUpdate(sql15);
+            stmt15.close();
             
             return true;
         }catch(SQLException tables_error){

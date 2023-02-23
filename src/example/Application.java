@@ -5,22 +5,18 @@ package example;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-import java.util.ArrayList;
 import org.kie.api.KieServices;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
 import pojos.EPOC;
+import pojos.Patient;
 import pojos.PulmonaryCondition;
 import pojos.Treatment;
 
 
-/**
- *
- * @author alberto.gildelafuent
- */
 public class Application {
-
-    public static void main(String[] args) {
+    
+        public static void main(String[] args) {
         KieServices ks = KieServices.Factory.get();
         KieContainer kc = ks.getKieClasspathContainer();
 
@@ -56,5 +52,4 @@ public class Application {
         // and then dispose the session
         ksession.dispose();
     }
-
 }

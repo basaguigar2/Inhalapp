@@ -4,59 +4,82 @@
  */
 package pojos;
 
+import java.rmi.NotBoundException;
+
 /**
  *
  * @author gisel
  */
 public class EPOC {
-    public PulmonaryCondition condition;
-    public boolean vaccine1,vaccine2, hospitalization, last_treatment; 
-    public int mMRC,EOS,exacerb,FEV;
-    public Treatment previous_treatment;
+    private Integer EPOC_id;
+    private PulmonaryCondition condition;
+    private String condition_string;
+    private boolean exacerbations; 
+    private int mMRC,EOS,FEV;
 
-    public EPOC(PulmonaryCondition condition, boolean vaccine1, boolean vaccine2, boolean hospitalization, boolean last_treatment, int mMRC, int EOS, int exacerb, int FEV, Treatment previous_treatment) {
-        this.condition = condition;
-        this.vaccine1 = vaccine1;
-        this.vaccine2 = vaccine2;
-        this.hospitalization = hospitalization;
-        this.last_treatment = last_treatment;
-        this.mMRC = mMRC;
-        this.EOS = EOS;
-        this.exacerb = exacerb;
-        this.FEV = FEV;
-        this.previous_treatment = previous_treatment;
+    public EPOC() {
     }
 
+    public EPOC(String condition, int mMRC, int EOS, boolean exacerb, int FEV) {
+        this.condition_string = condition;
+        this.mMRC = mMRC;
+        this.EOS = EOS;
+        this.exacerbations = exacerb;
+        this.FEV = FEV;
+    }
     
-    //Construcotr para hacer pruebas, no importante
+    public EPOC(String condition, int mMRC, int EOS, boolean exacerb, int FEV, Integer id) {
+        this.condition_string = condition;
+        this.mMRC = mMRC;
+        this.EOS = EOS;
+        this.exacerbations = exacerb;
+        this.FEV = FEV;
+        this.EPOC_id = id;
+    }
+
     public EPOC(PulmonaryCondition condition) {
         this.condition = condition;
     }
 
+    public Integer getEPOC_id() {
+        return EPOC_id;
+    }
+
+    public void setEPOC_id(Integer EPOC_id) {
+        this.EPOC_id = EPOC_id;
+    }
+    
     public PulmonaryCondition getCondition() {
         return condition;
     }
-
+    
     public void setCondition(PulmonaryCondition condition) {
         this.condition = condition;
     }
 
- 
-
-    public boolean isHospitalization() {
-        return hospitalization;
+    public String getCondition_string() {
+        return condition_string;
     }
 
-    public void setHospitalization(boolean hospitalization) {
-        this.hospitalization = hospitalization;
-    }
-
-    public boolean isLast_treatment() {
-        return last_treatment;
-    }
-
-    public void setLast_treatment(boolean last_treatment) {
-        this.last_treatment = last_treatment;
+    public void setCondition_string(String condition_string) throws NotBoundException {
+        if(condition_string.equalsIgnoreCase("Severe chronic hypoxemia")){
+            setCondition(this.condition.SEVERE_CHRONIC_HYPOXEMIA);
+            this.condition_string = "Severe chronic hypoxemia";
+        } else if(condition_string.equalsIgnoreCase("Bulla")){
+            setCondition(this.condition.BULLA);
+            this.condition_string = "Bulla";
+        } else if(condition_string.equalsIgnoreCase("Severe heterogeneous emphysema in upper lobes")){
+            setCondition(this.condition.SEVERE_HETEROGENEOUS_EMPHYSEMA_IN_UPPER_LOBES);
+            this.condition_string = "Severe heterogeneous emphysema in upper lobes";
+        } else if(condition_string.equalsIgnoreCase("Advanced emphysema")){
+            setCondition(this.condition.ADVANCED_EMPHYSEMA);
+            this.condition_string = "Advanced emphysema";
+        } else if(condition_string.equalsIgnoreCase("Severe COPD")){
+            setCondition(this.condition.SEVERE_COPD);
+            this.condition_string = "Severe COPD";
+        } else {
+            throw new NotBoundException("Not valid condition. Introduce a valid condition: Severe chronic hypoxemia, Bulla, Severe heterogeneous emphysema in upper lobes, Advanced emphysema, Severe COPD");
+        }
     }
 
     public int getmMRC() {
@@ -75,12 +98,12 @@ public class EPOC {
         this.EOS = EOS;
     }
 
-    public int getExacerb() {
-        return exacerb;
+    public boolean isExacerbations() {
+        return exacerbations;
     }
 
-    public void setExacerb(int exacerb) {
-        this.exacerb = exacerb;
+    public void setExacerbations(boolean exacerb) {
+        this.exacerbations = exacerb;
     }
 
     public int getFEV() {
@@ -89,14 +112,6 @@ public class EPOC {
 
     public void setFEV(int FEV) {
         this.FEV = FEV;
-    }
-
-    public Treatment getPrevious_treatment() {
-        return previous_treatment;
-    }
-
-    public void setPrevious_treatment(Treatment previous_treatment) {
-        this.previous_treatment = previous_treatment;
     }
     
 }

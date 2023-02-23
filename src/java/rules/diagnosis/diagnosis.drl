@@ -1,0 +1,1353 @@
+/*
+ * Copyright 2010 Red Hat, Inc. and/or its affiliates.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+ 
+
+import pojos.EPOC 
+import pojos.Treatment
+import pojos.PulmonaryCondition
+import pojos.Asthma
+import pojos.AsthmaStage 
+
+rule "Chornic home oxygen therapy Rule"
+    dialect "java"
+    when
+        p : Patient(getRespiratorydisease().equals("EPOC"))
+        e : EPOC(condition == PulmonaryCondition.SEVERE_CHRONIC_HYPOXEMIA)
+    then   
+        e.setCondition(SEVERE_CHRONIC_HYPOXEMIA);
+        p.setEpoc(e);
+        Treatment treatment = new Treatment();
+        treatment.setDrug("Chornic home oxygen therapy");
+        treatment.setDose(" - ");
+        p.addTreatment(treatment);
+        System.out.println("Pulmonary condition: SEVERE CHRONIC HYPOXEMIA - Chronic home oxygen is the best treatment for the patient");
+end
+
+rule "Bullectomy Rule"
+    dialect "java"
+    when
+        p : Patient(getRespiratorydisease().equals("EPOC"))
+        e : EPOC(condition == PulmonaryCondition.BULLA)
+    then
+        e.setCondition(BULLA);
+        p.setEpoc(e);
+        Treatment treatment = new Treatment();
+        treatment.setDrug("Bullectomy");
+        treatment.setDose(" - ");
+        p.addTreatment(treatment);
+        System.out.println("Pulmonary condition: BULLA - Bullectomy is the best treatment for the patient");
+end
+
+rule "Pulmonar volume reduction Rule"
+    dialect "java"
+    when
+        p : Patient(getRespiratorydisease().equals("EPOC"))
+        e : EPOC(condition == PulmonaryCondition.SEVERE_HETEROGENEOUS_EMPHYSEMA_IN_UPPER_LOBES)
+    then
+        e.setCondition(SEVERE_HETEROGENEOUS_EMPHYSEMA_IN_UPPER_LOBES);
+        p.setEpoc(e);
+        Treatment treatment = new Treatment();
+        treatment.setDrug("Pulmonar volume reduction");
+        treatment.setDose(" - ");
+        p.addTreatment(treatment);
+        System.out.println("Pulmonary condition: SEVERE HETEROGENEOUS EMPHYSEMA IN UPPER LOBES - Pulmonar volume reduction is the best treatment for the patient");
+end
+
+rule "Bronchoscopic intervention Rule"
+    dialect "java"
+    when
+        p : Patient(getRespiratorydisease().equals("EPOC"))
+        e : EPOC(condition == PulmonaryCondition.ADVANCED_EMPHYSEMA)
+    then
+        e.setCondition(ADVANCED_EMPHYSEMA);
+        p.setEpoc(e);
+        Treatment treatment = new Treatment();
+        treatment.setDrug("Bronchoscopic intervention");
+        treatment.setDose(" - ");
+        p.addTreatment(treatment);
+        System.out.println("Pulmonary condition: ADVANCED EMPHYSEMA - Bronchoscopic intervention is the best treatment for the patient");
+end
+
+rule "Pulmonar transplant Rule"
+    dialect "java"
+    when
+        p : Patient(getRespiratorydisease().equals("EPOC"))
+        e : EPOC(condition == PulmonaryCondition.SEVERE_COPD)
+    then
+        e.setCondition(SEVERE_COPD);
+        p.setEpoc(e);
+        Treatment treatment = new Treatment();
+        treatment.setDrug("Pulmonar transplant");
+        treatment.setDose(" - ");
+        p.addTreatment(treatment);
+        System.out.println("Pulmonary condition: SEVERE COPD - Pulmonar transplant is the best treatment for the patient");
+end
+
+rule "Influenza vaccine Rule"
+    dialect "java"
+    when 
+        p: Patient (getRespiratorydisease().equals("EPOC"), influenza_vaccine == false)
+    then 
+        p.setInfluenza_vaccine(true);
+        System.out.println("You should put influenza vaccine");
+end
+
+rule "Pneumonia vaccine Rule"
+    dialect "java"
+    when 
+        p: Patient (getRespiratorydisease().equals("EPOC"), pneumonia_vaccine == false, age>65)
+    then 
+        p.setPneumonia_vaccine(true);
+        System.out.println("You should put pneumonia vaccine");
+end
+
+rule "SABA/SAMA Rule"
+    dialect "java"
+    when 
+        p: Patient(getRespiratorydisease().equals("EPOC"), treatment_list.isEmpty())
+        e: EPOC (mMRC <= 1, CAT<10, hospitalization == false)
+    then 
+        p.setEpoc(e);
+        ArrayList<Treatment> t = new ArrayList<>();
+        Treatment treatment = new Treatment();
+        treatment.setDrug("SABA/SAMA");
+        treatment.setDose(" - ");
+        t.add(treatment);
+        p.setTreatment_List(t);
+        System.out.println("SABA/SAMA is the best treatment for the patient");
+end
+
+rule "LABA/LAMA Rule"
+    dialect "java"
+    when 
+        p: Patient(getRespiratorydisease().equals("EPOC"), treatment_list.isEmpty())
+        e: EPOC (mMRC > 1, CAT>10, hospitalization == false)
+    then 
+        p.setEpoc(e);
+        ArrayList<Treatment> t = new ArrayList<>();
+        Treatment treatment = new Treatment();
+        treatment.setDrug("LABA/LAMA");
+        treatment.setDose(" - ");
+        t.add(treatment);
+        p.setTreatment_List(t);
+        System.out.println("LABA/LAMA is the best treatment for the patient");
+end
+rule "LAMA Rule 1"
+    dialect "java"
+    when 
+        p: Patient(getRespiratorydisease().equals("EPOC"), treatment_list.isEmpty())
+        e: EPOC (mMRC <= 1, CAT<10, hospitalization == true)
+    then 
+        p.setEpoc(e);
+        ArrayList<Treatment> t = new ArrayList<>();
+        Treatment treatment = new Treatment();
+        treatment.setDrug("LAMA");
+        treatment.setDose(" - ");
+        t.add(treatment);
+        p.setTreatment_List(t);
+        System.out.println("LAMA is the best treatment for the patient");
+end
+
+rule "LABA+IC Rule 1"
+    dialect "java"
+    when 
+        p: Patient(getRespiratorydisease().equals("EPOC"), treatment_list.isEmpty())
+        e: EPOC (mMRC > 1, CAT>10, hospitalization == true, eosinophilia == true)
+    then 
+        p.setEpoc(e);
+        ArrayList<Treatment> t = new ArrayList<>();
+        Treatment treatment1 = new Treatment();
+        treatment1.setDrug("LABA");
+        treatment1.setDose(" - ");
+        t.add(treatment1);
+        Treatment treatment2 = new Treatment();
+        treatment2.setDrug("IC");
+        treatment2.setDose(" - ");
+        t.add(treatment2);
+        p.setTreatment_List(t);
+        System.out.println("LABA combined with IC is the best treatment for the patient");
+end
+
+rule "LAMA Rule 2"
+    dialect "java"
+    when 
+        p: Patient(getRespiratorydisease().equals("EPOC"), treatment_list.isEmpty())
+        e: EPOC (mMRC > 1, CAT>10 && CAT<20, hospitalization == true, eosinophilia == false)
+    then 
+        p.setEpoc(e);
+        ArrayList<Treatment> t = new ArrayList<>();
+        Treatment treatment = new Treatment();
+        treatment.setDrug("LAMA");
+        treatment.setDose(" - ");
+        p.setTreatment(treatment);
+        t.add(treatment);
+        p.setTreatment_List(t);
+        System.out.println("LAMA is the best treatment for the patient");
+end
+
+rule "LABA+LAMA Rule 1"
+    dialect "java"
+    when 
+        p: Patient(getRespiratorydisease().equals("EPOC"), treatment_list.isEmpty())
+        e: EPOC (mMRC > 1, CAT>20, hospitalization == true, eosinophilia == false)
+    then 
+        p.setEpoc(e);
+        ArrayList<Treatment> t = new ArrayList<>();
+        Treatment treatment1 = new Treatment();
+        treatment1.setDrug("LABA");
+        treatment1.setDose(" - ");
+        t.add(treatment1);
+        Treatment treatment2 = new Treatment();
+        treatment2.setDrug("LAMA");
+        treatment2.setDose(" - ");
+        t.add(treatment2);
+        p.setTreatment_List(t);
+        System.out.println("LABA combined with LAMA is the best treatment for the patient");
+end
+
+rule "keep treatment Rule"
+    dialect "java"
+    when
+        p: Patient(symptoms_controlled==true, !treatment_list.isEmpty())
+    then
+        System.out.println("Continue with the same treatment");
+end
+
+rule "LABA+LAMA Rule 2"
+    dialect "java"
+    when
+        p: Patient(getRespiratorydisease().equals("EPOC"), symptoms_controlled==false, !treatment_list.isEmpty(), string_treatments.contains("LABA/LAMA"), string_comorbidities.contains("disnea"))
+    then
+        Treatment treatment1 = new Treatment();
+        treatment1.setDrug("LABA");
+        treatment1.setDose(" - ");
+        p.addTreatment(treatment1);
+        Treatment treatment2 = new Treatment();
+        treatment2.setDrug("LAMA");
+        treatment2.setDose(" - ");
+        p.addTreatment(treatment2);
+        System.out.println("LABA combined with LAMA is the best treatment for the patient");
+end
+
+rule "LABA+LAMA+IC Rule 3"
+    dialect "java"
+    when
+        p: Patient(getRespiratorydisease().equals("EPOC"), symptoms_controlled==false, !treatment_list.isEmpty(), string_treatments.contains("LABA/LAMA"), string_comorbidities.contains("disnea"))
+    then
+        Treatment treatment1 = new Treatment();
+        treatment1.setDrug("LABA");
+        treatment1.setDose(" - ");
+        p.addTreatment(treatment1);
+        Treatment treatment2 = new Treatment();
+        treatment2.setDrug("LAMA");
+        treatment2.setDose(" - ");
+        p.addTreatment(treatment2);
+        Treatment treatment3 = new Treatment();
+        treatment3.setDrug("IC");
+        treatment3.setDose(" - ");
+        p.addTreatment(treatment3);
+        System.out.println("LABA combined with LAMA and IC is the best treatment for the patient");
+end
+
+rule "Change device Rule 1"
+    dialect "java"
+    when
+        p: Patient(getRespiratorydisease().equals("EPOC"), symptoms_controlled==false, !treatment_list.isEmpty(), string_treatments.contains("LABA"), string_treatments.contains("LAMA"), string_comorbidities.contains("disnea"))
+    then
+        p.setEpoc(e);
+        System.out.println("Change device and investigate other causes");
+end
+
+rule "Change device Rule 2"
+    dialect "java"
+    when
+        p: Patient(getRespiratorydisease().equals("EPOC"), symptoms_controlled==false, !treatment_list.isEmpty(), string_treatments.contains("LABA"), string_treatments.contains("LAMA"), string_treatments.contains("IC"), string_comorbidities.contains("disnea"))
+    then
+        p.setEpoc(e);
+        System.out.println("Change device and investigate other causes");
+end
+
+rule "LABA+IC Rule 2"
+    dialect "java"
+    when
+        p: Patient(getRespiratorydisease().equals("EPOC"), symptoms_controlled==false, !treatment_list.isEmpty())
+        e: EPOC (exacerbations== true, EOS >=300 || (EOS>=100 && exa == 2))
+    then
+        p.setEpoc(e);
+        Treatment treatment1 = new Treatment();
+        treatment1.setDrug("LABA");
+        treatment1.setDose(" - ");
+        p.addTreatment(treatment1);
+        Treatment treatment2 = new Treatment();
+        treatment2.setDrug("IC");
+        treatment2.setDose(" - ");
+        p.addTreatment(treatment2);
+        System.out.println("LABA combined with IC is the best treatment for the patient");
+end
+
+rule "LABA+LAMA Rule 3"
+    dialect "java"
+    when
+        p: Patient(getRespiratorydisease().equals("EPOC"), symptoms_controlled==false, !treatment_list.isEmpty())
+        e: EPOC (exacerbations== true, EOS <300 || exa < 2)
+    then
+        p.setEpoc(e);
+        Treatment treatment1 = new Treatment();
+        treatment1.setDrug("LABA");
+        treatment1.setDose(" - ");
+        p.addTreatment(treatment1);
+        Treatment treatment2 = new Treatment();
+        treatment2.setDrug("LAMA");
+        treatment2.setDose(" - ");
+        p.addTreatment(treatment2);
+        System.out.println("LABA combined with LAMA is the best treatment for the patient");
+end
+
+rule "Azimotricine Rule 1"
+    dialect "java"
+    when
+        p: Patient(getRespiratorydisease().equals("EPOC"), symptoms_controlled==false, !treatment_list.isEmpty()getRespiratorydisease().equals("EPOC"), !treatment_list.isEmpty(), smoker==false, string_treatments.contains("LABA"), string_treatments.contains("LAMA"))
+        e: EPOC (exacerbations== true, EOS<100)
+    then
+        p.setEpoc(e);
+        Treatment treatment = new Treatment();
+        treatment.setDrug("Azimotricine");
+        treatment.setDose(" - ");
+        p.addTreatment(treatment);
+        System.out.println("Azimotricine is the best treatment for the patient");
+end
+
+rule "Roflumilast Rule 1"
+    dialect "java"
+    when
+        p: Patient(getRespiratorydisease().equals("EPOC"), symptoms_controlled==false, !treatment_list.isEmpty(), smoker==true, string_treatments.contains("LABA"), string_treatments.contains("LAMA"))
+        e: EPOC (exacerbations== true, EOS<100, FEV<50)
+    then
+        p.setEpoc(e);
+        Treatment treatment = new Treatment();
+        treatment.setDrug("Roflumilast");
+        treatment.setDose(" - ");
+        p.addTreatment(treatment);
+        System.out.println("Roflumilast is the best treatment for the patient");
+end
+
+rule "Change device Rule 3"
+    dialect "java"
+    when
+        p: Patient(getRespiratorydisease().equals("EPOC"), symptoms_controlled==false, !treatment_list.isEmpty(), smoker==true, string_treatments.contains("LABA"), string_treatments.contains("LAMA"))
+        e: EPOC (exacerbations== true, EOS<100, FEV>50)
+    then
+        p.setEpoc(e);
+        System.out.println("Change device and investigate other causes");
+end
+
+rule "LABA+LAMA+IC Rule 3"
+    dialect "java"
+    when
+        p: Patient(getRespiratorydisease().equals("EPOC"), symptoms_controlled==false, !treatment_list.isEmpty(), string_treatments.contains("LABA"), string_treatments.contains("LAMA"))
+        e: EPOC (exacerbations== true, EOS>100)
+    then
+        p.setEpoc(e);
+        Treatment treatment1 = new Treatment();
+        treatment1.setDrug("LABA");
+        treatment1.setDose(" - ");
+        p.addTreatment(treatment1);
+        Treatment treatment2 = new Treatment();
+        treatment2.setDrug("LAMA");
+        treatment2.setDose(" - ");
+        p.addTreatment(treatment2);
+        Treatment treatment3 = new Treatment();
+        treatment3.setDrug("IC");
+        treatment3.setDose(" - ");
+        p.addTreatment(treatment3);
+        System.out.println("LABA combined with LAMA and IC is the best treatment for the patient");
+end
+
+rule "Azimotricine Rule 2"
+    dialect "java"
+    when
+        p: Patient(getRespiratorydisease().equals("EPOC"), symptoms_controlled==false, !treatment_list.isEmpty(), smoker==false, string_treatments.contains("LABA"), string_treatments.contains("LAMA"), string_treatments.contains("IC"))
+        e: EPOC (exacerbations== true, EOS>100)
+    then
+        p.setEpoc(e);
+        Treatment treatment = new Treatment();
+        treatment.setDrug("Azimotricine");
+        treatment.setDose(" - ");
+        p.addTreatment(treatment);
+        System.out.println("Roflumilast is the best treatment for the patient");
+end
+
+rule "Roflumilast Rule 2"
+    dialect "java"
+    when
+        p: Patient(getRespiratorydisease().equals("EPOC"), symptoms_controlled==false, !treatment_list.isEmpty(), smoker==true, string_treatments.contains("LABA"), string_treatments.contains("LAMA"), string_treatments.contains("IC"))
+        e: EPOC (exacerbations== true, EOS>100, FEV<50)
+    then
+        p.setEpoc(e);
+        Treatment treatment = new Treatment();
+        treatment.setDrug("Roflumilast");
+        treatment.setDose(" - ");
+        p.addTreatment(treatment);
+        System.out.println("Roflumilast is the best treatment for the patient");
+end
+
+rule "Change device Rule 4"
+    dialect "java"
+    when
+        p: Patient(getRespiratorydisease().equals("EPOC"), symptoms_controlled==false, !treatment_list.isEmpty(), smoker==true, string_treatments.contains("LABA"), string_treatments.contains("LAMA"), string_treatments.contains("IC"))
+        e: EPOC (exacerbations== true, EOS>100, FEV>50)
+    then
+        p.setEpoc(e);
+        System.out.println("Change device and investigate other causes");
+end
+
+rule "LABA+LAMA+IC Rule 4"
+    dialect "java"
+    when
+        p: Patient(getRespiratorydisease().equals("EPOC"), symptoms_controlled==false, !treatment_list.isEmpty(), string_treatments.contains("LABA"), string_treatments.contains("IC"))
+        e: EPOC (exacerbations== true)
+    then
+        p.setEpoc(e);
+        Treatment treatment1 = new Treatment();
+        treatment1.setDrug("LABA");
+        treatment1.setDose(" - ");
+        p.addTreatment(treatment1);
+        Treatment treatment2 = new Treatment();
+        treatment2.setDrug("LAMA");
+        treatment2.setDose(" - ");
+        p.addTreatment(treatment3);
+        Treatment treatment3 = new Treatment();
+        treatment3.setDrug("IC");
+        treatment3.setDose(" - ");
+        p.addTreatment(treatment3);
+        System.out.println("LABA combined with LAMA and IC is the best treatment for the patient");
+end
+
+
+
+
+
+rule "No medication 1"
+    dialect "java"
+    when
+        
+        p : Patient(getRespiratorydisease().equals("Asthma"), !treatment_list.isEmpty(), treatment_stage== 1, symptoms_controlled==true)
+    then
+        Treatment treatment = new Treatment();
+        treatment.setDrug("No medication");
+        treatment.setDose("None");
+        p.addTreatment(treatment);
+        System.out.println("It is recommended not consume any control medication");
+end
+
+rule "No medication 2"
+    dialect "java"
+    when
+        
+        p : Patient(getRespiratorydisease().equals("Asthma"), !treatment_list.isEmpty(), treatment_stage== 2, symptoms_controlled==true)
+    then
+         
+        Treatment treatment = new Treatment();
+        treatment.setDrug("No medication");
+        treatment.setDose("None");
+        p.addTreatment(treatment);
+        p.setTreatment_stage(1);
+        System.out.println("It is recommended not consume any control medication");
+end
+
+rule "No medication 3"
+    dialect "java"
+    when
+        a : Asthma (dayTimeSymptoms_w < 2 , rescueMedication_w <2 , nocturnalSymptoms_w < 1, limitations ==0, pulmonar_function > 80, exarcebations_y ==0)
+        p : Patient(getRespiratorydisease().equals("Asthma"), treatment_list.isEmpty(), treatment_stage== 2, symptoms_controlled==true, age > 5, !string_comorbidities.contains("hypertension"))
+    then
+        ArrayList<Treatment> t = new ArrayList<>();
+        Treatment treatment = new Treatment();
+        treatment.setDrug("No medication");
+        treatment.setDose("None");
+        t.add(treatment);
+        p.setTreatment_List(t);
+        p.setTreatment_stage(1);
+        a.setStage(INTERMITTENT);
+        p.setAsthma(a);
+        System.out.println("Disease Stage : INTERMITTENT ASTHMA - It is recommended not consume any control medication");
+end
+
+rule "GCI low dosis 1"
+    dialect "java"
+    when
+        
+        p : Patient(getRespiratorydisease().equals("Asthma"), !treatment_list.isEmpty(), treatment_stage==1, age <5, symptoms_controlled==false, !string_comorbidities.contains("viral infection"), !string_comorbidities.contains("pulmonary tuberculosis"))
+    then
+        Treatment treatment = new Treatment();
+        treatment.setDrug("GCI");
+        treatment.setDose("0.1 mg/day");
+        p.addTreatment(treatment);
+        p.setTreatment_stage(2);
+        System.out.println("0.1 mg/day of GCI is the best treatment for the patient");
+end
+
+rule "GCI low dosis 2"
+    dialect "java"
+    when
+        
+        p : Patient(getRespiratorydisease().equals("Asthma"), !treatment_list.isEmpty(), treatment_stage==1, age >5, symptoms_controlled==false, !string_comorbidities.contains("viral infection"), !string_comorbidities.contains("pulmonary tuberculosis"))
+    then
+        Treatment treatment = new Treatment();
+        treatment.setDrug("GCI");
+        treatment.setDose("0.2 mg/day");
+        p.addTreatment(treatment);
+        p.setTreatment_stage(2);
+        System.out.println("0.2 mg/day of GCI is the best treatment for the patient");
+end
+
+rule "GCI low dosis 3"
+    dialect "java"
+    when
+        
+        p : Patient(getRespiratorydisease().equals("Asthma"), !treatment_list.isEmpty(), treatment_stage==3, age <5, symptoms_controlled==true, !string_comorbidities.contains("viral infection"), !string_comorbidities.contains("pulmonary tuberculosis"))
+    then
+        Treatment treatment = new Treatment();
+        treatment.setDrug("GCI");
+        treatment.setDose("0.1 mg/day");
+        p.addTreatment(treatment);
+        p.setTreatment_stage(2);
+        System.out.println("0.1 mg/day of GCI is the best treatment for the patient");
+end
+
+rule "GCI low dosis 4"
+    dialect "java"
+    when
+        
+        p : Patient(getRespiratorydisease().equals("Asthma"), !treatment_list.isEmpty(), treatment_stage==3, age >5, symptoms_controlled==true, !string_comorbidities.contains("viral infection"), !string_comorbidities.contains("pulmonary tuberculosis"))
+    then
+        Treatment treatment = new Treatment();
+        treatment.setDrug("GCI");
+        treatment.setDose("0.2 mg/day");
+        p.addTreatment(treatment);
+        p.setTreatment_stage(2);
+        System.out.println("0.2 mg/day of GCI is the best treatment for the patient");
+end
+
+rule "GCI low dosis 5"
+    dialect "java"
+    when
+        a : Asthma (dayTimeSymptoms_w > 2, dayTimeSymptoms_w < 4, rescueMedication_w > 2 ,rescueMedication_w < 4, nocturnalSymptoms_w > 1, nocturnalSymptoms_w < 2, limitations ==1, pulmonar_function > 80, exarcebations_y >= 0, exarcebations_y < 2 )
+        p : Patient(getRespiratorydisease().equals("Asthma"), treatment_list.isEmpty(),  age < 5, !string_comorbidities.contains("viral infection"), !string_comorbidities.contains("pulmonary tuberculosis"))
+    then
+        ArrayList<Treatment> t = new ArrayList<>();
+        Treatment treatment = new Treatment();
+        treatment.setDrug("GCI");
+        treatment.setDose("0.1 mg/day");
+        t.add(treatment);
+        p.setTreatment_List(t);
+        p.setTreatment_stage(2);
+        a.setStage(MILD_PERSISTENT);
+        p.setAsthma(a);
+        System.out.println("Disease Stage : MILD PERSISTENT ASTHMA - 0.1 mg/day of GCI is the best treatment for the patient");
+end
+
+rule "GCI low dosis 6"
+    dialect "java"
+    when
+        a : Asthma (dayTimeSymptoms_w > 2, dayTimeSymptoms_w < 4 rescueMedication_w > 2 ,rescueMedication_w < 4, nocturnalSymptoms_w > 1, nocturnalSymptoms_w < 2, limitations ==1, pulmonar_function > 80, exarcebations_y >= 0, exarcebations_y < 2 )
+        p : Patient(getRespiratorydisease().equals("Asthma"), treatment_list.isEmpty(),  age > 5, !string_comorbidities.contains("viral infection"), !string_comorbidities.contains("pulmonary tuberculosis"))
+    then
+        ArrayList<Treatment> t = new ArrayList<>();
+        Treatment treatment = new Treatment();
+        treatment.setDrug("GCI");
+        treatment.setDose("0.2 mg/day");
+        t.add(treatment);
+        p.setTreatment_List(t);
+        p.setTreatment_stage(2);
+        a.setStage(MILD_PERSISTENT);
+        p.setAsthma(a);
+        System.out.println("Disease Stage : MILD PERSISTENT ASTHMA - 0.2 mg/day of GCI is the best treatment for the patient");
+end
+
+
+rule "GCI medium dosis 1"
+    dialect "java"
+    when
+        
+        p : Patient(getRespiratorydisease().equals("Asthma"), !treatment_list.isEmpty(), treatment_stage==2, age <5, symptoms_controlled==false, !string_comorbidities.contains("viral infection"), !string_comorbidities.contains("pulmonary tuberculosis"))
+    then
+        Treatment treatment = new Treatment();
+        treatment.setDrug("GCI");
+        treatment.setDose("0.2 mg/day");
+        p.addTreatment(treatment);
+        p.setTreatment_stage(3);
+        System.out.println("0.2 mg/day of GCI is the best treatment for the patient");
+end
+
+rule "GCI medium dosis 2"
+    dialect "java"
+    when
+        
+        p : Patient(getRespiratorydisease().equals("Asthma"), !treatment_list.isEmpty(), treatment_stage==2, age >5, symptoms_controlled==false, !string_comorbidities.contains("viral infection"), !string_comorbidities.contains("pulmonary tuberculosis"))
+    then
+        Treatment treatment = new Treatment();
+        treatment.setDrug("GCI");
+        treatment.setDose("0.3- 0.4mg/day");
+        p.addTreatment(treatment);
+        p.setTreatment_stage(3);
+        System.out.println("0.3-0.4 mg/day of GCI is the best treatment for the patient");
+end
+
+rule "GCI medium dosis 3"
+    dialect "java"
+    when
+        
+        p : Patient(getRespiratorydisease().equals("Asthma"), !treatment_list.isEmpty(), treatment_stage==4, age <5, symptoms_controlled==true, !string_comorbidities.contains("viral infection"), !string_comorbidities.contains("pulmonary tuberculosis"))
+    then
+        Treatment treatment = new Treatment();
+        treatment.setDrug("GCI");
+        treatment.setDose("0.2 mg/day");
+        p.addTreatment(treatment);
+        p.setTreatment_stage(3);
+        System.out.println("0.2 mg/day of GCI is the best treatment for the patient");
+end
+
+
+rule "GCI medium dosis 4"
+    dialect "java"
+    when
+        
+        p : Patient(getRespiratorydisease().equals("Asthma"), !treatment_list.isEmpty(), treatment_stage==4, age >5, symptoms_controlled==true, !string_comorbidities.contains("viral infection"), !string_comorbidities.contains("pulmonary tuberculosis"))
+    then
+        Treatment treatment = new Treatment();
+        treatment.setDrug("GCI");
+        treatment.setDose("0.3-0.4mg/day");
+        p.addTreatment(treatment);
+        p.setTreatment_stage(3);
+        System.out.println("0.3-0.4 mg/day of GCI is the best treatment for the patient");
+end
+
+rule "GCI medium dosis 5"
+    dialect "java"
+    when
+        a : Asthma (dayTimeSymptoms_w > 6, dayTimeSymptoms_w < 8, rescueMedication_w > 6 ,rescueMedication_w < 8, nocturnalSymptoms_w > 3, nocturnalSymptoms_w < 6, limitations ==2, pulmonar_function > 60,pulmonar_function < 80,  exarcebations_y > 2 )
+        p : Patient(getRespiratorydisease().equals("Asthma"), treatment_list.isEmpty(),  age < 5, !string_comorbidities.contains("viral infection"), !string_comorbidities.contains("pulmonary tuberculosis"))
+    then
+        ArrayList<Treatment> t = new ArrayList<>();
+        Treatment treatment = new Treatment();
+        treatment.setDrug("GCI");
+        treatment.setDose("0.2 mg/day");
+        t.add(treatment);
+        p.setTreatment_List(t);
+        p.setTreatment_stage(3);
+        a.setStage(MODERATE_PERSISTENT);
+        p.setAsthma(a);
+        System.out.println("Disease Stage :MODERATE PERSISTENT ASTHMA - 0.2 mg/day of GCI is the best treatment for the patient");
+end
+
+rule "GCI medium dosis 6"
+    dialect "java"
+    when
+        a : Asthma (dayTimeSymptoms_w > 6, dayTimeSymptoms_w < 8, rescueMedication_w > 6 ,rescueMedication_w < 8, nocturnalSymptoms_w > 3, nocturnalSymptoms_w < 6, limitations ==2, pulmonar_function > 60,pulmonar_function < 80,  exarcebations_y > 2 )
+        p : Patient(getRespiratorydisease().equals("Asthma"), treatment_list.isEmpty(),  age > 5, !string_comorbidities.contains("viral infection"), !string_comorbidities.contains("pulmonary tuberculosis"))
+    then
+        ArrayList<Treatment> t = new ArrayList<>();
+        Treatment treatment = new Treatment();
+        treatment.setDrug("GCI");
+        treatment.setDose("0.3-0.4 mg/day");
+        t.add(treatment);
+        p.setTreatment_List(t);
+        p.setTreatment_stage(3);
+        a.setStage(MODERATE_PERSISTENT);
+        p.setAsthma(a);
+        System.out.println("Disease Stage : MODERATE PERSISTENT ASTHMA - 0.3-0.4 mg/day of GCI is the best treatment for the patient");
+end
+
+rule "GCI high dosis + ARLT 1"
+    dialect "java"
+    when
+        
+        p : Patient(getRespiratorydisease().equals("Asthma"), !treatment_list.isEmpty(), treatment_stage==4, age <5, symptoms_controlled==false, !string_comorbidities.contains("viral infection"), !string_comorbidities.contains("pulmonary tuberculosis"), !string_comorbidities.contains("cardiovascular diseases"))
+    then
+        Treatment treatment1 = new Treatment();
+        treatment1.setDrug("GCI");
+        treatment1.setDose("0.4 mg/day");
+        p.addTreatment(treatment1);
+        Treatment treatment2 = new Treatment();
+        treatment2.setDrug("ARLT");
+        treatment2.setDose("0.02 mg/day");
+        p.addTreatment(treatment2);
+        p.setTreatment_stage(5);
+        System.out.println("0.4 mg/day of GCI combined with 0.02 mg/day of ARLT and is the best treatment for the patient");
+end
+
+rule "GCI high dosis + ARLT 2"
+    dialect "java"
+    when
+        
+        p : Patient(getRespiratorydisease().equals("Asthma"), !treatment_list.isEmpty(), treatment_stage==6, age <5, symptoms_controlled==true, !string_comorbidities.contains("viral infection"), !string_comorbidities.contains("pulmonary tuberculosis"), !string_comorbidities.contains("cardiovascular diseases"))
+    then
+        Treatment treatment1 = new Treatment();
+        treatment1.setDrug("GCI");
+        treatment1.setDose("0.4 mg/day");
+        p.addTreatment(treatment1);
+        Treatment treatment2 = new Treatment();
+        treatment2.setDrug("ARLT");
+        treatment2.setDose("0.02 mg/day");
+        p.addTreatment(treatment2);
+        p.setTreatment_stage(5);
+        System.out.println("0.4 mg/day of GCI combined with 0.02 mg/day of ARLT and is the best treatment for the patient");
+end
+
+rule "GCI high dosis + BAAL 1"
+    dialect "java"
+    when
+        
+        p : Patient(getRespiratorydisease().equals("Asthma"), !treatment_list.isEmpty(), treatment_stage==4, age > 5, symptoms_controlled==false, !string_comorbidities.contains("viral infection"), !string_comorbidities.contains("pulmonary tuberculosis"), !string_comorbidities.contains("glaucoma"), !string_comorbidities.contains("urinary retention"))
+    then
+        Treatment treatment1 = new Treatment();
+        treatment1.setDrug("GCI");
+        treatment1.setDose("0.5 mg/day");
+        p.addTreatment(treatment1);
+        Treatment treatment2 = new Treatment();
+        treatment2.setDrug("BAAL");
+        treatment2.setDose("0.05 mg/day");
+        p.addTreatment(treatment2);
+        p.setTreatment_stage(5);
+        System.out.println("0.5 mg/day of GCI combined with 0.05 mg/day of BAAL and is the best treatment for the patient");
+end
+
+rule "GCI high dosis + BAAL 2"
+    dialect "java"
+    when
+        
+        p : Patient(getRespiratorydisease().equals("Asthma"), !treatment_list.isEmpty(), treatment_stage==6, age >5, symptoms_controlled==true, !string_comorbidities.contains("viral infection"), !string_comorbidities.contains("pulmonary tuberculosis"), !string_comorbidities.contains("glaucoma"), !string_comorbidities.contains("urinary retention"))
+    then
+        Treatment treatment1 = new Treatment();
+        treatment1.setDrug("GCI");
+        treatment1.setDose("0.5 mg/day");
+        p.addTreatment(treatment)1;
+        Treatment treatment2 = new Treatment();
+        treatment2.setDrug("BAAL");
+        treatment2.setDose("0.05 mg/day");
+        p.addTreatment(treatment2);
+        p.setTreatment_stage(5);
+        System.out.println("0.5 mg/day of GCI combined with 0.05 mg/day of BAAL and is the best treatment for the patient");
+end
+
+rule "GCI high dosis 1"
+    dialect "java"
+    when
+        a : Asthma (dayTimeSymptoms_w > 8,  rescueMedication_w > 8, nocturnalSymptoms_w > 6, limitations ==3, pulmonar_function < 60,  exarcebations_y > 2 )
+        p : Patient(getRespiratorydisease().equals("Asthma"), treatment_list.isEmpty(),  age > 5, !string_comorbidities.contains("viral infection"), !string_comorbidities.contains("pulmonary tuberculosis"))
+    then
+        ArrayList<Treatment> t = new ArrayList<>();
+        Treatment treatment = new Treatment();
+        treatment.setDrug("GCI");
+        treatment.setDose("0.6 mg/day");
+        t.add(treatment);
+        p.setTreatment_List(t);
+        p.setTreatment_stage(4);
+        a.setStage(SEVERE_PERSISTENT);
+        p.setAsthma(a);
+        System.out.println("Disease Stage : SEVERE PERSISTENT ASTHMA - 0.6 mg/day of GCI is the best treatment for the patient");
+end
+
+rule "GCI high dosis 2"
+    dialect "java"
+    when
+        a : Asthma (dayTimeSymptoms_w > 8,  rescueMedication_w > 8, nocturnalSymptoms_w > 6, limitations ==3, pulmonar_function < 60,  exarcebations_y > 2 )
+        p : Patient(getRespiratorydisease().equals("Asthma"), treatment_list.isEmpty(),  age < 5, !string_comorbidities.contains("viral infection"), !string_comorbidities.contains("pulmonary tuberculosis"))
+    then
+        ArrayList<Treatment> t = new ArrayList<>();
+        Treatment treatment = new Treatment();
+        treatment.setDrug("GCI");
+        treatment.setDose(0.5 mg/day GCI);
+        t.add(treatment);
+        p.setTreatment_List(t);
+        p.setTreatment_stage(4);
+        a.setStage(SEVERE_PERSISTENT);
+        p.setAsthma(a);
+        System.out.println("Disease Stage : SEVERE PERSISTENT ASTHMA - 0.5 mg/day of GCI is the best treatment for the patient");
+end
+
+rule "ARLT 1"
+    dialect "java"
+    when
+        
+        p : Patient(getRespiratorydisease().equals("Asthma"), !treatment_list.isEmpty(), treatment_stage==1, age <5, symptoms_controlled==false, string_comorbidities.contains("viral infection") || string_comorbidities.contains("pulmonary tuberculosis"), !string_comorbidities.contains("cardiovascular disease") )
+    then
+        Treatment treatment = new Treatment();
+        treatment.setDrug("ARLT");
+        treatment.setDose("0.02 mg/day");
+        p.addTreatment(treatment);
+        p.setTreatment_stage(2);
+        System.out.println("0.02 mg/day of ARLT is the best treatment for the patient");
+end
+
+rule "ARLT 2"
+    dialect "java"
+    when
+        
+        p : Patient(getRespiratorydisease().equals("Asthma"), !treatment_list.isEmpty(), treatment_stage==1, age >5, symptoms_controlled==false, string_comorbidities.contains("viral infection") || string_comorbidities.contains("pulmonary tuberculosis"), !string_comorbidities.contains("cardiovascular disease") )
+    then
+        Treatment treatment = new Treatment();
+        treatment.setDrug("ARLT");
+        treatment.setDose("0.04 mg/day");
+        p.addTreatment(treatment);
+        p.setTreatment_stage(2);
+        System.out.println("0.04 mg/day of ARLT is the best treatment for the patient");
+end
+
+rule "ARLT 3"
+    dialect "java"
+    when
+        
+        p : Patient(getRespiratorydisease().equals("Asthma"), !treatment_list.isEmpty(), treatment_stage==3, age <5, symptoms_controlled==true, string_comorbidities.contains("viral infection") || string_comorbidities.contains("pulmonary tuberculosis"), !string_comorbidities.contains("cardiovascular disease") )
+    then
+        Treatment treatment = new Treatment();
+        treatment.setDrug("ARLT");
+        treatment.setDose("0.02 mg/day");
+        p.addTreatment(treatment);
+        p.setTreatment_stage(2);
+        System.out.println("0.02 mg/day of ARLT is the best treatment for the patient");
+end
+
+rule "ARLT 4"
+    dialect "java"
+    when
+        
+        p : Patient(getRespiratorydisease().equals("Asthma"), !treatment_list.isEmpty(), treatment_stage==3, age >5, symptoms_controlled==true, string_comorbidities.contains("viral infection") || string_comorbidities.contains("pulmonary tuberculosis"), !string_comorbidities.contains("cardiovascular disease") )
+    then
+        Treatment treatment = new Treatment();
+        treatment.setDrug("ARLT");
+        treatment.setDose("0.04 mg/day");
+        p.addTreatment(treatment);
+        p.setTreatment_stage(2);
+        System.out.println("0.04 mg/day of ARLT is the best treatment for the patient");
+end
+
+rule "ARLT 5"
+    dialect "java"
+    when
+        a : Asthma (dayTimeSymptoms_w > 2, dayTimeSymptoms_w < 4, rescueMedication_w > 2 ,rescueMedication_w < 4, nocturnalSymptoms_w > 1, nocturnalSymptoms_w < 2, limitations ==1, pulmonar_function > 80, exarcebations_y >= 0, exarcebations_y < 2 )
+        p : Patient(getRespiratorydisease().equals("Asthma"), treatment_list.isEmpty(),  age < 5, string_comorbidities.contains("viral infection") || string_comorbidities.contains("pulmonary tuberculosis"), !string_comorbidities.contains("cardiovascular disease"))
+    then
+        ArrayList<Treatment> t = new ArrayList<>();
+        Treatment treatment = new Treatment();
+        treatment.setDrug("ARLT");
+        treatment.setDose("0.02 mg/day");
+        t.add(treatment);
+        p.setTreatment_List(t);
+        p.setTreatment_stage(2);
+        a.setStage(MILD_PERSISTENT);
+        p.setAsthma(a);
+        System.out.println("Disease Stage : MILD PERSISTENT ASTHMA - 0.02 mg/day of ARLT is the best treatment for the patient");
+end
+
+rule "ARLT 6"
+    dialect "java"
+    when
+        a : Asthma (dayTimeSymptoms_w > 2, dayTimeSymptoms_w < 4 rescueMedication_w > 2 ,rescueMedication_w < 4, nocturnalSymptoms_w > 1, nocturnalSymptoms_w < 2, limitations ==1, pulmonar_function > 80, exarcebations_y >= 0, exarcebations_y < 2 )
+        p : Patient(getRespiratorydisease().equals("Asthma"), treatment_list.isEmpty(),  age > 5, string_comorbidities.contains("viral infection") || string_comorbidities.contains("pulmonary tuberculosis"), !string_comorbidities.contains("cardiovascular disease"))
+    then
+        ArrayList<Treatment> t = new ArrayList<>();
+        Treatment treatment = new Treatment();
+        treatment.setDrug("ARLT");
+        treatment.setDose("0.04 mg/day");
+        t.add(treatment);
+        p.setTreatment_List(t);
+        p.setTreatment_stage(2);
+        a.setStage(MILD_PERSISTENT);
+        p.setAsthma(a);
+        System.out.println("Disease Stage : MILD PERSISTENT ASTHMA - 0.04 mg/day of ARLT is the best treatment for the patient");
+end
+
+rule "GCI low dosis + ARLT 1"
+    dialect "java"
+    when
+        
+        p : Patient(getRespiratorydisease().equals("Asthma"), !treatment_list.isEmpty(), treatment_stage==2, age <5, symptoms_controlled==false, string_comorbidities.contains("HSS axis diseases") || string_comorbidities.contains("Decreased bone mineral density"), !string_comorbidities.contains("viral infection"), !string_comorbidities.contains("pulmonary tuberculosis"), !string_comorbidities.contains("cardiovascular disease"))
+    then
+        Treatment treatment1 = new Treatment();
+        treatment1.setDrug("GCI");
+        treatment1.setDose("0.1 mg/day");
+        p.addTreatment(treatment1);
+        Treatment treatment2 = new Treatment();
+        treatment2.setDrug("ARLT");
+        treatment2.setDose("0.02 mg/day");
+        p.addTreatment(treatment2);
+        p.setTreatment_stage(3);
+        System.out.println("0.1 mg/day of GCI combined with 0.02 mg/day of ARLT is the best treatment for the patient");
+end
+
+rule "GCI low dosis + ARLT 2"
+    dialect "java"
+    when
+        
+        p : Patient(getRespiratorydisease().equals("Asthma"), !treatment_list.isEmpty(), treatment_stage==2, age >5, symptoms_controlled==false, string_comorbidities.contains("HSS axis diseases") || string_comorbidities.contains("Decreased bone mineral density"), !string_comorbidities.contains("viral infection"), !string_comorbidities.contains("pulmonary tuberculosis"), !string_comorbidities.contains("cardiovascular disease"))
+    then
+        Treatment treatment1 = new Treatment();
+        treatment1.setDrug("GCI");
+        treatment1.setDose("0.2 mg/day");
+        p.addTreatment(treatment1);
+        Treatment treatment2 = new Treatment();
+        treatment2.setDrug("ARLT");
+        treatment2.setDose("0.04 mg/day");
+        p.addTreatment(treatment2);
+        p.setTreatment_stage(3);
+        System.out.println("0.2 mg/day of GCI combined with 0.04 mg/day of ARLT is the best treatment for the patient");
+end
+
+rule "GCI low dosis + ARLT 3"
+    dialect "java"
+    when
+        
+        p : Patient(getRespiratorydisease().equals("Asthma"), !treatment_list.isEmpty(), treatment_stage==4, age >5, symptoms_controlled==true, string_comorbidities.contains("HSS axis diseases") || string_comorbidities.contains("Decreased bone mineral density"), !string_comorbidities.contains("viral infection"), !string_comorbidities.contains("pulmonary tuberculosis"), !string_comorbidities.contains("cardiovascular disease"))
+    then
+        Treatment treatment1 = new Treatment();
+        treatment1.setDrug("GCI");
+        treatment1.setDose("0.2 mg/day");
+        p.addTreatment(treatment1);
+        Treatment treatment2 = new Treatment();
+        treatment2.setDrug("ARLT");
+        treatment2.setDose("0.04 mg/day");
+        p.addTreatment(treatment2);
+        p.setTreatment_stage(3);
+        System.out.println("0.2 mg/day of GCI combined with 0.04 mg/day of ARLT is the best treatment for the patient");
+end
+
+rule "GCI low dosis + ARLT 4"
+    dialect "java"
+    when
+        
+        p : Patient(getRespiratorydisease().equals("Asthma"), !treatment_list.isEmpty(), treatment_stage==4, age <5, symptoms_controlled==true, string_comorbidities.contains("HSS axis diseases") || string_comorbidities.contains("Decreased bone mineral density"), !string_comorbidities.contains("viral infection"), !string_comorbidities.contains("pulmonary tuberculosis"), !string_comorbidities.contains("cardiovascular disease"))
+    then
+        Treatment treatment1 = new Treatment();
+        treatment1.setDrug("GCI");
+        treatment1.setDose("0.1 mg/day");
+        p.addTreatment(treatment1);
+        Treatment treatment2 = new Treatment();
+        treatment2.setDrug("ARLT");
+        treatment2.setDose("0.02 mg/day");
+        p.addTreatment(treatment2);
+        p.setTreatment_stage(3);
+        System.out.println("0.1 mg/day of GCI combined with 0.02 mg/day of ARLT is the best treatment for the patient");
+end
+
+rule "GCI low dosis + BAAL 1"
+    dialect "java"
+    when
+        
+        p : Patient(getRespiratorydisease().equals("Asthma"), !treatment_list.isEmpty(), treatment_stage==2, age >5, symptoms_controlled==false, string_comorbidities.contains("HSS axis diseases") || string_comorbidities.contains("Decreased bone mineral density") || string_comorbidities.contains("cardiovascular disease"), !string_comorbidities.contains("viral infection"), !string_comorbidities.contains("pulmonary tuberculosis"), !string_comorbidities.contains("glaucoma"), !string_comorbidities.contains("urinary retention"))
+    then
+        Treatment treatment1 = new Treatment();
+        treatment1.setDrug("GCI");
+        treatment1.setDose("0.2 mg/day");
+        p.addTreatment(treatment1);
+        Treatment treatment2 = new Treatment();
+        treatment2.setDrug("BAAL");
+        treatment2.setDose("0.05 mg/day");
+        p.addTreatment(treatment2);
+        p.setTreatment_stage(3);
+        System.out.println("0.2 mg/day of GCI combined with 0.05 mg/day of BAAL is the best treatment for the patient");
+end
+
+rule "GCI low dosis + BAAL 2"
+    dialect "java"
+    when
+        
+        p : Patient(getRespiratorydisease().equals("Asthma"), !treatment_list.isEmpty(), treatment_stage==4, age >5, symptoms_controlled==true, string_comorbidities.contains("HSS axis diseases") || string_comorbidities.contains("Decreased bone mineral density") || string_comorbidities.contains("cardiovascular disease"), !string_comorbidities.contains("viral infection"), !string_comorbidities.contains("pulmonary tuberculosis"), !string_comorbidities.contains("glaucoma"), !string_comorbidities.contains("urinary retention"))
+    then
+        Treatment treatment1 = new Treatment();
+        treatment1.setDrug("GCI");
+        treatment1.setDose("0.2 mg/day");
+        p.addTreatment(treatment1);
+        Treatment treatment2 = new Treatment();
+        treatment2.setDrug("BAAL");
+        treatment2.setDose("0.05 mg/day");
+        p.addTreatment(treatment2);
+        p.setTreatment_stage(3);
+        System.out.println("0.2 mg/day of GCI combined with 0.05 mg/day of BAAL is the best treatment for the patient");
+end
+
+rule "GCI low dosis + BAAL 3"
+    dialect "java"
+    when
+        a : Asthma (dayTimeSymptoms_w > 6, dayTimeSymptoms_w < 8, rescueMedication_w > 6 ,rescueMedication_w < 8, nocturnalSymptoms_w > 3, nocturnalSymptoms_w < 6, limitations ==2, pulmonar_function > 60,pulmonar_function < 80,  exarcebations_y > 2 )
+        p : Patient(getRespiratorydisease().equals("Asthma"), treatment_list.isEmpty(),  age > 5, string_comorbidities.contains("HSS axis diseases") || string_comorbidities.contains("Decreased bone mineral density") || string_comorbidities.contains("cardiovascular disease"), !string_comorbidities.contains("viral infection"), !string_comorbidities.contains("pulmonary tuberculosis"), !string_comorbidities.contains("glaucoma"), !string_comorbidities.contains("urinary retention"))
+    then
+        ArrayList<Treatment> t = new ArrayList<>();
+        Treatment treatment1 = new Treatment();
+        treatment1.setDrug("GCI");
+        treatment1.setDose("0.2 mg/day");
+        t.add(treatment1);
+        Treatment treatment2 = new Treatment();
+        treatment2.setDrug("BAAL");
+        treatment2.setDose("0.05 mg/day");
+        t.add(treatment2);
+        p.setTreatment_List(t);
+        p.setTreatment_stage(4);
+        a.setStage(MODERATE_PERSISTENT);
+        p.setAsthma(a);
+        System.out.println("Disease Stage : MODERATE PERSISTENT ASTHMA - 0.2 mg/day of GCI combined with 0.05 mg/day of BAAL is the best treatment for the patient");
+end
+
+rule "GCI low dosis + ARLT 5"
+    dialect "java"
+    when
+        a : Asthma (dayTimeSymptoms_w > 6, dayTimeSymptoms_w < 8, rescueMedication_w > 6 ,rescueMedication_w < 8, nocturnalSymptoms_w > 3, nocturnalSymptoms_w < 6, limitations ==2, pulmonar_function > 60,pulmonar_function < 80,  exarcebations_y > 2 )
+        p : Patient(getRespiratorydisease().equals("Asthma"), treatment_list.isEmpty(),  age < 5, string_comorbidities.contains("HSS axis diseases") || string_comorbidities.contains("Decreased bone mineral density"), !string_comorbidities.contains("viral infection"), !string_comorbidities.contains("pulmonary tuberculosis"), !string_comorbidities.contains("cardiovascular disease"))
+    then
+        ArrayList<Treatment> t = new ArrayList<>();
+        Treatment treatment1 = new Treatment();
+        treatment1.setDrug("GCI");
+        treatment1.setDose("0.1 mg/day");
+        t.add(treatment1);
+        Treatment treatment2 = new Treatment();
+        treatment2.setDrug("ARLT");
+        treatment2.setDose("0.02 mg/day");
+        t.add(treatment2);
+        p.setTreatment_List(t);
+        p.setTreatment_stage(4);
+        a.setStage(MODERATE_PERSISTENT);
+        p.setAsthma(a);
+        System.out.println("Disease Stage :MODERATE PERSISTENT ASTHMA - 0.1 mg/day of GCI combined with 0.02 mg/day of ARLT is the best treatment for the patient");
+end
+
+rule "GCI low dosis + ARLT 6"
+    dialect "java"
+    when
+        a : Asthma (dayTimeSymptoms_w > 6, dayTimeSymptoms_w < 8, rescueMedication_w > 6 ,rescueMedication_w < 8, nocturnalSymptoms_w > 3, nocturnalSymptoms_w < 6, limitations ==2, pulmonar_function > 60,pulmonar_function < 80,  exarcebations_y > 2 )
+        p : Patient(getRespiratorydisease().equals("Asthma"), treatment_list.isEmpty(),  age > 5, string_comorbidities.contains("HSS axis diseases") || string_comorbidities.contains("Decreased bone mineral density"), !string_comorbidities.contains("viral infection"), !string_comorbidities.contains("pulmonary tuberculosis"), !string_comorbidities.contains("cardiovascular disease"))
+    then
+        ArrayList<Treatment> t = new ArrayList<>();
+        Treatment treatment1 = new Treatment();
+        treatment1.setDrug("GCI");
+        treatment1.setDose("0.2 mg/day");
+        t.add(treatment1);
+        Treatment treatment2 = new Treatment();
+        treatment2.setDrug("ARLT");
+        treatment2.setDose("0.04 mg/day");
+        t.add(treatment2);
+        p.setTreatment_List(t);
+        p.setTreatment_stagee(4);
+        a.setStage(MODERATE_PERSISTENT);
+        p.setAsthma(a);
+        System.out.println("Disease Stage : MODERATE PERSISTENT ASTHMA - 0.2 mg/day of GCI combined with 0.04 mg/day of ARLT is the best treatment for the patient");
+end
+
+rule "GCI medium dosis + BAAL 1"
+    dialect "java"
+    when
+        a : Asthma (dayTimeSymptoms_w > 8,  rescueMedication_w > 8, nocturnalSymptoms_w > 6, limitations ==3, pulmonar_function < 60,  exarcebations_y > 2 )
+        p : Patient(getRespiratorydisease().equals("Asthma"), treatment_list.isEmpty(),  age > 5, string_comorbidities.contains("HSS axis diseases") || string_comorbidities.contains("Decreased bone mineral density"), !string_comorbidities.contains("viral infection"), !string_comorbidities.contains("pulmonary tuberculosis"), !string_comorbidities.contains("glaucoma"), !string_comorbidities.contains("urinary retention"))
+    then
+        ArrayList<Treatment> t = new ArrayList<>();
+        Treatment treatment1 = new Treatment();
+        treatment1.setDrug("GCI");
+        treatment1.setDose("0.3-0.4 mg/day");
+        t.add(treatment1);
+        Treatment treatment2 = new Treatment();
+        treatment2.setDrug("BAAL");
+        treatment2.setDose("0.05 mg/day");
+        t.add(treatment2);
+        p.setTreatment_List(t);
+        p.setTreatment_stage(5);
+        a.setStage(SEVERE_PERSISTENT);
+        p.setAsthma(a);
+        System.out.println("Disease Stage : SEVERE PERSISTENT ASTHMA - 0.3-0.4 mg/day of GCI combined with 0.05 mg/day of BAAL is the best treatment for the patient");
+end
+
+rule "GCI medium dosis + ARLT 1"
+    dialect "java"
+    when
+        
+        p : Patient(getRespiratorydisease().equals("Asthma"), !treatment_list.isEmpty(), treatment_stage==3, age >5,symptoms_controlled==false, !string_comorbidities.contains("viral infection"), !string_comorbidities.contains("pulmonary tuberculosis"), !string_comorbidities.contains("cardiovascular disease"))
+    then
+        Treatment treatment1 = new Treatment();
+        treatment1.setDrug("GCI");
+        treatment1.setDose("0.3-0.4 mg/day");
+        p.addTreatment(treatment1);
+        Treatment treatment2 = new Treatment();
+        treatment2.setDrug("ARLT");
+        treatment2.setDose("0.04 mg/day");
+        p.addTreatment(treatment2);
+        p.setTreatment_stage(4);
+        System.out.println("0.3-0.4 mg/day of GCI combined with 0.04 mg/day of ARLT is the best treatment for the patient");
+end
+
+rule "GCI medium dosis + ARLT 2"
+    dialect "java"
+    when
+        
+        p : Patient(getRespiratorydisease().equals("Asthma"), !treatment_list.isEmpty(), treatment_stage==3, age <5,symptoms_controlled==false, !string_comorbidities.contains("viral infection"), !string_comorbidities.contains("pulmonary tuberculosis"), !string_comorbidities.contains("cardiovascular disease"))
+    then
+        Treatment treatment1 = new Treatment();
+        treatment1.setDrug("GCI");
+        treatment1.setDose("0.2 mg/day");
+        p.addTreatment(treatment1);
+        Treatment treatment2 = new Treatment();
+        treatment2.setDrug("ARLT");
+        treatment2.setDose("0.02 mg/day");
+        p.addTreatment(treatment2);
+        p.setTreatment_stage(4);
+        System.out.println("0.2 mg/day of GCI combined with 0.02 mg/day of ARLT is the best treatment for the patient");
+end
+
+rule "GCI medium dosis + ARLT 3"
+    dialect "java"
+    when
+        
+        p : Patient(getRespiratorydisease().equals("Asthma"), !treatment_list.isEmpty(), treatment_stage==5, age <5,symptoms_controlled==true, !string_comorbidities.contains("viral infection"), !string_comorbidities.contains("pulmonary tuberculosis"), !string_comorbidities.contains("cardiovascular disease"))
+    then
+        Treatment treatment1 = new Treatment();
+        treatment1.setDrug("GCI");
+        treatment1.setDose("0.2 mg/day");
+        p.addTreatment(treatment1);
+        Treatment treatment2 = new Treatment();
+        treatment2.setDrug("ARLT");
+        treatment2.setDose("0.02 mg/day");
+        p.addTreatment(treatment2);
+        p.setTreatment_stage(4);
+        System.out.println("0.2 mg/day of GCI combined with 0.02 mg/day of ARLT is the best treatment for the patient");
+end
+
+rule "GCI medium dosis + ARLT 4"
+    dialect "java"
+    when
+        
+        p : Patient(getRespiratorydisease().equals("Asthma"), !treatment_list.isEmpty(), treatment_stage==5, age >5,symptoms_controlled==true, !string_comorbidities.contains("viral infection"), !string_comorbidities.contains("pulmonary tuberculosis"), !string_comorbidities.contains("cardiovascular disease"))
+    then
+        Treatment treatment1 = new Treatment();
+        treatment1.setDrug("GCI");
+        treatment1.setDose("0.3-0.4 mg/day");
+        p.addTreatment(treatment1);
+        Treatment treatment2 = new Treatment();
+        treatment2.setDrug("ARLT");
+        treatment2.setDose("0.04 mg/day");
+        p.addTreatment(treatment2);
+        p.setTreatment_stage(4);
+        System.out.println("0.3-0.4 mg/day of GCI combined with 0.04 mg/day of ARLT is the best treatment for the patient");
+end
+
+rule "GCI medium dosis + BAAL 2"
+    dialect "java"
+    when
+        
+        p : Patient(getRespiratorydisease().equals("Asthma"), !treatment_list.isEmpty(), treatment_stage==3, age >5,symptoms_controlled==false, string_comorbidities.contains("cardiovascular disease"), !string_comorbidities.contains("viral infection"), !string_comorbidities.contains("pulmonary tuberculosis"), !string_comorbidities.contains("glaucoma"), !string_comorbidities.contains("urinary retention"))
+    then
+        Treatment treatment1 = new Treatment();
+        treatment1.setDrug("GCI");
+        treatment1.setDose("0.3-0.4 mg/day");
+        p.addTreatment(treatment1);
+        Treatment treatment2 = new Treatment();
+        treatment2.setDrug("BAAL");
+        treatment2.setDose("0.05 mg/day");
+        p.addTreatment(treatment2);
+        p.setTreatment_stage(4);
+        System.out.println("0.3-0.4 mg/day of GCI combined with 0.05 mg/day of BAAL is the best treatment for the patient");
+end
+
+rule "GCI medium dosis + BAAL 3"
+    dialect "java"
+    when
+        
+        p : Patient(getRespiratorydisease().equals("Asthma"), !treatment_list.isEmpty(), treatment_stage==5, age >5,symptoms_controlled==true, string_comorbidities.contains("cardiovascular disease"), !string_comorbidities.contains("viral infection"), !string_comorbidities.contains("pulmonary tuberculosis"), !string_comorbidities.contains("glaucoma"), !string_comorbidities.contains("urinary retention"))
+    then
+        Treatment treatment1 = new Treatment();
+        treatment1.setDrug("GCI");
+        treatment1.setDose("0.3-0.4 mg/day");
+        p.addTreatment(treatment1);
+        Treatment treatment2 = new Treatment();
+        treatment2.setDrug("BAAL");
+        treatment2.setDose("0.05 mg/day");
+        p.addTreatment(treatment2);
+        p.setTreatment_stage(4);
+        System.out.println("0.3-0.4 mg/day of GCI combined with 0.05 mg/day of BAAL is the best treatment for the patient");
+end
+
+rule "GCO 1"
+    dialect "java"
+    when
+        
+        p : Patient(getRespiratorydisease().equals("Asthma"), !treatment_list.isEmpty(), treatment_stage==5, age <5,symptoms_controlled==false, !string_comorbidities.contains("diabetes"), !string_comorbidities.contains("osteoporosis"), !string_comorbidities.contains("cardiovascular disease"))
+    then
+        Treatment treatment = new Treatment();
+        treatment.setDrug("GCO");
+        treatment.setDose("0.5-2 mg/kg/day");
+        p.addTreatment(treatment);
+        p.setTreat_stage(6);
+        System.out.println("0.5-2 mg/kg/day of GCO is the best treatment for the patient");
+end
+
+rule "GCO 2"
+    dialect "java"
+    when
+        
+        p : Patient(getRespiratorydisease().equals("Asthma"), !treatment_list.isEmpty(), treat_stage==5, age >5,symptoms_controlled==false, !string_comorbidities.contains("diabetes"), !string_comorbidities.contains("osteoporosis"), !string_comorbidities.contains("cardiovascular disease"))
+    then
+        Treatment treatment = new Treatment();
+        treatment.setDrug("GCO");
+        treatment.setDose("40-60 mg/kg/day");
+        p.addTreatment(treatment);
+        p.setTreat_stage(6);
+        System.out.println("40-60 mg/kg/day of GCO is the best treatment for the patient");
+end
+
+rule "BAAC 1"
+    dialect "java"
+    when
+        a : Asthma (stage==AsthmaStage.NONE, PS>0,PS<3, PEF<80, SAT_O2 <94)
+        p : Patient(getRespiratorydisease().equals("Asthma"), treatment_list.isEmpty(),  age < 5, !string_comorbidities.contains("diabetes"), !string_comorbidities.contains("glaucoma"), !string_comorbidities.contains("cardiovascular disease"), !string_comorbidities.contains("hypertiroidism"))
+    then
+        ArrayList<Treatment> t = new ArrayList<>();
+        Treatment treatment = new Treatment();
+        treatment.setDrug("BAAC");
+        treatment.setDose("0.15-2.5 mg/kg on demand");
+        t.add(treatment);
+        p.setTreatment_List(t);
+        System.out.println("0.15-2.5 mg/kg of BAAC on demand is the best treatment for the patient");
+end
+
+rule "BAAC 2"
+    dialect "java"
+    when
+        a : Asthma (stage==AsthmaStage.NONE, PS>0,PS<3, PEF<80, SAT_O2 <94)
+        p : Patient(getRespiratorydisease().equals("Asthma"), treatment_list.isEmpty(),  age > 5, !string_comorbidities.contains("diabetes"), !string_comorbidities.contains("glaucoma"), !string_comorbidities.contains("cardiovascular disease"), !string_comorbidities.contains("hypertiroidism"))
+    then
+        ArrayList<Treatment> t = new ArrayList<>();
+        Treatment treatment = new Treatment();
+        treatment.setDrug("BAAC");
+        treatment.setDose("0.5-1 mg on demand");
+        t.add(treatment);
+        p.setTreatment_List(t);
+        System.out.println("0.5-1 mg of BAAC on demand is the best treatment for the patient");
+end
+
+rule "BAAC + Sistemic Corticoids 1"
+    dialect "java"
+    when
+        a : Asthma (stage==AsthmaStage.NONE, PS>4,PS<6, PEF>60,PEF<80, SAT_O2 >91, SAT_O2 <94)
+        p : Patient(getRespiratorydisease().equals("Asthma"), treatment_list.isEmpty(),  age < 5, !string_comorbidities.contains("diabetes"), 
+        !string_comorbidities.contains("glaucoma"), !string_comorbidities.contains("cardiovascular disease"), !string_comorbidities.contains("hypertiroidism"),
+        !string_comorbidities.contains("infecction"), !string_comorbidities.contains("osteoporosis"), !string_comorbidities.contains("peptic ulcer"))
+    then
+        ArrayList<Treatment> t = new ArrayList<>();
+        Treatment treatment1 = new Treatment();
+        treatment1.setDrug("BAAC");
+        treatment1.setDose("0.15-2.5 mg/kg");
+        t.add(treatment1);
+        Treatment treatment2 = new Treatment();
+        treatment2.setDrug("Sistemic corticoids");
+        treatment2.setDose("1 mg/kg/day");
+        t.add(treatment2);
+        p.setTreatment_List(t);
+        System.out.println("0.15-2.5 mg/kg of BAAC combined with 1 mg/kg/day of Sistemic Corticoidsis is the best treatment for the patient");
+end
+
+rule "BAAC + Sistemic Corticoids 2"
+    dialect "java"
+    when
+        a : Asthma (stage==AsthmaStage.NONE, PS>4,PS<6, PEF>60,PEF<80, SAT_O2 >91, SAT_O2 <94)
+        p : Patient(getRespiratorydisease().equals("Asthma"), treatment_list.isEmpty(),  age >5, !string_comorbidities.contains("diabetes"), 
+        !string_comorbidities.contains("glaucoma"), !string_comorbidities.contains("cardiovascular disease"), 
+        !string_comorbidities.contains("hypertiroidism"), !string_comorbidities.contains("infecction"), !string_comorbidities.contains("osteoporosis"), !string_comorbidities.contains("peptic ulcer"))
+    then
+        ArrayList<Treatment> t = new ArrayList<>();
+        Treatment treatment1 = new Treatment();
+        treatment1.setDrug("BAAC");
+        treatment1.setDose("0.5-1 mg on demand");
+        t.add(treatment1);
+        Treatment treatment2 = new Treatment();
+        treatment2.setDrug("Sistemic corticoids");
+        treatment2.setDose("3 mg/kg/day");
+        t.add(treatment2);
+        p.setTreatment_List(t);
+        System.out.println("0.5-1 mg of BAAC on demand combined with 3 mg/kg/day of Sistemic Corticoidsis is the best treatment for the patient");
+end
+
+rule "BAAC + Sistemic Corticoids + Suplementary O2 1"
+    dialect "java"
+    when
+        a : Asthma (stage==AsthmaStage.NONE, PS>7,PS<9, PEF<60,  SAT_O2 <91)
+        p : Patient(getRespiratorydisease().equals("Asthma"), treatment_list.isEmpty(), age >5, !string_comorbidities.contains("diabetes"), 
+        !string_comorbidities.contains("glaucoma"), !string_comorbidities.contains("cardiovascular disease"), !string_comorbidities.contains("diabetes"), 
+        !string_comorbidities.contains("glaucoma"), !string_comorbidities.contains("cardiovascular disease"), 
+        !string_comorbidities.contains("hypertiroidism"), !string_comorbidities.contains("infecction"), !string_comorbidities.contains("osteoporosis"), !string_comorbidities.contains("peptic ulcer"))
+    then
+        ArrayList<Treatment> t = new ArrayList<>();
+        Treatment treatment1 = new Treatment();
+        treatment1.setDrug("BAAC");
+        treatment1.setDose("0.5-1 mg on demand");
+        t.add(treatment1);
+        Treatment treatment2 = new Treatment();
+        treatment2.setDrug("Sistemic corticoids");
+        treatment2.setDose("3 mg/kg/day");
+        t.add(treatment2);
+        Treatment treatment3 = new Treatment();
+        treatment3.setDrug("Suplementary O2");
+        treatment3.setDose("On demand");
+        t.add(treatment3);
+        p.setTreatment_List(t);
+        System.out.println("0.5-1 mg of BAAC on demand combined with 3 mg/kg/day of Sistemic Corticoidsis and Suplementary O2 on demand is the best treatment for the patient");
+end
+
+rule "BAAC + Sistemic Corticoids + Suplementary O2 2"
+    dialect "java"
+    when
+        a : Asthma (stage==AsthmaStage.NONE, PS>7,PS<9, PEF<60,  SAT_O2 <91)
+        p : Patient(getRespiratorydisease().equals("Asthma"), treatment_list.isEmpty(), age <5, !string_comorbidities.contains("diabetes"), 
+        !string_comorbidities.contains("glaucoma"), !string_comorbidities.contains("cardiovascular disease"), !string_comorbidities.contains("diabetes"), 
+        !string_comorbidities.contains("glaucoma"), !string_comorbidities.contains("cardiovascular disease"), 
+        !string_comorbidities.contains("hypertiroidism"), !string_comorbidities.contains("infecction"), !string_comorbidities.contains("osteoporosis"), !string_comorbidities.contains("peptic ulcer"))
+    then
+        ArrayList<Treatment> t = new ArrayList<>();
+        Treatment treatment1 = new Treatment();
+        treatment1.setDrug("BAAC");
+        treatment1.setDose("0.15-2.5 mg/kg");
+        t.add(treatment1);
+        Treatment treatment2 = new Treatment();
+        treatment2.setDrug("Sistemic corticoids");
+        treatment2.setDose("1 mg/kg/day");
+        t.add(treatment2);
+        Treatment treatment3 = new Treatment();
+        treatment3.setDrug("Suplementary O2");
+        treatment3.setDose("On demand");
+        t.add(treatment3);
+        p.setTreatment_List(t);
+        System.out.println("0.15-2.5 mg/kg of BAAC combined with 1 mg/kg/day of Sistemic Corticoidsis and Suplementary O2 on demand is the best treatment for the patient");
+end
+
+rule "BAAC on demand"
+    dialect "java"
+    when
+        a : Asthma (stage!=AsthmaStage.NONE)
+        p : Patient(!string_comorbidities.contains("diabetes"), !string_comorbidities.contains("glaucoma"), !string_comorbidities.contains("cardiovascular disease"), 
+        !string_comorbidities.contains("hypertiroidism"))
+    then
+        Treatment treatment = new Treatment();
+        treatment.setDrug("BAAC on demand during crisis");
+        treatment.setDose("2-4 inhalations");
+        p.addTreatment(treatment);
+        System.out.println("2-4 inhalations of BAAC on demand during a crisis is the best treatment");
+end
+
+rule "Hospitalization"
+    dialect "java"
+    when
+        p : Patient(getRespiratorydisease().equals("Asthma"), !treatment_list.isEmpty(), treat_stage==6, symptoms_controlled==false)
+    then
+        p.setHospitalization(true);
+        System.out.println("The patient needs to be hospitalized");
+end
