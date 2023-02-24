@@ -31,8 +31,7 @@ rule "Chornic home oxygen therapy Rule"
         e.setCondition(SEVERE_CHRONIC_HYPOXEMIA);
         p.setEpoc(e);
         Treatment treatment = new Treatment();
-        treatment.setDrug("Chornic home oxygen therapy");
-        treatment.setDose(" - ");
+        treatment.setDrug("Chronic home oxygen therapy");
         p.addTreatment(treatment);
         System.out.println("Pulmonary condition: SEVERE CHRONIC HYPOXEMIA - Chronic home oxygen is the best treatment for the patient");
 end
@@ -47,7 +46,6 @@ rule "Bullectomy Rule"
         p.setEpoc(e);
         Treatment treatment = new Treatment();
         treatment.setDrug("Bullectomy");
-        treatment.setDose(" - ");
         p.addTreatment(treatment);
         System.out.println("Pulmonary condition: BULLA - Bullectomy is the best treatment for the patient");
 end
@@ -62,7 +60,6 @@ rule "Pulmonar volume reduction Rule"
         p.setEpoc(e);
         Treatment treatment = new Treatment();
         treatment.setDrug("Pulmonar volume reduction");
-        treatment.setDose(" - ");
         p.addTreatment(treatment);
         System.out.println("Pulmonary condition: SEVERE HETEROGENEOUS EMPHYSEMA IN UPPER LOBES - Pulmonar volume reduction is the best treatment for the patient");
 end
@@ -77,7 +74,6 @@ rule "Bronchoscopic intervention Rule"
         p.setEpoc(e);
         Treatment treatment = new Treatment();
         treatment.setDrug("Bronchoscopic intervention");
-        treatment.setDose(" - ");
         p.addTreatment(treatment);
         System.out.println("Pulmonary condition: ADVANCED EMPHYSEMA - Bronchoscopic intervention is the best treatment for the patient");
 end
@@ -92,7 +88,6 @@ rule "Pulmonar transplant Rule"
         p.setEpoc(e);
         Treatment treatment = new Treatment();
         treatment.setDrug("Pulmonar transplant");
-        treatment.setDose(" - ");
         p.addTreatment(treatment);
         System.out.println("Pulmonary condition: SEVERE COPD - Pulmonar transplant is the best treatment for the patient");
 end
@@ -125,7 +120,7 @@ rule "SABA/SAMA Rule"
         ArrayList<Treatment> t = new ArrayList<>();
         Treatment treatment = new Treatment();
         treatment.setDrug("SABA/SAMA");
-        treatment.setDose(" - ");
+        treatment.setDose("2-4 inhalations/day");
         t.add(treatment);
         p.setTreatment_List(t);
         System.out.println("SABA/SAMA is the best treatment for the patient");
@@ -141,7 +136,7 @@ rule "LABA/LAMA Rule"
         ArrayList<Treatment> t = new ArrayList<>();
         Treatment treatment = new Treatment();
         treatment.setDrug("LABA/LAMA");
-        treatment.setDose(" - ");
+        treatment.setDose("1-2 inhalations/day");
         t.add(treatment);
         p.setTreatment_List(t);
         System.out.println("LABA/LAMA is the best treatment for the patient");
@@ -156,7 +151,7 @@ rule "LAMA Rule 1"
         ArrayList<Treatment> t = new ArrayList<>();
         Treatment treatment = new Treatment();
         treatment.setDrug("LAMA");
-        treatment.setDose(" - ");
+        treatment.setDose(" 1-2 inhalations/day ");
         t.add(treatment);
         p.setTreatment_List(t);
         System.out.println("LAMA is the best treatment for the patient");
@@ -172,11 +167,11 @@ rule "LABA+IC Rule 1"
         ArrayList<Treatment> t = new ArrayList<>();
         Treatment treatment1 = new Treatment();
         treatment1.setDrug("LABA");
-        treatment1.setDose(" - ");
+        treatment1.setDose("1-2 inhalations/day");
         t.add(treatment1);
         Treatment treatment2 = new Treatment();
         treatment2.setDrug("IC");
-        treatment2.setDose(" - ");
+        treatment2.setDose("1-2 inhalations/day");
         t.add(treatment2);
         p.setTreatment_List(t);
         System.out.println("LABA combined with IC is the best treatment for the patient");
@@ -192,7 +187,7 @@ rule "LAMA Rule 2"
         ArrayList<Treatment> t = new ArrayList<>();
         Treatment treatment = new Treatment();
         treatment.setDrug("LAMA");
-        treatment.setDose(" - ");
+        treatment.setDose(" 1-2 inhalations/day ");
         p.setTreatment(treatment);
         t.add(treatment);
         p.setTreatment_List(t);
@@ -209,11 +204,11 @@ rule "LABA+LAMA Rule 1"
         ArrayList<Treatment> t = new ArrayList<>();
         Treatment treatment1 = new Treatment();
         treatment1.setDrug("LABA");
-        treatment1.setDose(" - ");
+        treatment1.setDose(" 1-2 inhalations/day ");
         t.add(treatment1);
         Treatment treatment2 = new Treatment();
         treatment2.setDrug("LAMA");
-        treatment2.setDose(" - ");
+        treatment2.setDose(" 1-2 inhalations/day ");
         t.add(treatment2);
         p.setTreatment_List(t);
         System.out.println("LABA combined with LAMA is the best treatment for the patient");
@@ -234,11 +229,11 @@ rule "LABA+LAMA Rule 2"
     then
         Treatment treatment1 = new Treatment();
         treatment1.setDrug("LABA");
-        treatment1.setDose(" - ");
+        treatment1.setDose(" 1-2 inhalations/day ");
         p.addTreatment(treatment1);
         Treatment treatment2 = new Treatment();
         treatment2.setDrug("LAMA");
-        treatment2.setDose(" - ");
+        treatment2.setDose("1-2 inhalations/day");
         p.addTreatment(treatment2);
         System.out.println("LABA combined with LAMA is the best treatment for the patient");
 end
@@ -250,15 +245,15 @@ rule "LABA+LAMA+IC Rule 1"
     then
         Treatment treatment1 = new Treatment();
         treatment1.setDrug("LABA");
-        treatment1.setDose(" - ");
+        treatment1.setDose("1-2 inhalations/day");
         p.addTreatment(treatment1);
         Treatment treatment2 = new Treatment();
         treatment2.setDrug("LAMA");
-        treatment2.setDose(" - ");
+        treatment2.setDose("1-2 inhalations/day");
         p.addTreatment(treatment2);
         Treatment treatment3 = new Treatment();
         treatment3.setDrug("IC");
-        treatment3.setDose(" - ");
+        treatment3.setDose("1-2 inhalations/day");
         p.addTreatment(treatment3);
         System.out.println("LABA combined with LAMA and IC is the best treatment for the patient");
 end
@@ -290,11 +285,11 @@ rule "LABA+IC Rule 2"
         p.setEpoc(e);
         Treatment treatment1 = new Treatment();
         treatment1.setDrug("LABA");
-        treatment1.setDose(" - ");
+        treatment1.setDose("1-2 inhalations/day");
         p.addTreatment(treatment1);
         Treatment treatment2 = new Treatment();
         treatment2.setDrug("IC");
-        treatment2.setDose(" - ");
+        treatment2.setDose("1-2 inhalations/day");
         p.addTreatment(treatment2);
         System.out.println("LABA combined with IC is the best treatment for the patient");
 end
@@ -308,11 +303,11 @@ rule "LABA+LAMA Rule 3"
         p.setEpoc(e);
         Treatment treatment1 = new Treatment();
         treatment1.setDrug("LABA");
-        treatment1.setDose(" - ");
+        treatment1.setDose("1-2 inhalations/day");
         p.addTreatment(treatment1);
         Treatment treatment2 = new Treatment();
         treatment2.setDrug("LAMA");
-        treatment2.setDose(" - ");
+        treatment2.setDose("1-2 inhalations/day");
         p.addTreatment(treatment2);
         System.out.println("LABA combined with LAMA is the best treatment for the patient");
 end
@@ -326,7 +321,7 @@ rule "Azimotricine Rule 1"
         p.setEpoc(e);
         Treatment treatment = new Treatment();
         treatment.setDrug("Azimotricine");
-        treatment.setDose(" - ");
+        treatment.setDose("250 mg/day");
         p.addTreatment(treatment);
         System.out.println("Azimotricine is the best treatment for the patient");
 end
@@ -340,7 +335,7 @@ rule "Roflumilast Rule 1"
         p.setEpoc(e);
         Treatment treatment = new Treatment();
         treatment.setDrug("Roflumilast");
-        treatment.setDose(" - ");
+        treatment.setDose("500 mcg/day");
         p.addTreatment(treatment);
         System.out.println("Roflumilast is the best treatment for the patient");
 end
@@ -364,15 +359,15 @@ rule "LABA+LAMA+IC Rule 2"
         p.setEpoc(e);
         Treatment treatment1 = new Treatment();
         treatment1.setDrug("LABA");
-        treatment1.setDose(" - ");
+        treatment1.setDose("1-2 inhalations/day");
         p.addTreatment(treatment1);
         Treatment treatment2 = new Treatment();
         treatment2.setDrug("LAMA");
-        treatment2.setDose(" - ");
+        treatment2.setDose("1-2 inhalations/day");
         p.addTreatment(treatment2);
         Treatment treatment3 = new Treatment();
         treatment3.setDrug("IC");
-        treatment3.setDose(" - ");
+        treatment3.setDose("1-2 inhalations/day");
         p.addTreatment(treatment3);
         System.out.println("LABA combined with LAMA and IC is the best treatment for the patient");
 end
@@ -386,7 +381,7 @@ rule "Azimotricine Rule 2"
         p.setEpoc(e);
         Treatment treatment = new Treatment();
         treatment.setDrug("Azimotricine");
-        treatment.setDose(" - ");
+        treatment.setDose("250 mg/day");
         p.addTreatment(treatment);
         System.out.println("Roflumilast is the best treatment for the patient");
 end
@@ -400,7 +395,7 @@ rule "Roflumilast Rule 2"
         p.setEpoc(e);
         Treatment treatment = new Treatment();
         treatment.setDrug("Roflumilast");
-        treatment.setDose(" - ");
+        treatment.setDose("500 mcg/day");
         p.addTreatment(treatment);
         System.out.println("Roflumilast is the best treatment for the patient");
 end
@@ -424,15 +419,15 @@ rule "LABA+LAMA+IC Rule 3"
         p.setEpoc(e);
         Treatment treatment1 = new Treatment();
         treatment1.setDrug("LABA");
-        treatment1.setDose(" - ");
+        treatment1.setDose("1-2 inhalations/day");
         p.addTreatment(treatment1);
         Treatment treatment2 = new Treatment();
         treatment2.setDrug("LAMA");
-        treatment2.setDose(" - ");
+        treatment2.setDose("1-2 inhalations/day");
         p.addTreatment(treatment3);
         Treatment treatment3 = new Treatment();
         treatment3.setDrug("IC");
-        treatment3.setDose(" - ");
+        treatment3.setDose("1-2 inhalations/day");
         p.addTreatment(treatment3);
         System.out.println("LABA combined with LAMA and IC is the best treatment for the patient");
 end
