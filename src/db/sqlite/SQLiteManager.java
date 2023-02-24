@@ -172,7 +172,10 @@ public class SQLiteManager implements DBManager{
                     + "condition TEXT, " 
                     + "mMRC INTEGER, "
                     + "EOS INTEGER, "
+                    + "CAT INTEGER, "
+                    + "exa INTEGER, "
                     + "exacerbations BOOLEAN, "
+                    + "eosinophilia BOOLEAN, "
                     + "FEV INTEGER, "
                     + "id_patient FOREING KEY REFERENCES patient(medical_card_number) ON UPDATE CASCADE ON DELETE SET NULL)";
             stmt6.executeUpdate(sql6);

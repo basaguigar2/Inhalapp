@@ -14,25 +14,31 @@ public class EPOC {
     private Integer EPOC_id;
     private PulmonaryCondition condition;
     private String condition_string;
-    private boolean exacerbations; 
-    private int mMRC,EOS,FEV;
+    private boolean exacerbations, eosinophilia; 
+    private int mMRC,EOS,FEV,CAT, exa;
 
     public EPOC() {
     }
 
-    public EPOC(String condition, int mMRC, int EOS, boolean exacerb, int FEV) {
+    public EPOC(String condition, int mMRC, int EOS, int CAT, int exa, boolean exacerb, boolean eosinophilia, int FEV) {
         this.condition_string = condition;
         this.mMRC = mMRC;
         this.EOS = EOS;
+        this.CAT = CAT;
+        this.exa = exa;
         this.exacerbations = exacerb;
+        this.eosinophilia = eosinophilia;
         this.FEV = FEV;
     }
     
-    public EPOC(String condition, int mMRC, int EOS, boolean exacerb, int FEV, Integer id) {
+    public EPOC(String condition, int mMRC, int EOS, int CAT, int exa, boolean exacerb, boolean eosinophilia, int FEV, Integer id) {
         this.condition_string = condition;
         this.mMRC = mMRC;
         this.EOS = EOS;
+        this.CAT = CAT;
+        this.exa = exa;
         this.exacerbations = exacerb;
+        this.eosinophilia = eosinophilia;
         this.FEV = FEV;
         this.EPOC_id = id;
     }
@@ -106,12 +112,36 @@ public class EPOC {
         this.exacerbations = exacerb;
     }
 
+    public boolean isEosinophilia() {
+        return eosinophilia;
+    }
+
+    public void setEosinophilia(boolean eosinophilia) {
+        this.eosinophilia = eosinophilia;
+    }
+
     public int getFEV() {
         return FEV;
     }
 
     public void setFEV(int FEV) {
         this.FEV = FEV;
+    }
+
+    public int getCAT() {
+        return CAT;
+    }
+
+    public void setCAT(int CAT) {
+        this.CAT = CAT;
+    }
+
+    public int getExa() {
+        return exa;
+    }
+
+    public void setExa(int exa) {
+        this.exa = exa;
     }
     
 }
