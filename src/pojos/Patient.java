@@ -6,6 +6,7 @@ package pojos;
 
 import java.rmi.NotBoundException;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -27,13 +28,13 @@ public class Patient {
    
    private Integer userId;
    
-   private ArrayList<Treatment> treatment_list = new ArrayList<>();
-   private ArrayList<Comorbidity> comorbidity = new ArrayList<>();
+   private List<Treatment> treatment_list = new ArrayList<>();
+   private List<Comorbidity> comorbidity = new ArrayList<>();
    private EPOC epoc;
    private Asthma asthma;
    
-   private ArrayList<String> string_comorbidities = new ArrayList<>();
-   private ArrayList<String> string_treatments = new ArrayList<>();
+   private List<String> string_comorbidities = new ArrayList<>();
+   private List<String> string_treatments = new ArrayList<>();
 
     public Patient() {
     }
@@ -199,7 +200,7 @@ public class Patient {
         this.userId = userId;
     }
 
-    public ArrayList<Treatment> getTreatment_List() {
+    public List<Treatment> getTreatment_List() {
         return treatment_list;
     }
 
@@ -211,7 +212,7 @@ public class Patient {
         this.treatment_list.add(treatment);
     }
 
-    public ArrayList<String> getString_treatments() {
+    public List<String> getString_treatments() {
         return string_treatments;
     }
 
@@ -247,7 +248,7 @@ public class Patient {
         }
     }
     
-    public ArrayList<Comorbidity> getComorbidity() {
+    public List<Comorbidity> getComorbidity() {
         return comorbidity;
     }
 
@@ -255,7 +256,7 @@ public class Patient {
         this.comorbidity = comorbidity;
     }
 
-    public ArrayList<String> getString_comorbidities() {
+    public List<String> getString_comorbidities() {
         return string_comorbidities;
     }
 

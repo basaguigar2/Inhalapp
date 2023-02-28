@@ -21,6 +21,8 @@ import pojos.Treatment
 import pojos.PulmonaryCondition
 import pojos.Asthma
 import pojos.AsthmaStage 
+import pojos.*;
+
 
 rule "Chornic home oxygen therapy Rule"
     dialect "java"
