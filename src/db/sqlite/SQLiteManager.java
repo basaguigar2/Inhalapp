@@ -160,8 +160,9 @@ public class SQLiteManager implements DBManager{
             Statement stmt5 = c.createStatement();
             String sql5 = "CREATE TABLE treatment " 
                     + "(tid INTEGER PRIMARY KEY AUTOINCREMENT, " 
-                    + "drug TEXT NOT NULL, " 
+                    + "drug TEXT , " 
                     + "dose TEXT , "
+                    + "therapy TEXT , "
                     + "id_patient FOREING KEY REFERENCES patient(medical_card_number) ON UPDATE CASCADE ON DELETE SET NULL)";
             stmt5.executeUpdate(sql5);
             stmt5.close();

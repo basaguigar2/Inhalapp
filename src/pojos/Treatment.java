@@ -11,9 +11,17 @@ package pojos;
 public class Treatment {
     private Integer tid;
     private String drug;
-    private String dose; //in miligrams
+    private String dose;//in miligrams
+    private String therapy;
 
     public Treatment() {
+    }
+
+    public Treatment(Integer tid, String drug, String dose, String therapy) {
+        this.tid = tid;
+        this.drug = drug;
+        this.dose = dose;
+        this.therapy = therapy;
     }
 
     public Treatment(Integer tid, String drug, String dose) {
@@ -25,6 +33,10 @@ public class Treatment {
     public Treatment(String drug, String dose) {
         this.drug = drug;
         this.dose = dose;
+    }
+
+    public Treatment(String therapy) {
+        this.therapy = therapy;
     }
 
     public Integer getTreatmentId() {
@@ -49,6 +61,14 @@ public class Treatment {
 
     public void setDose(String dose) {
         this.dose = dose;
+    }
+
+    public String getTherapy() {
+        return therapy;
+    }
+
+    public void setTherapy(String therapy) {
+        this.therapy = therapy;
     }
     
     @Override

@@ -33,7 +33,7 @@ rule "Chornic home oxygen therapy Rule"
         e.setCondition(SEVERE_CHRONIC_HYPOXEMIA);
         p.setEpoc(e);
         Treatment treatment = new Treatment();
-        treatment.setDrug("Chronic home oxygen therapy");
+        treatment.setTherapy("Chronic home oxygen therapy");
         p.addTreatment(treatment);
         System.out.println("Pulmonary condition: SEVERE CHRONIC HYPOXEMIA - Chronic home oxygen is the best treatment for the patient");
 end
@@ -47,7 +47,7 @@ rule "Bullectomy Rule"
         e.setCondition(BULLA);
         p.setEpoc(e);
         Treatment treatment = new Treatment();
-        treatment.setDrug("Bullectomy");
+        treatment.setTherapy("Bullectomy");
         p.addTreatment(treatment);
         System.out.println("Pulmonary condition: BULLA - Bullectomy is the best treatment for the patient");
 end
@@ -61,7 +61,7 @@ rule "Pulmonar volume reduction Rule"
         e.setCondition(SEVERE_HETEROGENEOUS_EMPHYSEMA_IN_UPPER_LOBES);
         p.setEpoc(e);
         Treatment treatment = new Treatment();
-        treatment.setDrug("Pulmonar volume reduction");
+        treatment.setTherapy("Pulmonar volume reduction");
         p.addTreatment(treatment);
         System.out.println("Pulmonary condition: SEVERE HETEROGENEOUS EMPHYSEMA IN UPPER LOBES - Pulmonar volume reduction is the best treatment for the patient");
 end
@@ -75,7 +75,7 @@ rule "Bronchoscopic intervention Rule"
         e.setCondition(ADVANCED_EMPHYSEMA);
         p.setEpoc(e);
         Treatment treatment = new Treatment();
-        treatment.setDrug("Bronchoscopic intervention");
+        treatment.setTherapy("Bronchoscopic intervention");
         p.addTreatment(treatment);
         System.out.println("Pulmonary condition: ADVANCED EMPHYSEMA - Bronchoscopic intervention is the best treatment for the patient");
 end
@@ -89,7 +89,7 @@ rule "Pulmonar transplant Rule"
         e.setCondition(SEVERE_COPD);
         p.setEpoc(e);
         Treatment treatment = new Treatment();
-        treatment.setDrug("Pulmonar transplant");
+        treatment.setTherapy("Pulmonar transplant");
         p.addTreatment(treatment);
         System.out.println("Pulmonary condition: SEVERE COPD - Pulmonar transplant is the best treatment for the patient");
 end
