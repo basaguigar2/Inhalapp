@@ -36,15 +36,9 @@ public class Application {
         // KieRuntimeLogger logger = ks.getLoggers().newThreadedFileLogger( ksession, "./helloworld", 1000 );
         // The application can insert facts into the session
         EPOC patient = new EPOC(PulmonaryCondition.SEVERE_CHRONIC_HYPOXEMIA);
-        
-        System.out.println(patient);
-        
-        Treatment t = new Treatment();
         // Inserta el objeto de paciente en la sesión de drools
         ksession.insert(patient);
         //System.out.println(t.getDrug());
-        
-      
 
         // and fire the rules
         ksession.fireAllRules();

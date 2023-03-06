@@ -11,11 +11,11 @@ import java.rmi.NotBoundException;
  * @author gisel
  */
 public class Asthma {
-    private Integer asthma_id;
-    private AsthmaStage stage;
-    private String stage_string;
-    private int PS, PEF,SAT_O2;
-    private int dayTimeSymptoms_w, rescueMedication_w, nocturnalSymptoms_w, limitations, pulmonar_function, exarcebations_y;
+    public Integer asthma_id;
+    public AsthmaStage stage;
+    public String stage_string;
+    public int PS, PEF,SAT_O2;
+    public int dayTimeSymptoms_w, rescueMedication_w, nocturnalSymptoms_w, limitations, pulmonar_function, exarcebations_y;
     
     public Asthma(){
     }

@@ -22,6 +22,7 @@ import pojos.PulmonaryCondition
 import pojos.Asthma
 import pojos.AsthmaStage 
 import pojos.*;
+import java.util.ArrayList;
 
 
 rule "Chornic home oxygen therapy Rule"
@@ -30,7 +31,7 @@ rule "Chornic home oxygen therapy Rule"
         p : Patient(getRespiratorydisease().equals("EPOC"))
         e : EPOC(condition == PulmonaryCondition.SEVERE_CHRONIC_HYPOXEMIA)
     then   
-        e.setCondition(SEVERE_CHRONIC_HYPOXEMIA);
+        e.setCondition(PulmonaryCondition.SEVERE_CHRONIC_HYPOXEMIA);
         p.setEpoc(e);
         Treatment treatment = new Treatment();
         treatment.setTherapy("Chronic home oxygen therapy");
@@ -44,7 +45,7 @@ rule "Bullectomy Rule"
         p : Patient(getRespiratorydisease().equals("EPOC"))
         e : EPOC(condition == PulmonaryCondition.BULLA)
     then
-        e.setCondition(BULLA);
+        e.setCondition(PulmonaryCondition.BULLA);
         p.setEpoc(e);
         Treatment treatment = new Treatment();
         treatment.setTherapy("Bullectomy");
@@ -58,7 +59,7 @@ rule "Pulmonar volume reduction Rule"
         p : Patient(getRespiratorydisease().equals("EPOC"))
         e : EPOC(condition == PulmonaryCondition.SEVERE_HETEROGENEOUS_EMPHYSEMA_IN_UPPER_LOBES)
     then
-        e.setCondition(SEVERE_HETEROGENEOUS_EMPHYSEMA_IN_UPPER_LOBES);
+        e.setCondition(PulmonaryCondition.SEVERE_HETEROGENEOUS_EMPHYSEMA_IN_UPPER_LOBES);
         p.setEpoc(e);
         Treatment treatment = new Treatment();
         treatment.setTherapy("Pulmonar volume reduction");
@@ -72,7 +73,7 @@ rule "Bronchoscopic intervention Rule"
         p : Patient(getRespiratorydisease().equals("EPOC"))
         e : EPOC(condition == PulmonaryCondition.ADVANCED_EMPHYSEMA)
     then
-        e.setCondition(ADVANCED_EMPHYSEMA);
+        e.setCondition(PulmonaryCondition.ADVANCED_EMPHYSEMA);
         p.setEpoc(e);
         Treatment treatment = new Treatment();
         treatment.setTherapy("Bronchoscopic intervention");
@@ -86,7 +87,7 @@ rule "Pulmonar transplant Rule"
         p : Patient(getRespiratorydisease().equals("EPOC"))
         e : EPOC(condition == PulmonaryCondition.SEVERE_COPD)
     then
-        e.setCondition(SEVERE_COPD);
+        e.setCondition(PulmonaryCondition.SEVERE_COPD);
         p.setEpoc(e);
         Treatment treatment = new Treatment();
         treatment.setTherapy("Pulmonar transplant");
@@ -182,7 +183,7 @@ end
 rule "LAMA Rule 2"
     dialect "java"
     when 
-        p: Patient(getRespiratorydisease().equals("EPOC"), treatment_list.isEmpty(, hospitalization == true))
+        p: Patient(getRespiratorydisease().equals("EPOC"), treatment_list.isEmpty(),hospitalization == true)
         e: EPOC (mMRC > 1, CAT>10 && CAT<20, eosinophilia == false)
     then 
         p.setEpoc(e);
@@ -190,7 +191,7 @@ rule "LAMA Rule 2"
         Treatment treatment = new Treatment();
         treatment.setDrug("LAMA");
         treatment.setDose(" 1-2 inhalations/day ");
-        p.setTreatment(treatment);
+        p.addTreatment(treatment);
         t.add(treatment);
         p.setTreatment_List(t);
         System.out.println("LAMA is the best treatment for the patient");
@@ -265,7 +266,6 @@ rule "Change device Rule 1"
     when
         p: Patient(getRespiratorydisease().equals("EPOC"), symptoms_controlled==false, !treatment_list.isEmpty(), string_treatments.contains("LABA"), string_treatments.contains("LAMA"), string_comorbidities.contains("disnea"))
     then
-        p.setEpoc(e);
         System.out.println("Change device and investigate other causes");
 end
 
@@ -274,7 +274,6 @@ rule "Change device Rule 2"
     when
         p: Patient(getRespiratorydisease().equals("EPOC"), symptoms_controlled==false, !treatment_list.isEmpty(), string_treatments.contains("LABA"), string_treatments.contains("LAMA"), string_treatments.contains("IC"), string_comorbidities.contains("disnea"))
     then
-        p.setEpoc(e);
         System.out.println("Change device and investigate other causes");
 end
 
@@ -426,7 +425,7 @@ rule "LABA+LAMA+IC Rule 3"
         Treatment treatment2 = new Treatment();
         treatment2.setDrug("LAMA");
         treatment2.setDose("1-2 inhalations/day");
-        p.addTreatment(treatment3);
+        p.addTreatment(treatment2);
         Treatment treatment3 = new Treatment();
         treatment3.setDrug("IC");
         treatment3.setDose("1-2 inhalations/day");
@@ -479,7 +478,7 @@ rule "No medication 3"
         t.add(treatment);
         p.setTreatment_List(t);
         p.setTreatment_stage(1);
-        a.setStage(INTERMITTENT);
+        a.setStage(AsthmaStage.INTERMITTENT);
         p.setAsthma(a);
         System.out.println("Disease Stage : INTERMITTENT ASTHMA - It is recommended not consume any control medication");
 end
@@ -553,7 +552,7 @@ rule "GCI low dosis 5"
         t.add(treatment);
         p.setTreatment_List(t);
         p.setTreatment_stage(2);
-        a.setStage(MILD_PERSISTENT);
+        a.setStage(AsthmaStage.MILD_PERSISTENT);
         p.setAsthma(a);
         System.out.println("Disease Stage : MILD PERSISTENT ASTHMA - 0.1 mg/day of GCI is the best treatment for the patient");
 end
@@ -561,7 +560,7 @@ end
 rule "GCI low dosis 6"
     dialect "java"
     when
-        a : Asthma (dayTimeSymptoms_w > 2, dayTimeSymptoms_w < 4 rescueMedication_w > 2 ,rescueMedication_w < 4, nocturnalSymptoms_w > 1, nocturnalSymptoms_w < 2, limitations ==1, pulmonar_function > 80, exarcebations_y >= 0, exarcebations_y < 2 )
+        a : Asthma (dayTimeSymptoms_w > 2, dayTimeSymptoms_w < 4, rescueMedication_w > 2 ,rescueMedication_w < 4, nocturnalSymptoms_w > 1, nocturnalSymptoms_w < 2, limitations ==1, pulmonar_function > 80, exarcebations_y >= 0, exarcebations_y < 2 )
         p : Patient(getRespiratorydisease().equals("Asthma"), treatment_list.isEmpty(),  age > 5, !string_comorbidities.contains("viral infection"), !string_comorbidities.contains("pulmonary tuberculosis"))
     then
         ArrayList<Treatment> t = new ArrayList<>();
@@ -571,7 +570,7 @@ rule "GCI low dosis 6"
         t.add(treatment);
         p.setTreatment_List(t);
         p.setTreatment_stage(2);
-        a.setStage(MILD_PERSISTENT);
+        a.setStage(AsthmaStage.MILD_PERSISTENT);
         p.setAsthma(a);
         System.out.println("Disease Stage : MILD PERSISTENT ASTHMA - 0.2 mg/day of GCI is the best treatment for the patient");
 end
@@ -647,7 +646,7 @@ rule "GCI medium dosis 5"
         t.add(treatment);
         p.setTreatment_List(t);
         p.setTreatment_stage(3);
-        a.setStage(MODERATE_PERSISTENT);
+        a.setStage(AsthmaStage.MODERATE_PERSISTENT);
         p.setAsthma(a);
         System.out.println("Disease Stage :MODERATE PERSISTENT ASTHMA - 0.2 mg/day of GCI is the best treatment for the patient");
 end
@@ -665,7 +664,7 @@ rule "GCI medium dosis 6"
         t.add(treatment);
         p.setTreatment_List(t);
         p.setTreatment_stage(3);
-        a.setStage(MODERATE_PERSISTENT);
+        a.setStage(AsthmaStage.MODERATE_PERSISTENT);
         p.setAsthma(a);
         System.out.println("Disease Stage : MODERATE PERSISTENT ASTHMA - 0.3-0.4 mg/day of GCI is the best treatment for the patient");
 end
@@ -755,7 +754,7 @@ rule "GCI high dosis 1"
         t.add(treatment);
         p.setTreatment_List(t);
         p.setTreatment_stage(4);
-        a.setStage(SEVERE_PERSISTENT);
+        a.setStage(AsthmaStage.SEVERE_PERSISTENT);
         p.setAsthma(a);
         System.out.println("Disease Stage : SEVERE PERSISTENT ASTHMA - 0.6 mg/day of GCI is the best treatment for the patient");
 end
@@ -769,11 +768,11 @@ rule "GCI high dosis 2"
         ArrayList<Treatment> t = new ArrayList<>();
         Treatment treatment = new Treatment();
         treatment.setDrug("GCI");
-        treatment.setDose(0.5 mg/day GCI);
+        treatment.setDose("0.5 mg/day GCI");
         t.add(treatment);
         p.setTreatment_List(t);
         p.setTreatment_stage(4);
-        a.setStage(SEVERE_PERSISTENT);
+        a.setStage(AsthmaStage.SEVERE_PERSISTENT);
         p.setAsthma(a);
         System.out.println("Disease Stage : SEVERE PERSISTENT ASTHMA - 0.5 mg/day of GCI is the best treatment for the patient");
 end
@@ -847,7 +846,7 @@ rule "ARLT 5"
         t.add(treatment);
         p.setTreatment_List(t);
         p.setTreatment_stage(2);
-        a.setStage(MILD_PERSISTENT);
+        a.setStage(AsthmaStage.MILD_PERSISTENT);
         p.setAsthma(a);
         System.out.println("Disease Stage : MILD PERSISTENT ASTHMA - 0.02 mg/day of ARLT is the best treatment for the patient");
 end
@@ -855,7 +854,7 @@ end
 rule "ARLT 6"
     dialect "java"
     when
-        a : Asthma (dayTimeSymptoms_w > 2, dayTimeSymptoms_w < 4 rescueMedication_w > 2 ,rescueMedication_w < 4, nocturnalSymptoms_w > 1, nocturnalSymptoms_w < 2, limitations ==1, pulmonar_function > 80, exarcebations_y >= 0, exarcebations_y < 2 )
+        a : Asthma (dayTimeSymptoms_w > 2, dayTimeSymptoms_w < 4, rescueMedication_w > 2 ,rescueMedication_w < 4, nocturnalSymptoms_w > 1, nocturnalSymptoms_w < 2, limitations ==1, pulmonar_function > 80, exarcebations_y >= 0, exarcebations_y < 2 )
         p : Patient(getRespiratorydisease().equals("Asthma"), treatment_list.isEmpty(),  age > 5, string_comorbidities.contains("viral infection") || string_comorbidities.contains("pulmonary tuberculosis"), !string_comorbidities.contains("cardiovascular disease"))
     then
         ArrayList<Treatment> t = new ArrayList<>();
@@ -865,7 +864,7 @@ rule "ARLT 6"
         t.add(treatment);
         p.setTreatment_List(t);
         p.setTreatment_stage(2);
-        a.setStage(MILD_PERSISTENT);
+        a.setStage(AsthmaStage.MILD_PERSISTENT);
         p.setAsthma(a);
         System.out.println("Disease Stage : MILD PERSISTENT ASTHMA - 0.04 mg/day of ARLT is the best treatment for the patient");
 end
@@ -995,7 +994,7 @@ rule "GCI low dosis + BAAL 3"
         t.add(treatment2);
         p.setTreatment_List(t);
         p.setTreatment_stage(4);
-        a.setStage(MODERATE_PERSISTENT);
+        a.setStage(AsthmaStage.MODERATE_PERSISTENT);
         p.setAsthma(a);
         System.out.println("Disease Stage : MODERATE PERSISTENT ASTHMA - 0.2 mg/day of GCI combined with 0.05 mg/day of BAAL is the best treatment for the patient");
 end
@@ -1017,7 +1016,7 @@ rule "GCI low dosis + ARLT 5"
         t.add(treatment2);
         p.setTreatment_List(t);
         p.setTreatment_stage(4);
-        a.setStage(MODERATE_PERSISTENT);
+        a.setStage(AsthmaStage.MODERATE_PERSISTENT);
         p.setAsthma(a);
         System.out.println("Disease Stage :MODERATE PERSISTENT ASTHMA - 0.1 mg/day of GCI combined with 0.02 mg/day of ARLT is the best treatment for the patient");
 end
@@ -1038,8 +1037,8 @@ rule "GCI low dosis + ARLT 6"
         treatment2.setDose("0.04 mg/day");
         t.add(treatment2);
         p.setTreatment_List(t);
-        p.setTreatment_stagee(4);
-        a.setStage(MODERATE_PERSISTENT);
+        p.setTreatment_stage(4);
+        a.setStage(AsthmaStage.MODERATE_PERSISTENT);
         p.setAsthma(a);
         System.out.println("Disease Stage : MODERATE PERSISTENT ASTHMA - 0.2 mg/day of GCI combined with 0.04 mg/day of ARLT is the best treatment for the patient");
 end
@@ -1061,7 +1060,7 @@ rule "GCI medium dosis + BAAL 1"
         t.add(treatment2);
         p.setTreatment_List(t);
         p.setTreatment_stage(5);
-        a.setStage(SEVERE_PERSISTENT);
+        a.setStage(AsthmaStage.SEVERE_PERSISTENT);
         p.setAsthma(a);
         System.out.println("Disease Stage : SEVERE PERSISTENT ASTHMA - 0.3-0.4 mg/day of GCI combined with 0.05 mg/day of BAAL is the best treatment for the patient");
 end
@@ -1184,21 +1183,20 @@ rule "GCO 1"
         treatment.setDrug("GCO");
         treatment.setDose("0.5-2 mg/kg/day");
         p.addTreatment(treatment);
-        p.setTreat_stage(6);
+        p.setTreatment_stage(6);
         System.out.println("0.5-2 mg/kg/day of GCO is the best treatment for the patient");
 end
 
 rule "GCO 2"
     dialect "java"
     when
-        
         p : Patient(getRespiratorydisease().equals("Asthma"), !treatment_list.isEmpty(), treat_stage==5, age >5,symptoms_controlled==false, !string_comorbidities.contains("diabetes"), !string_comorbidities.contains("osteoporosis"), !string_comorbidities.contains("cardiovascular disease"))
     then
         Treatment treatment = new Treatment();
         treatment.setDrug("GCO");
         treatment.setDose("40-60 mg/kg/day");
         p.addTreatment(treatment);
-        p.setTreat_stage(6);
+        p.setTreatment_stage(6);
         System.out.println("40-60 mg/kg/day of GCO is the best treatment for the patient");
 end
 

@@ -13,28 +13,28 @@ import java.util.List;
  * @author gisel
  */
 public class Patient {
-   private Integer medical_card_number;
-   private String name;
-   private String surname;
-   private Integer age;
-   private String gender;
-   private boolean pregnancy;
-   private boolean influenza_vaccine, pneumonia_vaccine;
-   private Integer treatment_stage = 0;
-   private boolean smoker;
-   private boolean symptoms_controlled;
-   private boolean hospitalization;
-   private String respiratorydisease;
+   public Integer medical_card_number;
+   public String name;
+   public String surname;
+   public Integer age;
+   public String gender;
+   public boolean pregnancy;
+   public boolean influenza_vaccine, pneumonia_vaccine;
+   public Integer treat_stage = 0;
+   public boolean smoker;
+   public boolean symptoms_controlled;
+   public boolean hospitalization;
+   public String respiratorydisease;
    
-   private Integer userId;
+   public Integer userId;
    
-   private List<Treatment> treatment_list = new ArrayList<>();
-   private List<Comorbidity> comorbidity = new ArrayList<>();
-   private EPOC epoc;
-   private Asthma asthma;
+   public List<Treatment> treatment_list = new ArrayList<>();
+   public List<Comorbidity> comorbidity = new ArrayList<>();
+   public EPOC epoc;
+   public Asthma asthma;
    
-   private List<String> string_comorbidities = new ArrayList<>();
-   private List<String> string_treatments = new ArrayList<>();
+   public List<String> string_comorbidities = new ArrayList<>();
+   public List<String> string_treatments = new ArrayList<>();
 
     public Patient() {
     }
@@ -50,7 +50,7 @@ public class Patient {
         this.symptoms_controlled = symptoms_controlled;
         this.hospitalization = hospitalization;
         this.respiratorydisease = respiratorydisease;
-        this.treatment_stage = treatment_stage;
+        this.treat_stage = treatment_stage;
         this.userId = userId;
     }
 
@@ -64,7 +64,7 @@ public class Patient {
         this.symptoms_controlled = symptoms_controlled;
         this.hospitalization = hospitalization;
         this.respiratorydisease = respiratorydisease;
-        this.treatment_stage = treatment_stage;
+        this.treat_stage = treatment_stage;
         this.smoker = smoker;
     }
 
@@ -225,24 +225,24 @@ public class Patient {
     }
 
     public Integer getTreatment_stage() {
-        return treatment_stage;
+        return treat_stage;
     }
 
     public void setTreatment_stage(int treatment_stage) throws NotBoundException {
         if(treatment_stage==0){
-            this.treatment_stage = 0;
+            this.treat_stage = 0;
         } else if(treatment_stage==1){
-            this.treatment_stage = 1;
+            this.treat_stage = 1;
         } else if(treatment_stage==2){
-            this.treatment_stage = 2;
+            this.treat_stage = 2;
         } else if(treatment_stage==3){
-            this.treatment_stage = 3;
+            this.treat_stage = 3;
         } else if(treatment_stage==4){
-            this.treatment_stage = 4;
+            this.treat_stage = 4;
         } else if(treatment_stage==5){
-            this.treatment_stage = 5;
+            this.treat_stage = 5;
         } else if(treatment_stage==6){
-            this.treatment_stage = 6;
+            this.treat_stage = 6;
         } else{
             throw new NotBoundException("Not valid stage. Introduce a valid stage [1-6]");
         }

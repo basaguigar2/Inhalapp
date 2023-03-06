@@ -11,11 +11,11 @@ import java.rmi.NotBoundException;
  * @author gisel
  */
 public class EPOC {
-    private Integer EPOC_id;
-    private PulmonaryCondition condition;
-    private String condition_string;
-    private boolean exacerbations, eosinophilia; 
-    private int mMRC,EOS,FEV,CAT, exa;
+    public Integer EPOC_id;
+    public PulmonaryCondition condition;
+    public String condition_string;
+    public boolean exacerbations, eosinophilia; 
+    public int mMRC,EOS,FEV,CAT, exa;
 
     public EPOC() {
     }
@@ -143,5 +143,11 @@ public class EPOC {
     public void setExa(int exa) {
         this.exa = exa;
     }
+
+    @Override
+    public String toString() {
+        return "EPOC{" + "condition=" + condition + '}';
+    }
+    
     
 }
