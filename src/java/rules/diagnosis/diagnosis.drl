@@ -36,7 +36,6 @@ rule "Chornic home oxygen therapy Rule"
         Treatment treatment = new Treatment();
         treatment.setTherapy("Chronic home oxygen therapy");
         p.addTreatment(treatment);
-        System.out.println("Pulmonary condition: SEVERE CHRONIC HYPOXEMIA - Chronic home oxygen is the best treatment for the patient");
 end
 
 rule "Bullectomy Rule"
@@ -116,7 +115,7 @@ end
 rule "SABA/SAMA Rule"
     dialect "java"
     when 
-        p: Patient(getRespiratorydisease().equals("EPOC"), treatment_list.isEmpty(), hospitalization == false)
+        p: Patient(getRespiratorydisease().equals("EPOC"), treatment_list.isEmpty(), hospitalization == false, !string_comorbidities.contains("cardiovascular diseases"))
         e: EPOC (mMRC <= 1, CAT<10)
     then 
         p.setEpoc(e);
@@ -132,7 +131,7 @@ end
 rule "LABA/LAMA Rule"
     dialect "java"
     when 
-        p: Patient(getRespiratorydisease().equals("EPOC"), treatment_list.isEmpty(), hospitalization == false)
+        p: Patient(getRespiratorydisease().equals("EPOC"), treatment_list.isEmpty(), hospitalization == false,  !string_comorbidities.contains("cardiovascular diseases"))
         e: EPOC (mMRC > 1, CAT>10)
     then 
         p.setEpoc(e);
@@ -147,7 +146,7 @@ end
 rule "LAMA Rule 1"
     dialect "java"
     when 
-        p: Patient(getRespiratorydisease().equals("EPOC"), treatment_list.isEmpty(), hospitalization == true)
+        p: Patient(getRespiratorydisease().equals("EPOC"), treatment_list.isEmpty(), hospitalization == true,  !string_comorbidities.contains("cardiovascular diseases"))
         e: EPOC (mMRC <= 1, CAT<10)
     then 
         p.setEpoc(e);
@@ -163,7 +162,7 @@ end
 rule "LABA+IC Rule 1"
     dialect "java"
     when 
-        p: Patient(getRespiratorydisease().equals("EPOC"), treatment_list.isEmpty(), hospitalization == true)
+        p: Patient(getRespiratorydisease().equals("EPOC"), treatment_list.isEmpty(), hospitalization == true, !string_comorbidities.contains("cardiovascular diseases"), !string_comorbidities.contains("pulmonar tuberculosis"),  !string_comorbidities.contains("viral infection"))
         e: EPOC (mMRC > 1, CAT>10, eosinophilia == true)
     then 
         p.setEpoc(e);
@@ -183,7 +182,7 @@ end
 rule "LAMA Rule 2"
     dialect "java"
     when 
-        p: Patient(getRespiratorydisease().equals("EPOC"), treatment_list.isEmpty(),hospitalization == true)
+        p: Patient(getRespiratorydisease().equals("EPOC"), treatment_list.isEmpty(),hospitalization == true, !string_comorbidities.contains("cardiovascular diseases"))
         e: EPOC (mMRC > 1, CAT>10 && CAT<20, eosinophilia == false)
     then 
         p.setEpoc(e);
@@ -200,7 +199,7 @@ end
 rule "LABA+LAMA Rule 1"
     dialect "java"
     when 
-        p: Patient(getRespiratorydisease().equals("EPOC"), treatment_list.isEmpty(), hospitalization == true)
+        p: Patient(getRespiratorydisease().equals("EPOC"), treatment_list.isEmpty(), hospitalization == true, !string_comorbidities.contains("cardiovascular diseases"))
         e: EPOC (mMRC > 1, CAT>20, eosinophilia == false)
     then 
         p.setEpoc(e);
@@ -228,7 +227,7 @@ end
 rule "LABA+LAMA Rule 2"
     dialect "java"
     when
-        p: Patient(getRespiratorydisease().equals("EPOC"), symptoms_controlled==false, !treatment_list.isEmpty(), string_treatments.contains("LABA/LAMA"), string_comorbidities.contains("disnea"))
+        p: Patient(getRespiratorydisease().equals("EPOC"), symptoms_controlled==false, !treatment_list.isEmpty(), string_treatments.contains("LABA/LAMA"), string_comorbidities.contains("disnea"),!string_comorbidities.contains("cardiovascular diseases"))
     then
         Treatment treatment1 = new Treatment();
         treatment1.setDrug("LABA");
@@ -244,7 +243,7 @@ end
 rule "LABA+LAMA+IC Rule 1"
     dialect "java"
     when
-        p: Patient(getRespiratorydisease().equals("EPOC"), symptoms_controlled==false, !treatment_list.isEmpty(), string_treatments.contains("LABA/LAMA"), string_comorbidities.contains("disnea"))
+        p: Patient(getRespiratorydisease().equals("EPOC"), symptoms_controlled==false, !treatment_list.isEmpty(), string_treatments.contains("LABA/LAMA"), string_comorbidities.contains("disnea"), !string_comorbidities.contains("cardiovascular diseases"), !string_comorbidities.contains("pulmonar tuberculosis"),  !string_comorbidities.contains("viral infection"))
     then
         Treatment treatment1 = new Treatment();
         treatment1.setDrug("LABA");
@@ -280,7 +279,7 @@ end
 rule "LABA+IC Rule 2"
     dialect "java"
     when
-        p: Patient(getRespiratorydisease().equals("EPOC"), symptoms_controlled==false, !treatment_list.isEmpty())
+        p: Patient(getRespiratorydisease().equals("EPOC"), symptoms_controlled==false, !treatment_list.isEmpty(), !string_comorbidities.contains("cardiovascular diseases"), !string_comorbidities.contains("pulmonar tuberculosis"),  !string_comorbidities.contains("viral infection"))
         e: EPOC (exacerbations== true, EOS >=300 || (EOS>=100 && exa == 2))
     then
         p.setEpoc(e);
@@ -298,7 +297,7 @@ end
 rule "LABA+LAMA Rule 3"
     dialect "java"
     when
-        p: Patient(getRespiratorydisease().equals("EPOC"), symptoms_controlled==false, !treatment_list.isEmpty())
+        p: Patient(getRespiratorydisease().equals("EPOC"), symptoms_controlled==false, !treatment_list.isEmpty(), !string_comorbidities.contains("cardiovascular diseases"))
         e: EPOC (exacerbations== true, EOS <300 || exa < 2)
     then
         p.setEpoc(e);
@@ -316,7 +315,7 @@ end
 rule "Azimotricine Rule 1"
     dialect "java"
     when
-        p: Patient(getRespiratorydisease().equals("EPOC"), symptoms_controlled==false, !treatment_list.isEmpty(), smoker==false, string_treatments.contains("LABA"), string_treatments.contains("LAMA"))
+        p: Patient(getRespiratorydisease().equals("EPOC"), symptoms_controlled==false, !treatment_list.isEmpty(), smoker==false, string_treatments.contains("LABA"), string_treatments.contains("LAMA"), !string_comorbidities.contains("cardiovascular diseases"), !string_comorbidities.contains("vision disorders"))
         e: EPOC (exacerbations== true, EOS<100)
     then
         p.setEpoc(e);
@@ -330,7 +329,7 @@ end
 rule "Roflumilast Rule 1"
     dialect "java"
     when
-        p: Patient(getRespiratorydisease().equals("EPOC"), symptoms_controlled==false, !treatment_list.isEmpty(), smoker==true, string_treatments.contains("LABA"), string_treatments.contains("LAMA"))
+        p: Patient(getRespiratorydisease().equals("EPOC"), symptoms_controlled==false, !treatment_list.isEmpty(), smoker==true, string_treatments.contains("LABA"), string_treatments.contains("LAMA"), !string_comorbidities.contains("cardiovascular diseases"))
         e: EPOC (exacerbations== true, EOS<100, FEV<50)
     then
         p.setEpoc(e);
@@ -354,7 +353,7 @@ end
 rule "LABA+LAMA+IC Rule 2"
     dialect "java"
     when
-        p: Patient(getRespiratorydisease().equals("EPOC"), symptoms_controlled==false, !treatment_list.isEmpty(), string_treatments.contains("LABA"), string_treatments.contains("LAMA"))
+        p: Patient(getRespiratorydisease().equals("EPOC"), symptoms_controlled==false, !treatment_list.isEmpty(), string_treatments.contains("LABA"), string_treatments.contains("LAMA"),  !string_comorbidities.contains("cardiovascular diseases"))
         e: EPOC (exacerbations== true, EOS>100)
     then
         p.setEpoc(e);
@@ -376,7 +375,7 @@ end
 rule "Azimotricine Rule 2"
     dialect "java"
     when
-        p: Patient(getRespiratorydisease().equals("EPOC"), symptoms_controlled==false, !treatment_list.isEmpty(), smoker==false, string_treatments.contains("LABA"), string_treatments.contains("LAMA"), string_treatments.contains("IC"))
+        p: Patient(getRespiratorydisease().equals("EPOC"), symptoms_controlled==false, !treatment_list.isEmpty(), smoker==false, string_treatments.contains("LABA"), string_treatments.contains("LAMA"), string_treatments.contains("IC"), !string_comorbidities.contains("cardiovascular diseases"), !string_comorbidities.contains("pulmonar tuberculosis"),  !string_comorbidities.contains("viral infection"), !string_comorbidities.contains("vision disorders"))
         e: EPOC (exacerbations== true, EOS>100)
     then
         p.setEpoc(e);
@@ -384,13 +383,12 @@ rule "Azimotricine Rule 2"
         treatment.setDrug("Azimotricine");
         treatment.setDose("250 mg/day");
         p.addTreatment(treatment);
-        System.out.println("Roflumilast is the best treatment for the patient");
 end
 
 rule "Roflumilast Rule 2"
     dialect "java"
     when
-        p: Patient(getRespiratorydisease().equals("EPOC"), symptoms_controlled==false, !treatment_list.isEmpty(), smoker==true, string_treatments.contains("LABA"), string_treatments.contains("LAMA"), string_treatments.contains("IC"))
+        p: Patient(getRespiratorydisease().equals("EPOC"), symptoms_controlled==false, !treatment_list.isEmpty(), smoker==true, string_treatments.contains("LABA"), string_treatments.contains("LAMA"), string_treatments.contains("IC"), !string_comorbidities.contains("cardiovascular diseases"), !string_comorbidities.contains("pulmonar tuberculosis"),  !string_comorbidities.contains("viral infection"))
         e: EPOC (exacerbations== true, EOS>100, FEV<50)
     then
         p.setEpoc(e);
@@ -414,7 +412,7 @@ end
 rule "LABA+LAMA+IC Rule 3"
     dialect "java"
     when
-        p: Patient(getRespiratorydisease().equals("EPOC"), symptoms_controlled==false, !treatment_list.isEmpty(), string_treatments.contains("LABA"), string_treatments.contains("IC"))
+        p: Patient(getRespiratorydisease().equals("EPOC"), symptoms_controlled==false, !treatment_list.isEmpty(), string_treatments.contains("LABA"), string_treatments.contains("IC"), !string_comorbidities.contains("cardiovascular diseases"), !string_comorbidities.contains("pulmonar tuberculosis"),  !string_comorbidities.contains("viral infection"))
         e: EPOC (exacerbations== true)
     then
         p.setEpoc(e);
@@ -434,9 +432,37 @@ rule "LABA+LAMA+IC Rule 3"
 end
 
 
+rule "Cardiovascular disease"
+    dialect "java"
+    when
+        p: Patient(string_comorbidities.contains("cardiovascular diseases"), !string_comorbidities.contains("vision disorders"))
+    then 
+        Treatment treatment = new Treatment();
+        treatment.setDrug("Azimotricine");
+        treatment.setDose("250 mg/day");
+        p.addTreatment(treatment);
+end
 
+rule "Vision disorders"
+    dialect "java"
+    when
+        p: Patient(string_comorbidities.contains("cardiovascular diseases"), string_comorbidities.contains("vision disorders"))
+    then 
+        Treatment treatment = new Treatment();
+        treatment.setTherapy("Chronic home oxygen therapy");
+        p.addTreatment(treatment);    
+end
 
-
+rule "Tuberculosis and Infection"
+    dialect "java"
+    when
+        p: Patient(string_comorbidities.contains("pulmonary tuberculosis"), string_comorbidities.contains("viral infection"))
+    then 
+        Treatment treatment = new Treatment();
+        treatment.setDrug("Muscarinic receptor antagonists");
+        treatment.setDose("18 mcg/day");
+        p.addTreatment(treatment);  
+end
 rule "No medication 1"
     dialect "java"
     when
