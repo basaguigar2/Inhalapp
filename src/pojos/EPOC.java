@@ -20,6 +20,10 @@ public class EPOC {
     public EPOC() {
     }
 
+    public EPOC(String condition_string) {
+        this.condition_string = condition_string;
+    }
+
     public EPOC(String condition, int mMRC, int EOS, int CAT, int exa, boolean exacerb, boolean eosinophilia, int FEV) {
         this.condition_string = condition;
         this.mMRC = mMRC;
@@ -83,8 +87,11 @@ public class EPOC {
         } else if(condition_string.equalsIgnoreCase("Severe COPD")){
             setCondition(this.condition.SEVERE_COPD);
             this.condition_string = "Severe COPD";
+        } else if(condition_string.equalsIgnoreCase("NONE")){
+            setCondition(this.condition.NONE);
+            this.condition_string = "NONE";
         } else {
-            throw new NotBoundException("Not valid condition. Introduce a valid condition: Severe chronic hypoxemia, Bulla, Severe heterogeneous emphysema in upper lobes, Advanced emphysema, Severe COPD");
+            throw new NotBoundException("Not valid condition. Introduce a valid condition: Severe chronic hypoxemia, Bulla, Severe heterogeneous emphysema in upper lobes, Advanced emphysema, Severe COPD, or NONE");
         }
     }
 

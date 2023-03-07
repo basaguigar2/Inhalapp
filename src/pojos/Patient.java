@@ -204,24 +204,27 @@ public class Patient {
         return treatment_list;
     }
 
-    public void setTreatment_List(ArrayList<Treatment> treatment_list) {
+    public void setTreatment_List(List<Treatment> treatment_list) {
         this.treatment_list = treatment_list;
+        this.setString_treatments(treatment_list);
     }
     
     public void addTreatment(Treatment treatment){
-        this.treatment_list.add(treatment);
+        if(this.treatment_list.contains(treatment)==false && this.string_treatments.contains(treatment.getDrug())==false){
+            this.treatment_list.add(treatment);
+            this.string_treatments.add(treatment.getDrug());
+        }
     }
 
     public List<String> getString_treatments() {
         return string_treatments;
     }
 
-    public void setString_treatments(ArrayList<String> string_treatments) {
+    public void setString_treatments(List<Treatment> string_treatments) {
         for (int i = 0; i < this.treatment_list.size(); i++) {
                 String t = this.treatment_list.get(i).getDrug();
-                string_treatments.add(t);
+                this.string_treatments.add(t);
         }
-        this.string_treatments = string_treatments;
     }
 
     public Integer getTreatment_stage() {
@@ -252,20 +255,26 @@ public class Patient {
         return comorbidity;
     }
 
-    public void setComorbidity(ArrayList<Comorbidity> comorbidity) {
+    public void setComorbidity(List<Comorbidity> comorbidity) {
         this.comorbidity = comorbidity;
+        this.setString_comorbidities(comorbidity);
     }
-
+    
+    public void addComorbidity(Comorbidity comorbidity){
+        if(this.comorbidity.contains(comorbidity)==false && this.string_comorbidities.contains(comorbidity.getComorbidityName())==false){
+            this.comorbidity.add(comorbidity);
+            this.string_comorbidities.add(comorbidity.getComorbidityName());
+        }
+    }
     public List<String> getString_comorbidities() {
         return string_comorbidities;
     }
 
-    public void setString_comorbidities(ArrayList<String> string_comorbidities) {
+    public void setString_comorbidities(List<Comorbidity> string_comorbidities) {
         for (int i = 0; i < this.comorbidity.size(); i++) {
                 String c = this.comorbidity.get(i).getComorbidityName();
-                string_comorbidities.add(c);
+                this.string_comorbidities.add(c);
         }
-        this.string_comorbidities = string_comorbidities;
     }
 
     @Override
