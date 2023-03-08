@@ -36,28 +36,33 @@ public class Application {
         // KieRuntimeLogger logger = ks.getLoggers().newThreadedFileLogger( ksession, "./helloworld", 1000 );
         // The application can insert facts into the session
      
-        Patient p = new Patient(1234, "Gisela", "Aragon", 70, "Female", FALSE, TRUE, FALSE, TRUE, "EPOC", 0);
-        EPOC e = new EPOC("NONE");
+        Patient p = new Patient(1234, "Gisela", "Aragon", 4, "Female", 
+                FALSE, FALSE, FALSE, FALSE, "Asthma", 6);
+        Asthma a = new Asthma();
         Treatment t = new Treatment("LABA", "1-2 inhalations/day");
         p.addTreatment(t);
-        //Treatment t1 = new Treatment("LAMA", "1-2 inhalations/day");
-        //p.addTreatment(t1);
-        Treatment t2 = new Treatment("IC", "1-2 inhalations/day");
-        p.addTreatment(t2);
-        e.setCAT(25);
-        e.setmMRC(2);
-        e.setEosinophilia(false);
-        e.setExacerbations(true);
-        e.setEOS(200);
-        e.setExa(1);
-        e.setFEV(60);
-        p.setEpoc(e);
+        
+        p.setAsthma(a);
+        a.setDayTimeSymptoms_w(9);
+        a.setrescueMedication_w(9);
+        a.setnocturnalSymptoms_w(7);
+        a.setlimitations(3);
+        a.setpulmonar_function(50);
+        a.setexarcebations_y(3);
+        
+        a.setPS(5);
+        a.setPEF(70);
+        a.setSAT_O2(93);
+        
+        a.setStage_string("NONE");
+        p.setAsthma(a);
+        
         p.setInfluenza_vaccine(true);
         p.setPneumonia_vaccine(true);
         Comorbidity c = new Comorbidity("viral infection");
-        p.addComorbidity(c);
-        Comorbidity c1 = new Comorbidity("pulmonary tuberculosis");
-        p.addComorbidity(c1);
+        //p.addComorbidity(c);
+        Comorbidity c1 = new Comorbidity("cardiovascular disease");
+        //p.addComorbidity(c1);
         p.setSymptoms_controlled(false);
         
         // Inserta el objeto de paciente en la sesión de drools
@@ -68,18 +73,20 @@ public class Application {
         ksession.fireAllRules();
 
         System.out.println(p.getRespiratorydisease());
-        System.out.println(p.getEpoc().getCondition_string());
         System.out.println(p.treatment_list.isEmpty());
         System.out.println(p.string_treatments);
         System.out.println(p.string_comorbidities);
         System.out.println(p.hospitalization);
-        System.out.println(p.string_comorbidities.contains("cardiovascular diseases"));
-        System.out.println(p.getEpoc().getCAT());
-        System.out.println(p.getEpoc().getmMRC());
-        System.out.println(p.getEpoc().EOS);
-        System.out.println(p.getEpoc().exa);
-        System.out.println(p.getEpoc().FEV);
-        System.out.println(p.getEpoc().exacerbations);
+        System.out.println(p.treat_stage);
+        System.out.println(p.getAsthma().dayTimeSymptoms_w);
+        System.out.println(p.getAsthma().rescueMedication_w);
+        System.out.println(p.getAsthma().nocturnalSymptoms_w);
+        System.out.println(p.getAsthma().limitations);
+        System.out.println(p.getAsthma().pulmonar_function);
+        System.out.println(p.getAsthma().exarcebations_y);
+        System.out.println(p.getAsthma().PS);
+        System.out.println(p.getAsthma().PEF);
+        System.out.println(p.getAsthma().SAT_O2);
 
         
 

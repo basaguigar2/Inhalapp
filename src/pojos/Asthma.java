@@ -92,7 +92,7 @@ public class Asthma {
         return PS;
     }
 
-    public void PS(int PS) {
+    public void setPS(int PS) {
         this.PS = PS;
     }
     
