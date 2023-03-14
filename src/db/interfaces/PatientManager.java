@@ -20,8 +20,9 @@ public interface PatientManager {
     public void introduceEPOC(int medCardNumber, int EPOCId);
     public void introduceAsthma(int medCardNumber, int asthmaId);
     public Patient selectPatient(int medCardNumber);
-    public ArrayList<Patient> selectAllPatients();
+    public ArrayList<Patient> selectAllPatients(int userId);
     public boolean editPatient(Integer medCardNum, String name, String surname, Integer age, String gender, boolean pregnancy, boolean smoker, boolean symptoms_controlled, boolean hospitalization, String respiratorydisease, Integer treatment_stage);
     public void createLinkUserPatient(int userId, int medCardNumber);
     public void createLinkDoctorPatient(int medCardNumber, int doctorId);
+    public ArrayList patient_names(int doc_id);
 }

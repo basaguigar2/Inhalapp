@@ -4,13 +4,10 @@
  */
 package db.sqlite;
 
-import db.interfaces.AllergyManager;
 import db.interfaces.AsthmaManager;
 import db.interfaces.ComorbidityManager;
 import db.interfaces.DBManager;
-import db.interfaces.DoctorManager;
 import db.interfaces.PatientManager;
-import db.interfaces.RoleManager;
 import db.interfaces.TreatmentManager;
 import db.interfaces.UserManager;
 import java.sql.Connection;
@@ -27,14 +24,11 @@ public class SQLiteManager implements DBManager{
 
     private Connection c;
     private PatientManager patient;
-    private DoctorManager doctor;
     private TreatmentManager treatment;
     private EpocManager epoc;
     private AsthmaManager asthma;
     private ComorbidityManager comorbidity;
-    private AllergyManager allergy;
     private UserManager user;
-    private RoleManager role;
     
     public SQLiteManager(){
         super();
@@ -47,14 +41,11 @@ public class SQLiteManager implements DBManager{
             c = DriverManager.getConnection("jdbc:sqlite:./db/InhalApp.db"); 
             c.createStatement().execute("PRAGMA foreign_keys=ON"); 
             patient = new SQLitePatientManager(c);
-            doctor = new SQLiteDoctorManager(c);
             treatment = new SQLiteTreatmentManager(c);
             epoc = new SQLiteEpocManager(c);
             asthma = new SQLiteAsthmaManager(c);
             comorbidity = new SQLiteComorbidityManager(c);
-            allergy = new SQLiteAllergyManager(c);
             user = new SQLiteUserManager(c);
-            role = new SQLiteRoleManager(c);
         } catch (ClassNotFoundException exc) {
             exc.printStackTrace();
         } catch (SQLException ex) {
@@ -77,11 +68,6 @@ public class SQLiteManager implements DBManager{
     }
 
     @Override
-    public DoctorManager getDoctorManager() {
-        return doctor;
-    }
-
-    @Override
     public TreatmentManager getTreatmentManager() {
         return treatment;
     }
@@ -101,44 +87,38 @@ public class SQLiteManager implements DBManager{
         return asthma;
     }
 
-    @Override
-    public AllergyManager getAllergyManager() {
-        return allergy;
+     @Override
+    public UserManager getUserMAnager() {
+        return user;
     }
-
+    
     @Override
     public Connection getConnection() {
         return c;
     }
-
+    
     @Override
     public boolean createTables() {
         try{
-            Statement stmt1 = c.createStatement();
-            String sql1 = "CREATE TABLE role " 
-                + "(roleid INTEGER PRIMARY KEY AUTOINCREMENT, " 
-                + "type TEXT NOT NULL)"; 
-            stmt1.execute(sql1);
-            stmt1.close();
-            
             Statement stmt2 = c.createStatement();
             String sql2 = "CREATE TABLE users " 
                 + "(userid INTEGER PRIMARY KEY AUTOINCREMENT, " 
                 + "userName TEXT NOT NULL, " 
                 + "userPassword TEXT NOT NULL , "
-                + "email TEXT NOT NULL , "
-                + "userRoleid FOREING KEY REFERENCES role(roleid) ON UPDATE CASCADE ON DELETE SET NULL) ";
+                + "name TEXT NOT NULL ";
             stmt2.executeUpdate(sql2);
             stmt2.close();
             
             Statement stmt3 = c.createStatement();
             String sql3 = "CREATE TABLE patient " 
-                    + "(medical_card_number INTEGER PRIMARY KEY, " 
+                    + "(patientid INTEGER PRIMARY KEY AUTOINCREMENT, "
+                    + "medical_card_number INTEGER PRIMARY KEY, " 
                     + "name TEXT NOT NULL, " 
-                    + "surname TEXT NOT NULL, "
-                    + "age INTEGER, "
+                    + "age DATE, "
                     + "gender TEXT NOT NULL, "
                     + "pregnancy BOOLEAN, "
+                    + "influenzaV BOOLEAN,"
+                    + "pneumoniaV BOOLEAN"
                     + "smoker BOOLEAN, "
                     + "symptoms_controlled BOOLEAN, "
                     + "hospitalization BOOLEAN, "
@@ -147,15 +127,6 @@ public class SQLiteManager implements DBManager{
                     + "userId FOREING KEY REFERENCES users(userid) ON UPDATE RESTRICT ON DELETE CASCADE)";
             stmt3.executeUpdate(sql3);
             stmt3.close();
-            
-            Statement stmt4 = c.createStatement();
-            String sql4 = "CREATE TABLE doctor " 
-                    + "(doctorId INTEGER PRIMARY KEY AUTOINCREMENT, " 
-                    + "dname TEXT NOT NULL, " 
-                    + "dsurname TEXT NOT NULL, "
-                    + "userId FOREING KEY REFERENCES users(userid) ON UPDATE CASCADE ON DELETE SET NULL)";
-            stmt4.executeUpdate(sql4);
-            stmt4.close();
             
             Statement stmt5 = c.createStatement();
             String sql5 = "CREATE TABLE treatment " 
@@ -206,23 +177,6 @@ public class SQLiteManager implements DBManager{
                     + "id_patient FOREING KEY REFERENCES patient(medical_card_number) ON UPDATE CASCADE ON DELETE SET NULL)";
             stmt8.executeUpdate(sql8);
             stmt8.close();
-            
-            Statement stmt9 = c.createStatement();
-            String sql9 = "CREATE TABLE allergy " 
-                    + "(aid INTEGER PRIMARY KEY AUTOINCREMENT, " 
-                    + "aname TEXT NOT NULL, "
-                    + "type TEXT NOT NULL, "
-                    + "id_patient FOREING KEY REFERENCES patient(medical_card_number) ON UPDATE CASCADE ON DELETE SET NULL)";
-            stmt9.executeUpdate(sql9);
-            stmt9.close();
-            
-            Statement stmt10 = c.createStatement();
-            String sql10 = "CREATE TABLE doctor_patient "
-                               + "(patient_id REFERENCES patient(medical_card_number) ON UPDATE RESTRICT ON DELETE CASCADE,"
-                               + " doctor_id REFERENCES doctor(doctorId) ON UPDATE RESTRICT ON DELETE CASCADE, "
-                               + " PRIMARY KEY (patient_id,doctor_id))";
-            stmt10.executeUpdate(sql10);
-            stmt10.close();
             
             Statement stmt11 = c.createStatement();
             String sql11 = "CREATE TABLE treatment_patient "
@@ -276,5 +230,7 @@ public class SQLiteManager implements DBManager{
             }
         }
     }
+
+   
     
 }

@@ -15,12 +15,11 @@ public interface DBManager {
     public void connect();
     public void disconnect();
     public PatientManager getPatientManager(); 
-    public DoctorManager getDoctorManager();
     public TreatmentManager getTreatmentManager();
     public ComorbidityManager getComorbidityManager();
     public EpocManager getEPOCManager();
     public AsthmaManager getAsthmaManager();
-    public AllergyManager getAllergyManager();
     public Connection getConnection();
+    public UserManager getUserMAnager();
     public boolean createTables();
 }

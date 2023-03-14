@@ -14,8 +14,8 @@ public class EPOC {
     public Integer EPOC_id;
     public PulmonaryCondition condition;
     public String condition_string;
-    public boolean exacerbations, eosinophilia; 
-    public int mMRC,EOS,FEV,CAT, exa;
+    public boolean exacerbations, disnea,eosinophilia; 
+    public int mMRC,EOS,FEV,CAT,exa;
 
     public EPOC() {
     }
@@ -150,6 +150,16 @@ public class EPOC {
     public void setExa(int exa) {
         this.exa = exa;
     }
+
+    public boolean isDisnea() {
+        return disnea;
+    }
+
+    public void setDisnea(boolean disnea) {
+        this.disnea = disnea;
+    }
+    
+    
 
     @Override
     public String toString() {

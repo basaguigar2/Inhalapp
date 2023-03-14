@@ -5,6 +5,7 @@
 package pojos;
 
 import java.rmi.NotBoundException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,19 +14,18 @@ import java.util.List;
  * @author gisel
  */
 public class Patient {
+   public Integer id;
    public Integer medical_card_number;
    public String name;
-   public String surname;
-   public Integer age;
+   public LocalDate age;
    public String gender;
    public boolean pregnancy;
    public boolean influenza_vaccine, pneumonia_vaccine;
-   public Integer treat_stage = 0;
+   public Integer treat_stage;
    public boolean smoker;
    public boolean symptoms_controlled;
    public boolean hospitalization;
    public String respiratorydisease;
-   
    public Integer userId;
    
    public List<Treatment> treatment_list = new ArrayList<>();
@@ -39,35 +39,81 @@ public class Patient {
     public Patient() {
     }
 
-    public Patient(Integer medical_card_number, String name, String surname, Integer age, String gender, boolean pregnancy, boolean smoker, boolean symptoms_controlled, boolean hospitalization, String respiratorydisease, Integer treatment_stage, Integer userId) {
+    public Patient(Integer id, Integer medical_card_number, String name, LocalDate age, String gender, boolean pregnancy, boolean influenza_vaccine, boolean pneumonia_vaccine, boolean smoker, boolean symptoms_controlled, boolean hospitalization, String respiratorydisease, Integer userId, EPOC epoc, Asthma asthma) {
+        this.id = id;
         this.medical_card_number = medical_card_number;
         this.name = name;
-        this.surname = surname;
         this.age = age;
         this.gender = gender;
         this.pregnancy = pregnancy;
+        this.influenza_vaccine = influenza_vaccine;
+        this.pneumonia_vaccine = pneumonia_vaccine;
         this.smoker = smoker;
         this.symptoms_controlled = symptoms_controlled;
         this.hospitalization = hospitalization;
         this.respiratorydisease = respiratorydisease;
-        this.treat_stage = treatment_stage;
         this.userId = userId;
+        this.epoc = epoc;
+        this.asthma = asthma;
     }
 
-    public Patient(Integer medical_card_number, String name, String surname, Integer age, String gender, boolean pregnancy, boolean smoker, boolean symptoms_controlled, boolean hospitalization, String respiratorydisease, Integer treatment_stage) {
+   
+
+    public Patient(Integer medical_card_number, String name, LocalDate age, String gender, boolean pregnancy, boolean influenza_vaccine, boolean pneumonia_vaccine, boolean smoker, boolean symptoms_controlled, boolean hospitalization, String respiratorydisease, EPOC epoc, Asthma asthma) {
         this.medical_card_number = medical_card_number;
         this.name = name;
-        this.surname = surname;
         this.age = age;
         this.gender = gender;
         this.pregnancy = pregnancy;
+        this.influenza_vaccine = influenza_vaccine;
+        this.pneumonia_vaccine = pneumonia_vaccine;
+        this.smoker = smoker;
         this.symptoms_controlled = symptoms_controlled;
         this.hospitalization = hospitalization;
         this.respiratorydisease = respiratorydisease;
-        this.treat_stage = treatment_stage;
-        this.smoker = smoker;
+        this.epoc = epoc;
+        this.asthma = asthma;
     }
 
+    public Patient(Integer id, Integer medical_card_number, String name, LocalDate age, String gender, boolean pregnancy, boolean smoker, boolean symptoms_controlled, boolean hospitalization, String respiratorydisease) {
+        this.id = id;
+        this.medical_card_number = medical_card_number;
+        this.name = name;
+        this.age = age;
+        this.gender = gender;
+        this.pregnancy = pregnancy;
+        this.smoker = smoker;
+        this.symptoms_controlled = symptoms_controlled;
+        this.hospitalization = hospitalization;
+        this.respiratorydisease = respiratorydisease;
+    }
+
+    public Patient(Integer id, Integer medical_card_number, String name, LocalDate age, String gender, boolean pregnancy, boolean influenza_vaccine, boolean pneumonia_vaccine, Integer treat_stage, boolean smoker, boolean symptoms_controlled, boolean hospitalization, String respiratorydisease) {
+        this.id = id;
+        this.medical_card_number = medical_card_number;
+        this.name = name;
+        this.age = age;
+        this.gender = gender;
+        this.pregnancy = pregnancy;
+        this.influenza_vaccine = influenza_vaccine;
+        this.pneumonia_vaccine = pneumonia_vaccine;
+        this.treat_stage = treat_stage;
+        this.smoker = smoker;
+        this.symptoms_controlled = symptoms_controlled;
+        this.hospitalization = hospitalization;
+        this.respiratorydisease = respiratorydisease;
+    }
+
+    
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+    
     public Integer getMedical_card_number() {
         return medical_card_number;
     }
@@ -84,19 +130,11 @@ public class Patient {
         this.name = name;
     }
 
-    public String getPatientSurname() {
-        return surname;
-    }
-
-    public void setPatientSurname(String surname) {
-        this.surname = surname;
-    }
-
-    public Integer getPatientAge() {
+    public LocalDate getPatientAge() {
         return age;
     }
 
-    public void setPatientAge(Integer age) {
+    public void setPatientAge(LocalDate age) {
         this.age = age;
     }
 
@@ -279,7 +317,7 @@ public class Patient {
 
     @Override
     public String toString() {
-        return "Patient{" + "medical_card_number=" + medical_card_number + ", name=" + name + ", surname=" + surname + '}';
+        return "Patient{" + "medical_card_number=" + medical_card_number + ", name=" + name + '}';
     }
 
 }
