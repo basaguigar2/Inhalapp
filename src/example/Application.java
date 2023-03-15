@@ -20,6 +20,7 @@ public class Application {
         KieServices ks = KieServices.Factory.get();
         KieContainer kc = ks.getKieClasspathContainer();
         execute(ks, kc);
+        
     }
 
     public static void execute(KieServices ks, KieContainer kc) throws NotBoundException {
@@ -35,7 +36,7 @@ public class Application {
         // uncomment the next line
         // KieRuntimeLogger logger = ks.getLoggers().newThreadedFileLogger( ksession, "./helloworld", 1000 );
         // The application can insert facts into the session
-     
+     /*
         Patient p = new Patient(1234, "Gisela", "Aragon", 4, "Female", 
                 FALSE, FALSE, FALSE, FALSE, "Asthma", 6);
         Asthma a = new Asthma();
@@ -92,5 +93,6 @@ public class Application {
 
         // and then dispose the session
         ksession.dispose();
+*/
     }
 }

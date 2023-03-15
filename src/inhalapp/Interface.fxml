@@ -1,0 +1,853 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ScrollBar?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.Blend?>
+<?import javafx.scene.effect.Bloom?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane id="AnchorPane" prefHeight="530.0" prefWidth="694.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafx.InterfaceController">
+   <children>
+      <ImageView fitHeight="547.0" fitWidth="694.0" layoutY="-4.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/pngtree-minimalist-gradient-medical-background-picture-image_966366%20(1).jpg" />
+         </image>
+      </ImageView>
+      <TabPane fx:id="TabPane" prefHeight="530.0" prefWidth="694.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab fx:id="LogIn" text="LogIn">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" onMouseEntered="#setBoldOnMouseEnter" onMouseExited="#setNormalOnMouseExit" prefHeight="445.0" prefWidth="685.0">
+                     <children>
+                        <Label layoutX="31.0" layoutY="128.0" prefHeight="48.0" prefWidth="164.0" text="User:">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="user_log_in" layoutX="31.0" layoutY="193.0" prefHeight="35.0" prefWidth="266.0" promptText="Enter your username..." />
+                        <VBox layoutX="31.0" layoutY="241.0" prefHeight="37.0" prefWidth="134.0">
+                           <children>
+                              <Label prefHeight="70.0" prefWidth="291.0" text="Password:">
+                                 <font>
+                                    <Font name="System Bold" size="18.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </VBox>
+                        <Label fx:id="register_no_log_in" layoutX="139.0" layoutY="382.0" onMouseClicked="#go_to_register" onMouseEntered="#setBoldOnMouseEnter" onMouseExited="#setNormalOnMouseExit" prefHeight="26.0" prefWidth="99.0" text="Register?" textFill="#570df7" underline="true">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <ImageView fitHeight="259.0" fitWidth="252.0" layoutX="366.0" layoutY="125.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/2287797.png" />
+                           </image>
+                        </ImageView>
+                        <Text fill="#0259a4" layoutX="24.0" layoutY="72.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome to InhalApp">
+                           <font>
+                              <Font name="Arial Black" size="18.0" />
+                           </font>
+                        </Text>
+                        <Text fill="#0259a4" layoutX="24.0" layoutY="109.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Please introduce your username and password">
+                           <font>
+                              <Font name="Arial Black" size="18.0" />
+                           </font>
+                        </Text>
+                        <Button layoutX="73.0" layoutY="350.0" mnemonicParsing="false" onAction="#go_to_crisis" prefHeight="18.0" prefWidth="182.0" text="Submit" textFill="#03407e">
+                           <effect>
+                              <Blend mode="BLUE">
+                                 <topInput>
+                                    <Bloom threshold="0.0" />
+                                 </topInput>
+                              </Blend>
+                           </effect>
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                        </Button>
+                        <PasswordField fx:id="password_log_in" layoutX="32.0" layoutY="293.0" prefHeight="35.0" prefWidth="267.0" promptText="Enter your password..." />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+            <Tab fx:id="Register" text="Register">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="445.0" prefWidth="685.0">
+                           <children>
+                              <VBox layoutX="354.0" layoutY="-1.0" prefHeight="475.0" prefWidth="343.0">
+                                 <children>
+                                    <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="441.0" prefWidth="374.0" text="Image">
+                                       <font>
+                                          <Font size="48.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </VBox>
+                              <VBox layoutX="12.0" layoutY="67.0" prefHeight="106.0" prefWidth="327.0">
+                                 <children>
+                                    <Label prefHeight="54.0" prefWidth="315.0" text="User">
+                                       <font>
+                                          <Font name="System Bold" size="25.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="user_register" prefHeight="35.0" prefWidth="318.0" promptText="Enter your username..." />
+                                 </children>
+                              </VBox>
+                              <VBox layoutX="12.0" layoutY="163.0" prefHeight="105.0" prefWidth="328.0">
+                                 <children>
+                                    <Label prefHeight="56.0" prefWidth="291.0" text="Password">
+                                       <font>
+                                          <Font name="System Bold" size="25.0" />
+                                       </font>
+                                    </Label>
+                                    <PasswordField fx:id="password_register" prefHeight="35.0" prefWidth="290.0" promptText="Enter your password..." />
+                                 </children>
+                              </VBox>
+                              <Button layoutX="19.0" layoutY="396.0" mnemonicParsing="false" onAction="#register_button" prefHeight="35.0" prefWidth="163.0" text="Register">
+                                 <font>
+                                    <Font size="15.0" />
+                                 </font>
+                                 <effect>
+                                    <Blend />
+                                 </effect>
+                              </Button>
+                              <Label layoutX="12.0" layoutY="16.0" prefHeight="46.0" prefWidth="234.0" text="Register">
+                                 <font>
+                                    <Font name="System Bold" size="35.0" />
+                                 </font>
+                              </Label>
+                              <VBox layoutX="12.0" layoutY="269.0" prefHeight="105.0" prefWidth="328.0">
+                                 <children>
+                                    <Label prefHeight="56.0" prefWidth="291.0" text="Confirm Password">
+                                       <font>
+                                          <Font name="System Bold" size="25.0" />
+                                       </font>
+                                    </Label>
+                                    <PasswordField fx:id="confirm_register" prefHeight="35.0" prefWidth="290.0" promptText="Confirm your password..." />
+                                 </children>
+                              </VBox>
+                           </children>
+                        </AnchorPane>
+                     </children></AnchorPane>
+              </content>
+            </Tab>
+          <Tab fx:id="ListPatient" text="ListPatient">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="410.0" prefWidth="630.0">
+                     <children>
+                        <Pane layoutY="51.0" prefHeight="420.0" prefWidth="203.0">
+                           <children>
+                              <ListView fx:id="patient_names" layoutX="2.0" layoutY="-1.0" prefHeight="367.0" prefWidth="200.0" />
+                              <ScrollBar layoutX="178.0" orientation="VERTICAL" prefHeight="364.0" prefWidth="23.0" />
+                              <Button fx:id="go_to_addPatient" layoutX="102.0" layoutY="375.0" mnemonicParsing="false" onAction="#go_to_addPatient" text="Add Patient" />
+                           </children>
+                        </Pane>
+                        <Pane layoutX="209.0" layoutY="3.0" prefHeight="466.0" prefWidth="486.0">
+                           <children>
+                              <VBox layoutX="2.0" layoutY="28.0" prefHeight="139.0" prefWidth="480.0">
+                                 <children>
+                                    <Label prefHeight="36.0" prefWidth="490.0" text="Medical card number ">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="medical_card_tab3" prefHeight="26.0" prefWidth="467.0" />
+                                    <Label prefHeight="33.0" prefWidth="494.0" text="Name and surname">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="name_tab_3" />
+                                 </children>
+                              </VBox>
+                              <HBox layoutY="155.09999990463257" prefHeight="117.0" prefWidth="494.0">
+                                 <children>
+                                    <VBox prefHeight="118.0" prefWidth="157.0">
+                                       <children>
+                                          <Label prefHeight="53.0" prefWidth="122.0" text="Age">
+                                             <font>
+                                                <Font size="20.0" />
+                                             </font>
+                                          </Label>
+                                          <TextField fx:id="age_tab3" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="136.0" />
+                                       </children>
+                                    </VBox>
+                                    <VBox prefHeight="118.0" prefWidth="159.0">
+                                       <children>
+                                          <Label prefHeight="54.0" prefWidth="159.0" text="Sex">
+                                             <font>
+                                                <Font size="20.0" />
+                                             </font>
+                                          </Label>
+                                          <TextField fx:id="sex_tab3" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="136.0" />
+                                       </children>
+                                    </VBox>
+                                    <VBox prefHeight="118.0" prefWidth="170.0">
+                                       <children>
+                                          <HBox prefHeight="70.0" prefWidth="171.0">
+                                             <children>
+                                                <Label prefHeight="78.0" prefWidth="86.0" text="Pregnant">
+                                                   <font>
+                                                      <Font size="20.0" />
+                                                   </font>
+                                                </Label>
+                                                <CheckBox fx:id="pregnancy_tab3" mnemonicParsing="false" prefHeight="70.0" prefWidth="38.0" />
+                                             </children>
+                                          </HBox>
+                                          <HBox prefHeight="71.0" prefWidth="171.0">
+                                             <children>
+                                                <Label prefHeight="74.0" prefWidth="73.0" text="Smoker">
+                                                   <font>
+                                                      <Font size="20.0" />
+                                                   </font>
+                                                </Label>
+                                                <CheckBox fx:id="smoker_tab3" mnemonicParsing="false" prefHeight="70.0" prefWidth="27.0" />
+                                             </children>
+                                          </HBox>
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </HBox>
+                              <VBox layoutY="250.09999990463257" prefHeight="72.0" prefWidth="494.0">
+                                 <children>
+                                    <Label prefHeight="54.0" prefWidth="491.0" text="Respiratory disease">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <HBox prefHeight="39.0" prefWidth="494.0">
+                                       <children>
+                                          <RadioButton fx:id="copd_tab3" mnemonicParsing="false" prefHeight="30.0" prefWidth="367.0" text="COPD" />
+                                          <RadioButton fx:id="asthma_tab3" mnemonicParsing="false" prefHeight="30.0" prefWidth="385.0" text="Asthma" />
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </VBox>
+                              <VBox layoutY="329.0" prefHeight="137.0" prefWidth="479.0">
+                                 <children>
+                                    <Label prefHeight="45.0" prefWidth="493.0" text="Previous treatments">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <ListView fx:id="treatment_tab3" prefHeight="94.0" prefWidth="451.0" />
+                                 </children>
+                              </VBox>
+                              <Button layoutX="399.0" layoutY="-2.0" mnemonicParsing="false" onAction="#update_info" prefHeight="32.0" prefWidth="80.0" text="Update" />
+                              <Button layoutX="289.0" layoutY="-2.0" mnemonicParsing="false" onAction="#go_to_crisis" prefHeight="32.0" prefWidth="100.0" text="Asthma Crisis" textFill="RED">
+                                 <effect>
+                                    <Blend mode="RED">
+                                       <topInput>
+                                          <Bloom />
+                                       </topInput>
+                                    </Blend>
+                                 </effect>
+                              </Button>
+                           </children>
+                        </Pane>
+                        <Label layoutX="7.0" prefHeight="51.0" prefWidth="202.0" text="Patients">
+                           <font>
+                              <Font name="System Bold" size="36.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+            <Tab fx:id="AddPatient" text="AddPatient">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="388.0" prefWidth="630.0">
+                     <children>
+                        <Pane layoutX="12.0" prefHeight="466.0" prefWidth="682.0">
+                           <children>
+                              <VBox layoutX="2.0" prefHeight="156.0" prefWidth="659.0">
+                                 <children>
+                                    <Label prefHeight="36.0" prefWidth="490.0" text="Medical card number ">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="medical_card_tab4" prefHeight="20.0" prefWidth="659.0" />
+                                    <Label prefHeight="43.0" prefWidth="494.0" text="Name and surname">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="name_tab4" />
+                                 </children>
+                              </VBox>
+                              <HBox layoutY="155.0" prefHeight="117.0" prefWidth="688.0">
+                                 <children>
+                                    <VBox prefHeight="118.0" prefWidth="231.0">
+                                       <children>
+                                          <Label prefHeight="46.0" prefWidth="122.0" text="Age">
+                                             <font>
+                                                <Font size="20.0" />
+                                             </font>
+                                          </Label>
+                                          <DatePicker fx:id="age_picker" prefHeight="28.0" prefWidth="154.0" />
+                                       </children>
+                                    </VBox>
+                                    <VBox prefHeight="118.0" prefWidth="230.0">
+                                       <children>
+                                          <Label prefHeight="50.0" prefWidth="159.0" text="Sex">
+                                             <font>
+                                                <Font size="20.0" />
+                                             </font>
+                                          </Label>
+                                          <ComboBox fx:id="sex_comboBox" prefHeight="28.0" prefWidth="148.0" promptText="Select your sex">
+                                             <VBox.margin>
+                                                <Insets />
+                                             </VBox.margin>
+                                          </ComboBox>
+                                       </children>
+                                    </VBox>
+                                    <VBox prefHeight="139.0" prefWidth="171.0">
+                                       <children>
+                                          <HBox prefHeight="70.0" prefWidth="171.0">
+                                             <children>
+                                                <Label prefHeight="78.0" prefWidth="86.0" text="Pregnant">
+                                                   <font>
+                                                      <Font size="20.0" />
+                                                   </font>
+                                                </Label>
+                                                <CheckBox fx:id="pregnancy_tab4" mnemonicParsing="false" prefHeight="70.0" prefWidth="38.0" />
+                                             </children>
+                                          </HBox>
+                                          <HBox prefHeight="71.0" prefWidth="171.0">
+                                             <children>
+                                                <Label prefHeight="74.0" prefWidth="73.0" text="Smoker">
+                                                   <font>
+                                                      <Font size="20.0" />
+                                                   </font>
+                                                </Label>
+                                                <CheckBox fx:id="smoker_tab4" mnemonicParsing="false" prefHeight="70.0" prefWidth="27.0" />
+                                             </children>
+                                          </HBox>
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </HBox>
+                              <VBox layoutY="250.0" prefHeight="72.0" prefWidth="454.0">
+                                 <children>
+                                    <Label prefHeight="54.0" prefWidth="491.0" text="Respiratory disease">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <HBox prefHeight="39.0" prefWidth="494.0">
+                                       <children>
+                                          <RadioButton fx:id="copd_tab4" mnemonicParsing="false" prefHeight="30.0" prefWidth="367.0" text="COPD" />
+                                          <RadioButton fx:id="asthma_tab4" mnemonicParsing="false" prefHeight="29.0" prefWidth="381.0" text="Asthma" />
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </VBox>
+                              <VBox layoutY="329.0" prefHeight="108.0" prefWidth="506.0">
+                                 <children>
+                                    <HBox prefHeight="62.0" prefWidth="506.0">
+                                       <children>
+                                          <Label prefHeight="65.0" prefWidth="249.0" text="Previously Diagnosed">
+                                             <font>
+                                                <Font size="20.0" />
+                                             </font>
+                                          </Label>
+                                          <RadioButton fx:id="pD_true" mnemonicParsing="false" prefHeight="62.0" prefWidth="152.0" text="True" />
+                                          <RadioButton fx:id="pD_false" mnemonicParsing="false" prefHeight="64.0" prefWidth="150.0" selected="true" text="False" />
+                                       </children>
+                                    </HBox>
+                                    <TextField fx:id="last_treatment_tab4" promptText="Enter your last treatment..." visible="false" />
+                                 </children>
+                              </VBox>
+                              <Button fx:id="Add_Patient" layoutX="578.0" layoutY="401.0" mnemonicParsing="false" onAction="#add_Patient" prefHeight="36.0" prefWidth="90.0" text="Add" />
+                           </children>
+                        </Pane>
+                     </children></AnchorPane>
+              </content>
+            </Tab>
+            <Tab fx:id="Update_EPOC1" text="Update_EPOC1">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Pane prefHeight="501.0" prefWidth="694.0">
+                           <children>
+                              <VBox layoutX="14.0" layoutY="21.0" prefHeight="96.0" prefWidth="624.0">
+                                 <children>
+                                    <Label prefHeight="47.0" prefWidth="694.0" text="Any relevant pulmonar condition?">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <ComboBox fx:id="pulmonary_condition_comboBox" prefHeight="26.0" prefWidth="589.0" />
+                                 </children>
+                              </VBox>
+                              <VBox layoutX="294.0" layoutY="108.0" prefHeight="108.0" prefWidth="354.0">
+                                 <children>
+                                    <Label alignment="CENTER" prefHeight="73.0" prefWidth="394.0" text="Peripheric Eosinophilia &gt;300 cels/mL?">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <HBox maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="70.0" prefWidth="367.0">
+                                       <children>
+                                          <RadioButton fx:id="eosinophilia_yes" mnemonicParsing="false" prefHeight="67.0" prefWidth="220.0" text="Yes" />
+                                          <RadioButton fx:id="eosinophilia_no" mnemonicParsing="false" prefHeight="66.0" prefWidth="113.0" text="No" />
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </VBox>
+                              <HBox layoutY="231.0" prefHeight="25.0" prefWidth="685.0">
+                                 <children>
+                                    <Label alignment="CENTER" prefHeight="28.0" prefWidth="131.0" text="mMRC">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="mMRC_tab5" prefHeight="30.0" prefWidth="56.0" />
+                                    <Label alignment="CENTER" prefHeight="30.0" prefWidth="95.0" text="CAT">
+                                       <HBox.margin>
+                                          <Insets left="2.0" />
+                                       </HBox.margin>
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="CAT_tab5" prefHeight="35.0" prefWidth="64.0" />
+                                    <Label prefHeight="30.0" prefWidth="268.0" text="Exacerbations during the year">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                       <HBox.margin>
+                                          <Insets left="2.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                    <TextField fx:id="exacer_tab5" prefHeight="31.0" prefWidth="73.0">
+                                       <HBox.margin>
+                                          <Insets left="2.0" />
+                                       </HBox.margin>
+                                    </TextField>
+                                 </children>
+                              </HBox>
+                              <HBox layoutX="20.0" layoutY="157.0" prefHeight="61.0" prefWidth="250.0">
+                                 <children>
+                                    <Label prefHeight="100.0" prefWidth="176.0" text="Pneumonia Vaccine">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <CheckBox fx:id="pneumonia_tab5" mnemonicParsing="false" prefHeight="101.0" prefWidth="62.0" />
+                                 </children>
+                              </HBox>
+                              <HBox layoutX="22.0" layoutY="108.0" prefHeight="59.0" prefWidth="238.0">
+                                 <children>
+                                    <Label prefHeight="98.0" prefWidth="161.0" text="Influenza Vaccine">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <CheckBox fx:id="influenza_tab5" mnemonicParsing="false" prefHeight="102.0" prefWidth="14.0" />
+                                 </children>
+                              </HBox>
+                              <Button layoutX="270.0" layoutY="416.0" mnemonicParsing="false" onAction="#check_EPOC1" prefHeight="55.0" prefWidth="113.0" text="Check Treatment" />
+                              <VBox layoutX="22.0" layoutY="277.0" prefHeight="129.0" prefWidth="670.0">
+                                 <children>
+                                    <Label prefHeight="67.0" prefWidth="669.0" text="Any other remarkable disorder?">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <HBox prefHeight="73.0" prefWidth="670.0">
+                                       <children>
+                                          <CheckBox fx:id="cardiovascular_tab5" mnemonicParsing="false" prefHeight="70.0" prefWidth="156.0" text="Cardiovascular Disease" />
+                                          <CheckBox fx:id="tuberculosis_tab5" mnemonicParsing="false" prefHeight="68.0" prefWidth="150.0" text="Tuberculosis" />
+                                          <CheckBox fx:id="viral_tab5" mnemonicParsing="false" prefHeight="68.0" prefWidth="146.0" text="Viral infection" />
+                                          <CheckBox fx:id="vision_tab5" mnemonicParsing="false" prefHeight="76.0" prefWidth="158.0" text="Vision Disorder" />
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </Pane>
+                     </children></AnchorPane>
+              </content>
+            </Tab>
+            <Tab fx:id="Update_EPOC2" text="Update_EPOC2">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Pane prefHeight="504.0" prefWidth="694.0">
+                           <children>
+                              <HBox layoutX="32.0" layoutY="14.0" prefHeight="79.0" prefWidth="238.0">
+                                 <children>
+                                    <Label prefHeight="98.0" prefWidth="161.0" text="Influenza Vaccine">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <CheckBox mnemonicParsing="false" prefHeight="102.0" prefWidth="14.0" />
+                                 </children>
+                              </HBox>
+                              <HBox layoutX="277.0" layoutY="15.0" prefHeight="78.0" prefWidth="257.0">
+                                 <children>
+                                    <Label prefHeight="100.0" prefWidth="176.0" text="Pneumonia Vaccine">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <CheckBox mnemonicParsing="false" prefHeight="101.0" prefWidth="62.0" />
+                                 </children>
+                              </HBox>
+                              <VBox layoutX="32.0" layoutY="89.0" prefHeight="101.0" prefWidth="569.0">
+                                 <children>
+                                    <Label prefHeight="43.0" prefWidth="576.0" text="Select the cause of the deterioration:">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <HBox prefHeight="50.0" prefWidth="570.0">
+                                       <children>
+                                          <RadioButton fx:id="exacer_boolean" mnemonicParsing="false" prefHeight="63.0" prefWidth="233.0" text="Exacerbations" />
+                                          <RadioButton fx:id="disnea_boolean" mnemonicParsing="false" prefHeight="50.0" prefWidth="171.0" text="Disnea" />
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </VBox>
+                              <HBox layoutX="32.0" layoutY="190.0" prefHeight="28.0" prefWidth="614.0">
+                                 <children>
+                                    <Label alignment="CENTER" prefHeight="78.0" prefWidth="111.0" text="EOS">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="EOS_tab6" prefHeight="30.0" prefWidth="54.0" />
+                                    <Label alignment="CENTER" prefHeight="52.0" prefWidth="133.0" text="Exacerbations">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="Exacer_tab6" prefHeight="30.0" prefWidth="58.0" />
+                                    <Label alignment="CENTER" prefHeight="58.0" prefWidth="126.0" text="FEV">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="FEV_tab6" prefHeight="30.0" prefWidth="62.0" />
+                                 </children>
+                              </HBox>
+                              <VBox layoutX="14.0" layoutY="230.0" prefHeight="129.0" prefWidth="670.0">
+                                 <children>
+                                    <Label prefHeight="67.0" prefWidth="669.0" text="Any other remarkable disorder?">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <HBox prefHeight="73.0" prefWidth="670.0">
+                                       <children>
+                                          <CheckBox mnemonicParsing="false" prefHeight="70.0" prefWidth="156.0" text="Cardiovascular Disease" />
+                                          <CheckBox mnemonicParsing="false" prefHeight="68.0" prefWidth="150.0" text="Tuberculosis" />
+                                          <CheckBox mnemonicParsing="false" prefHeight="68.0" prefWidth="146.0" text="Viral infection" />
+                                          <CheckBox mnemonicParsing="false" prefHeight="76.0" prefWidth="158.0" text="Vision Disorder" />
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </VBox>
+                              <Button layoutX="273.0" layoutY="405.0" mnemonicParsing="false" onAction="#check_EPOC2" prefHeight="53.0" prefWidth="148.0" text="Check Treatment">
+                                 <font>
+                                    <Font size="15.0" />
+                                 </font>
+                              </Button>
+                           </children>
+                        </Pane>
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+            <Tab fx:id="CheckTreatment" text="CheckTreatment">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Pane prefHeight="473.0" prefWidth="694.0">
+                           <children>
+                              <VBox layoutX="8.0" prefHeight="414.0" prefWidth="342.0">
+                                 <children>
+                                    <Label prefHeight="101.0" prefWidth="380.0" text="Recommended Treatment">
+                                       <font>
+                                          <Font name="System Bold" size="24.0" />
+                                       </font>
+                                    </Label>
+                                    <TextArea prefHeight="290.0" prefWidth="342.0" promptText="Output of the rule" />
+                                 </children>
+                              </VBox>
+                              <VBox layoutX="353.0" prefHeight="475.0" prefWidth="344.0">
+                                 <children>
+                                    <Label prefHeight="470.0" prefWidth="308.0" text="Image">
+                                       <font>
+                                          <Font size="36.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </VBox>
+                              <Button alignment="CENTER" contentDisplay="RIGHT" layoutX="267.0" layoutY="417.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="80.0" text="Go back" />
+                           </children>
+                        </Pane>
+                     </children></AnchorPane>
+              </content>
+            </Tab>
+            <Tab fx:id="Update_Asthma1" text="Update_Asthma1">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Pane prefHeight="505.0" prefWidth="694.0">
+                           <children>
+                              <HBox layoutX="14.0" layoutY="22.0" prefHeight="39.0" prefWidth="528.0">
+                                 <children>
+                                    <Label prefHeight="83.0" prefWidth="275.0" text="Daytime symptoms per week?">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField prefHeight="43.0" prefWidth="104.0" />
+                                 </children>
+                              </HBox>
+                              <HBox layoutX="14.0" layoutY="68.0" prefHeight="44.0" prefWidth="528.0">
+                                 <children>
+                                    <Label prefHeight="44.0" prefWidth="307.0" text="Rescue medication use per week?">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField prefHeight="43.0" prefWidth="104.0" />
+                                 </children>
+                              </HBox>
+                              <HBox layoutX="14.0" layoutY="120.0" prefHeight="44.0" prefWidth="528.0">
+                                 <children>
+                                    <Label prefHeight="44.0" prefWidth="289.0" text="Nocturnal symptoms per week?">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField prefHeight="43.0" prefWidth="104.0" />
+                                 </children>
+                              </HBox>
+                              <HBox layoutX="8.0" layoutY="164.0" prefHeight="44.0" prefWidth="680.0">
+                                 <children>
+                                    <Label prefHeight="44.0" prefWidth="225.0" text="Pulmonar function (%)">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField prefHeight="43.0" prefWidth="104.0">
+                                       <HBox.margin>
+                                          <Insets right="3.0" />
+                                       </HBox.margin>
+                                    </TextField>
+                                    <HBox prefHeight="44.0" prefWidth="424.0">
+                                       <children>
+                                          <Label prefHeight="44.0" prefWidth="289.0" text="Limitations habitual activities">
+                                             <font>
+                                                <Font size="20.0" />
+                                             </font>
+                                          </Label>
+                                          <ComboBox prefHeight="34.0" prefWidth="142.0" />
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </HBox>
+                              <HBox layoutX="8.0" layoutY="215.0" prefHeight="38.0" prefWidth="528.0">
+                                 <children>
+                                    <Label prefHeight="44.0" prefWidth="234.0" text="Exacerbations per year?">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField prefHeight="43.0" prefWidth="104.0" />
+                                 </children>
+                              </HBox>
+                              <Button layoutX="267.0" layoutY="446.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="163.0" text="Check treatment">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Button>
+                              <VBox layoutX="8.0" layoutY="253.0" prefHeight="193.0" prefWidth="638.0">
+                                 <children>
+                                    <Label prefHeight="45.0" prefWidth="638.0" text="Any other remarkable disorder?">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <HBox prefHeight="49.0" prefWidth="638.0">
+                                       <children>
+                                          <CheckBox mnemonicParsing="false" prefHeight="70.0" prefWidth="156.0" text="Cardiovascular Disease" />
+                                          <CheckBox mnemonicParsing="false" prefHeight="68.0" prefWidth="150.0" text="Tuberculosis" />
+                                          <CheckBox mnemonicParsing="false" prefHeight="68.0" prefWidth="146.0" text="Viral infection" />
+                                          <CheckBox mnemonicParsing="false" prefHeight="76.0" prefWidth="158.0" text="Glaucoma" />
+                                       </children>
+                                    </HBox>
+                                    <HBox prefHeight="49.0" prefWidth="638.0">
+                                       <children>
+                                          <CheckBox mnemonicParsing="false" prefHeight="70.0" prefWidth="156.0" text="Urinary retention" />
+                                          <CheckBox mnemonicParsing="false" prefHeight="68.0" prefWidth="150.0" text="HSS axis. disease" />
+                                          <CheckBox mnemonicParsing="false" prefHeight="50.0" prefWidth="164.0" text="Decreased bone density" />
+                                          <CheckBox mnemonicParsing="false" prefHeight="76.0" prefWidth="158.0" text="Diabetes" />
+                                       </children>
+                                    </HBox>
+                                    <HBox prefHeight="49.0" prefWidth="638.0">
+                                       <children>
+                                          <CheckBox mnemonicParsing="false" prefHeight="70.0" prefWidth="156.0" text="Hypertiroidism" />
+                                          <CheckBox mnemonicParsing="false" prefHeight="68.0" prefWidth="150.0" text="Peptic Ulcer" />
+                                          <CheckBox mnemonicParsing="false" prefHeight="68.0" prefWidth="146.0" text="Osteoporosis" />
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </Pane>
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+            <Tab fx:id="Update_Asthma2" text="Update_Asthma_2">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <VBox layoutX="25.0" layoutY="35.0" prefHeight="96.0" prefWidth="343.0">
+                           <children>
+                              <Label prefHeight="63.0" prefWidth="648.0" text="Are the symptoms controlled?">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Label>
+                              <HBox prefHeight="52.0" prefWidth="646.0">
+                                 <children>
+                                    <RadioButton mnemonicParsing="false" prefHeight="74.0" prefWidth="202.0" text="Yes" />
+                                    <RadioButton mnemonicParsing="false" prefHeight="85.0" prefWidth="179.0" text="No" />
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                        <VBox layoutX="25.0" layoutY="131.0" prefHeight="193.0" prefWidth="638.0">
+                           <children>
+                              <Label prefHeight="45.0" prefWidth="638.0" text="Any other remarkable disorder?">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Label>
+                              <HBox prefHeight="49.0" prefWidth="638.0">
+                                 <children>
+                                    <CheckBox mnemonicParsing="false" prefHeight="70.0" prefWidth="156.0" text="Cardiovascular Disease" />
+                                    <CheckBox mnemonicParsing="false" prefHeight="68.0" prefWidth="150.0" text="Tuberculosis" />
+                                    <CheckBox mnemonicParsing="false" prefHeight="68.0" prefWidth="146.0" text="Viral infection" />
+                                    <CheckBox mnemonicParsing="false" prefHeight="76.0" prefWidth="158.0" text="Glaucoma" />
+                                 </children>
+                              </HBox>
+                              <HBox prefHeight="49.0" prefWidth="638.0">
+                                 <children>
+                                    <CheckBox mnemonicParsing="false" prefHeight="70.0" prefWidth="156.0" text="Urinary retention" />
+                                    <CheckBox mnemonicParsing="false" prefHeight="68.0" prefWidth="150.0" text="HSS axis. disease" />
+                                    <CheckBox mnemonicParsing="false" prefHeight="50.0" prefWidth="164.0" text="Decreased bone density" />
+                                    <CheckBox mnemonicParsing="false" prefHeight="76.0" prefWidth="158.0" text="Diabetes" />
+                                 </children>
+                              </HBox>
+                              <HBox prefHeight="49.0" prefWidth="638.0">
+                                 <children>
+                                    <CheckBox mnemonicParsing="false" prefHeight="70.0" prefWidth="156.0" text="Hypertiroidism" />
+                                    <CheckBox mnemonicParsing="false" prefHeight="68.0" prefWidth="150.0" text="Peptic Ulcer" />
+                                    <CheckBox mnemonicParsing="false" prefHeight="68.0" prefWidth="146.0" text="Osteoporosis" />
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                        <Button layoutX="262.0" layoutY="393.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="163.0" text="Check treatment">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+            <Tab fx:id="AsthmaCrisis" text="AsthmaCrisis">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Pane prefHeight="502.0" prefWidth="694.0">
+                           <children>
+                              <VBox layoutX="2.0" layoutY="120.0" prefHeight="166.0" prefWidth="694.0">
+                                 <children>
+                                    <HBox prefHeight="58.0" prefWidth="694.0">
+                                       <children>
+                                          <Label alignment="CENTER" prefHeight="42.0" prefWidth="290.0" text="PS (0-9)">
+                                             <font>
+                                                <Font size="20.0" />
+                                             </font>
+                                          </Label>
+                                          <TextField prefHeight="42.0" prefWidth="109.0" />
+                                       </children>
+                                    </HBox>
+                                    <HBox prefHeight="58.0" prefWidth="694.0">
+                                       <children>
+                                          <Label alignment="CENTER" prefHeight="42.0" prefWidth="290.0" text="PEF">
+                                             <font>
+                                                <Font size="20.0" />
+                                             </font>
+                                          </Label>
+                                          <TextField prefHeight="42.0" prefWidth="109.0" />
+                                       </children>
+                                    </HBox>
+                                    <HBox prefHeight="50.0" prefWidth="694.0">
+                                       <children>
+                                          <Label alignment="CENTER" prefHeight="42.0" prefWidth="290.0" text="Oxygen Saturation">
+                                             <font>
+                                                <Font size="20.0" />
+                                             </font>
+                                          </Label>
+                                          <TextField prefHeight="42.0" prefWidth="109.0" />
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </VBox>
+                              <Button layoutX="268.0" layoutY="378.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="163.0" text="Check treatment">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Button>
+                              <Label layoutX="34.0" layoutY="10.0" prefHeight="110.0" prefWidth="550.0" text="Introduce the score of pulmonar tests">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </Pane>
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+        </tabs>
+      </TabPane>
+   </children>
+</AnchorPane>

@@ -27,7 +27,7 @@ import pojos.*;
 rule "Chornic home oxygen therapy Rule"
     dialect "java"
     when
-        p : Patient(getRespiratorydisease().equals("EPOC"), getEpoc().getCondition_string.equals("Severe chronic hypoxemia"))
+        p : Patient(getRespiratorydisease().equals("EPOC"), getEpoc().getCondition_string().equals("Severe chronic hypoxemia"))
     then
         Treatment treatment = new Treatment();
         treatment.setTherapy("Chronic home oxygen therapy");
@@ -53,7 +53,7 @@ rule "Pulmonar volume reduction Rule"
     then
         Treatment treatment = new Treatment();
         treatment.setTherapy("Pulmonar volume reduction");
-        p.addTreatment(treatment);
+        p.addTreatment(ConstantTreatments.TREATMENT1);
         System.out.println("Pulmonary condition: SEVERE HETEROGENEOUS EMPHYSEMA IN UPPER LOBES - Pulmonar volume reduction is the best treatment for the patient");
 end
 
