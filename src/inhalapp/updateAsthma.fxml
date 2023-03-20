@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.Blend?>
+<?import javafx.scene.effect.Bloom?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="530.0" prefWidth="694.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafx.InterfaceController">
+   <children>
+      <ImageView fitHeight="547.0" fitWidth="694.0" layoutY="-4.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/pngtree-minimalist-gradient-medical-background-picture-image_966366%20(1).jpg" />
+         </image>
+      </ImageView>
+      <TabPane fx:id="TabPane" prefHeight="530.0" prefWidth="694.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+            <Tab fx:id="Update_Asthma1" text="Update Asthma">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Pane prefHeight="505.0" prefWidth="694.0">
+                           <children>
+                              <Label layoutX="41.0" layoutY="1.0" prefHeight="83.0" prefWidth="275.0" text="Daytime symptoms:">
+                                 <font>
+                                    <Font name="System Bold" size="18.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="daySymptomsTextField" layoutX="236.0" layoutY="30.0" prefHeight="26.0" prefWidth="424.0" promptText="Introduce daytime symptoms per week" />
+                              <Label layoutX="41.0" layoutY="63.0" prefHeight="44.0" prefWidth="178.0" text="Rescue medication:">
+                                 <font>
+                                    <Font name="System Bold" size="18.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="rescueMedTextField" layoutX="236.0" layoutY="73.0" prefHeight="25.0" prefWidth="423.0" promptText="Introduce the rescue medication needed per week" />
+                              <Label layoutX="41.0" layoutY="107.0" prefHeight="44.0" prefWidth="184.0" text="Nocturnal symptoms:">
+                                 <font>
+                                    <Font name="System Bold" size="18.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="nocturnalSymptomsTextField" layoutX="236.0" layoutY="116.0" prefHeight="25.0" prefWidth="423.0" promptText="Introduce the nocturnal symptoms per week" />
+                              <Label layoutX="329.0" layoutY="334.0" prefHeight="44.0" prefWidth="225.0" text="Pulmonar function (%)">
+                                 <font>
+                                    <Font name="System Bold" size="18.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="pulmonarFunctionTextField" layoutX="334.0" layoutY="378.0" prefHeight="26.0" prefWidth="331.0" promptText="Introduce the percentage of pulmonar function" />
+                              <Label layoutX="331.0" layoutY="253.0" prefHeight="44.0" prefWidth="289.0" text="Limitations in habitual activities:">
+                                 <font>
+                                    <Font name="System Bold" size="18.0" />
+                                 </font>
+                              </Label>
+                              <ComboBox fx:id="LimitationsChoiceBox" layoutX="331.0" layoutY="297.0" prefHeight="9.0" prefWidth="337.0" />
+                              <TextField fx:id="exacerbationsTextField" layoutX="329.0" layoutY="214.0" prefHeight="25.0" prefWidth="331.0" promptText="Introduce the exacerbations per year" />
+                              <Label layoutX="331.0" layoutY="170.0" prefHeight="44.0" prefWidth="198.0" text="Exacerbations:">
+                                 <font>
+                                    <Font name="System Bold" size="18.0" />
+                                 </font>
+                              </Label>
+                              <Button fx:id="checkTreatmentButton3" layoutX="267.0" layoutY="446.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="163.0" text="Check treatment">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                                 <effect>
+                                    <Blend mode="BLUE">
+                                       <topInput>
+                                          <Bloom />
+                                       </topInput>
+                                    </Blend>
+                                 </effect>
+                              </Button>
+                              <Label layoutX="41.0" layoutY="169.0" prefHeight="45.0" prefWidth="288.0" text="Any other remarkable disorder?">
+                                 <font>
+                                    <Font name="System Bold" size="18.0" />
+                                 </font>
+                              </Label>
+                              <VBox layoutX="43.0" layoutY="214.0" prefHeight="193.0" prefWidth="175.0">
+                                 <children>
+                                    <CheckBox fx:id="cardioDisease_tab1" mnemonicParsing="false" prefHeight="70.0" prefWidth="156.0" text="Cardiovascular Disease" />
+                                    <CheckBox fx:id="tuberculosis_tab1" mnemonicParsing="false" prefHeight="68.0" prefWidth="150.0" text="Tuberculosis" />
+                                    <CheckBox fx:id="viralInfection_tab1" mnemonicParsing="false" prefHeight="68.0" prefWidth="146.0" text="Viral infection" />
+                                    <CheckBox fx:id="glaucoma_tab1" mnemonicParsing="false" prefHeight="76.0" prefWidth="158.0" text="Glaucoma" />
+                                    <CheckBox fx:id="urinary_tab1" mnemonicParsing="false" prefHeight="70.0" prefWidth="156.0" text="Urinary retention" />
+                                    <CheckBox fx:id="hss_tab1" mnemonicParsing="false" prefHeight="68.0" prefWidth="150.0" text="HSS axis disease" />
+                                    <CheckBox fx:id="dbs_tab1" mnemonicParsing="false" prefHeight="50.0" prefWidth="164.0" text="Decreased bone density" />
+                                    <CheckBox fx:id="diabetes_tab1" mnemonicParsing="false" prefHeight="76.0" prefWidth="158.0" text="Diabetes" />
+                                    <CheckBox fx:id="hypertiroidism_tab1" mnemonicParsing="false" prefHeight="70.0" prefWidth="156.0" text="Hypertiroidism" />
+                                    <CheckBox fx:id="pUlcer_tab1" mnemonicParsing="false" prefHeight="68.0" prefWidth="150.0" text="Peptic Ulcer" />
+                                    <CheckBox fx:id="osteoporosis_tab1" mnemonicParsing="false" prefHeight="68.0" prefWidth="146.0" text="Osteoporosis" />
+                                 </children>
+                              </VBox>
+                              <Button fx:id="backButton" layoutX="27.0" layoutY="448.0" mnemonicParsing="false" prefHeight="19.0" prefWidth="88.0" text="Back">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                                 <effect>
+                                    <Blend mode="RED">
+                                       <topInput>
+                                          <Bloom />
+                                       </topInput>
+                                    </Blend>
+                                 </effect>
+                              </Button>
+                           </children>
+                        </Pane>
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+            <Tab fx:id="Update_Asthma2" text="Update control of the symptoms of Asthma">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Label layoutX="40.0" layoutY="75.0" prefHeight="63.0" prefWidth="271.0" text="Are the symptoms controlled?">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                        </Label>
+                        <RadioButton fx:id="symptoms_yes" layoutX="342.0" layoutY="70.0" mnemonicParsing="false" prefHeight="74.0" prefWidth="66.0" text="Yes">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </RadioButton>
+                        <RadioButton fx:id="symptoms_no" layoutX="431.0" layoutY="65.0" mnemonicParsing="false" prefHeight="85.0" prefWidth="58.0" text="No">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </RadioButton>
+                        <Label layoutX="41.0" layoutY="138.0" prefHeight="45.0" prefWidth="638.0" text="Any other remarkable disorder?">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                        </Label>
+                        <CheckBox fx:id="cardioDisease_tab2" layoutX="433.0" layoutY="231.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="183.0" text="Cardiovascular Disease">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </CheckBox>
+                        <CheckBox fx:id="tuberculosis_tab2" layoutX="433.0" layoutY="192.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="169.0" text="Tuberculosis">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </CheckBox>
+                        <CheckBox fx:id="viralInfection_tab2" layoutX="248.0" layoutY="313.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="173.0" text="Viral infection">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </CheckBox>
+                        <CheckBox fx:id="glaucoma_tab2" layoutX="248.0" layoutY="256.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="167.0" text="Glaucoma">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </CheckBox>
+                        <CheckBox fx:id="urinary_tab2" layoutX="248.0" layoutY="214.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="156.0" text="Urinary retention">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </CheckBox>
+                        <CheckBox fx:id="hss_tab2" layoutX="247.0" layoutY="176.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="150.0" text="HSS axis disease">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </CheckBox>
+                        <CheckBox fx:id="dbd_tab2" layoutX="433.0" layoutY="256.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="185.0" text="Decreased bone density">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </CheckBox>
+                        <CheckBox fx:id="diabetes_tab2" layoutX="44.0" layoutY="300.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="158.0" text="Diabetes">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </CheckBox>
+                        <CheckBox fx:id="hypertiroidism_tab2" layoutX="45.0" layoutY="260.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="156.0" text="Hypertiroidism">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </CheckBox>
+                        <CheckBox fx:id="pUlcer_tab2" layoutX="45.0" layoutY="220.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="150.0" text="Peptic Ulcer">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </CheckBox>
+                        <CheckBox fx:id="osteoporosis_tab2" layoutX="45.0" layoutY="183.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="146.0" text="Osteoporosis">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </CheckBox>
+                        <Button fx:id="checkTreatment4" layoutX="256.0" layoutY="376.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="199.0" text="Check treatment">
+                           <font>
+                              <Font name="System Bold" size="15.0" />
+                           </font>
+                           <effect>
+                              <Blend mode="BLUE">
+                                 <topInput>
+                                    <Bloom />
+                                 </topInput>
+                              </Blend>
+                           </effect>
+                        </Button>
+                        <Label layoutX="36.0" layoutY="26.0" prefHeight="63.0" prefWidth="623.0" text="Update the control of symptoms of the asthma and other diseases" textFill="#011b82">
+                           <font>
+                              <Font name="System Bold" size="20.0" />
+                           </font>
+                        </Label>
+                        <Button fx:id="backButton2" layoutX="26.0" layoutY="448.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="97.0" text="Back">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                           <effect>
+                              <Blend mode="RED">
+                                 <topInput>
+                                    <Bloom />
+                                 </topInput>
+                              </Blend>
+                           </effect>
+                        </Button>
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+            <Tab fx:id="AsthmaCrisis" text="Asthma Crisis">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Pane prefHeight="502.0" prefWidth="694.0">
+                           <children>
+                              <TextField fx:id="satTextField" layoutX="248.0" layoutY="197.0" prefHeight="20.0" prefWidth="366.0" promptText="Introduce the oxygen saturation" />
+                              <Label layoutX="36.0" layoutY="116.0" prefHeight="41.0" prefWidth="550.0" text="Introduce the score of pulmonar tests:">
+                                 <font>
+                                    <Font name="System Bold" size="18.0" />
+                                 </font>
+                              </Label>
+                              <Label alignment="CENTER" layoutX="10.0" layoutY="293.0" prefHeight="42.0" prefWidth="290.0" text="Pulmonary Score (PS):">
+                                 <font>
+                                    <Font name="System Bold" size="18.0" />
+                                 </font>
+                              </Label>
+                              <Label alignment="CENTER" layoutX="52.0" layoutY="241.0" prefHeight="42.0" prefWidth="252.0" text="Peak Expiratory Flow (PEF):">
+                                 <font>
+                                    <Font name="System Bold" size="18.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="psTextField" layoutX="261.0" layoutY="304.0" prefHeight="22.0" prefWidth="352.0" promptText="Introduce the pulmonary score (0-9)" />
+                              <Button fx:id="checkTreatmentButton5" layoutX="240.0" layoutY="373.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="216.0" text="Check treatment">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                                 <effect>
+                                    <Blend mode="BLUE">
+                                       <topInput>
+                                          <Bloom />
+                                       </topInput>
+                                    </Blend>
+                                 </effect>
+                              </Button>
+                              <Label layoutX="36.0" layoutY="38.0" prefHeight="41.0" prefWidth="624.0" text="In case of an asthma crisis, the following tests are necesary to" textFill="#041d80">
+                                 <font>
+                                    <Font name="System Bold" size="18.0" />
+                                 </font>
+                              </Label>
+                              <Label alignment="CENTER" layoutY="188.0" prefHeight="42.0" prefWidth="290.0" text="Oxygen Saturation:">
+                                 <font>
+                                    <Font name="System Bold" size="18.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="pefTextField" layoutX="307.0" layoutY="250.0" prefHeight="25.0" prefWidth="307.0" promptText="Introduce the value of PEF" />
+                              <Label layoutX="35.0" layoutY="59.0" prefHeight="41.0" prefWidth="624.0" text="evaluate the state of the patient." textFill="#041d80">
+                                 <font>
+                                    <Font name="System Bold" size="18.0" />
+                                 </font>
+                              </Label>
+                              <Button fx:id="backButton3" layoutX="35.0" layoutY="439.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="93.0" text="Back">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                                 <effect>
+                                    <Blend mode="RED">
+                                       <topInput>
+                                          <Bloom />
+                                       </topInput>
+                                    </Blend>
+                                 </effect>
+                              </Button>
+                           </children>
+                        </Pane>
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+        </tabs>
+      </TabPane>
+   </children>
+</AnchorPane>

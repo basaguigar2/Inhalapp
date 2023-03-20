@@ -17,7 +17,7 @@ public class Patient {
    public Integer id;
    public Integer medical_card_number;
    public String name;
-   public LocalDate age;
+   public int age;
    public String gender;
    public boolean pregnancy;
    public boolean influenza_vaccine, pneumonia_vaccine;
@@ -39,7 +39,18 @@ public class Patient {
     public Patient() {
     }
 
-    public Patient(Integer id, Integer medical_card_number, String name, LocalDate age, String gender, boolean pregnancy, boolean influenza_vaccine, boolean pneumonia_vaccine, boolean smoker, boolean symptoms_controlled, boolean hospitalization, String respiratorydisease, Integer userId, EPOC epoc, Asthma asthma) {
+    public Patient(Integer medical_card_number, String name, int age, String gender, boolean pregnancy, boolean smoker, boolean hospitalization, String respiratorydisease) {
+        this.medical_card_number = medical_card_number;
+        this.name = name;
+        this.age = age;
+        this.gender = gender;
+        this.pregnancy = pregnancy;
+        this.smoker = smoker;
+        this.hospitalization = hospitalization;
+        this.respiratorydisease = respiratorydisease;
+    }
+
+    public Patient(Integer id, Integer medical_card_number, String name, int age, String gender, boolean pregnancy, boolean influenza_vaccine, boolean pneumonia_vaccine, boolean smoker, boolean symptoms_controlled, boolean hospitalization, String respiratorydisease, Integer userId, EPOC epoc, Asthma asthma) {
         this.id = id;
         this.medical_card_number = medical_card_number;
         this.name = name;
@@ -59,7 +70,7 @@ public class Patient {
 
    
 
-    public Patient(Integer medical_card_number, String name, LocalDate age, String gender, boolean pregnancy, boolean influenza_vaccine, boolean pneumonia_vaccine, boolean smoker, boolean symptoms_controlled, boolean hospitalization, String respiratorydisease, EPOC epoc, Asthma asthma) {
+    public Patient(Integer medical_card_number, String name, int age, String gender, boolean pregnancy, boolean influenza_vaccine, boolean pneumonia_vaccine, boolean smoker, boolean symptoms_controlled, boolean hospitalization, String respiratorydisease, EPOC epoc, Asthma asthma) {
         this.medical_card_number = medical_card_number;
         this.name = name;
         this.age = age;
@@ -75,7 +86,7 @@ public class Patient {
         this.asthma = asthma;
     }
 
-    public Patient(Integer id, Integer medical_card_number, String name, LocalDate age, String gender, boolean pregnancy, boolean smoker, boolean symptoms_controlled, boolean hospitalization, String respiratorydisease) {
+    public Patient(Integer id, Integer medical_card_number, String name, int age, String gender, boolean pregnancy, boolean smoker, boolean symptoms_controlled, boolean hospitalization, String respiratorydisease) {
         this.id = id;
         this.medical_card_number = medical_card_number;
         this.name = name;
@@ -88,7 +99,7 @@ public class Patient {
         this.respiratorydisease = respiratorydisease;
     }
 
-    public Patient(Integer id, Integer medical_card_number, String name, LocalDate age, String gender, boolean pregnancy, boolean influenza_vaccine, boolean pneumonia_vaccine, Integer treat_stage, boolean smoker, boolean symptoms_controlled, boolean hospitalization, String respiratorydisease) {
+    public Patient(Integer id, Integer medical_card_number, String name, int age, String gender, boolean pregnancy, boolean influenza_vaccine, boolean pneumonia_vaccine, Integer treat_stage, boolean smoker, boolean symptoms_controlled, boolean hospitalization, String respiratorydisease) {
         this.id = id;
         this.medical_card_number = medical_card_number;
         this.name = name;
@@ -130,11 +141,11 @@ public class Patient {
         this.name = name;
     }
 
-    public LocalDate getPatientAge() {
+    public int getPatientAge() {
         return age;
     }
 
-    public void setPatientAge(LocalDate age) {
+    public void setPatientAge(int age) {
         this.age = age;
     }
 

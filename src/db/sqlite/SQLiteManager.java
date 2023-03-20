@@ -15,6 +15,8 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 import db.interfaces.EpocManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 /**
  *
@@ -114,7 +116,7 @@ public class SQLiteManager implements DBManager{
                     + "(patientid INTEGER PRIMARY KEY AUTOINCREMENT, "
                     + "medical_card_number INTEGER PRIMARY KEY, " 
                     + "name TEXT NOT NULL, " 
-                    + "age DATE, "
+                    + "age INTEGER NOT NULL, "
                     + "gender TEXT NOT NULL, "
                     + "pregnancy BOOLEAN, "
                     + "influenzaV BOOLEAN,"
@@ -231,6 +233,17 @@ public class SQLiteManager implements DBManager{
         }
     }
 
-   
-    
+   @Override
+    public int getLastId() {
+            int result = 0;
+            try {
+                    String query = "SELECT last_insert_rowid() AS lastId";
+                    PreparedStatement p = c.prepareStatement(query);
+                    ResultSet rs = p.executeQuery();
+                    result = rs.getInt("lastId");
+            } catch (SQLException e) {
+                    e.printStackTrace();
+            }
+            return result;
+    }
 }

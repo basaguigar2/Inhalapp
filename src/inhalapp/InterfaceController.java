@@ -281,7 +281,6 @@ public abstract class InterfaceController implements Initializable, DBManager {
         if (vision_tab5.isSelected()){
             cormobidities.add("Vision Disorder");
         }
-       // p.setString_comorbidities(cormobidities);
         if (disnea_boolean.isSelected()){
             e.setExacerbations(false);
             e.setDisnea(true);
@@ -308,7 +307,7 @@ public abstract class InterfaceController implements Initializable, DBManager {
     }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        u = new User();
+        //u = new User();
         observable_names = FXCollections.observableArrayList();
         //Adding the items of the comboBox
         sex_comboBox = new ComboBox<>();

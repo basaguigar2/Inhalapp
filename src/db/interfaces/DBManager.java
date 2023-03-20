@@ -22,4 +22,5 @@ public interface DBManager {
     public Connection getConnection();
     public UserManager getUserMAnager();
     public boolean createTables();
+    public int getLastId();
 }

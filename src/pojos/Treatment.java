@@ -48,6 +48,9 @@ public class Treatment {
     }
 
     public String getDrug() {
+        if (drug == null){
+            drug = "None";
+        }
         return drug;
     }
 
@@ -56,6 +59,9 @@ public class Treatment {
     }
 
     public String getDose() {
+        if (dose == null){
+            dose = "None";
+        }
         return dose;
     }
 
@@ -64,6 +70,9 @@ public class Treatment {
     }
 
     public String getTherapy() {
+        if (therapy == null){
+            therapy = "None";
+        }
         return therapy;
     }
 

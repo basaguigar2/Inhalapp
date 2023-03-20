@@ -45,6 +45,7 @@ public class RegisterController {
     private TextField username,emailtxt;
     
     private boolean check=true;
+    private static SceneChanger sc;
 
     @FXML
     void RegisterUser(ActionEvent event) throws IOException {
@@ -66,6 +67,7 @@ public class RegisterController {
             
             return;
         }
+        
         String username = this.username.getText();
         String email= this.emailtxt.getText();
         
@@ -73,8 +75,10 @@ public class RegisterController {
             showAlert(Alert.AlertType.ERROR, window, "Error!", "Please enter an existent gmail.com account");
             return;
         }
+        
         String password = this.password.getText();
         String confirmPassword = this.repeatpassword.getText();
+        
         if(!password.equals(confirmPassword)) {
             check=false;
             showAlert(Alert.AlertType.ERROR, window, "Error!", "he passwords introduced do not match");
@@ -97,27 +101,17 @@ public class RegisterController {
                     sendEmail("Welcome to Inhalapp!", "Your user is: "+username+"\n"+"Your password is: "+password,email);
                     Parent root = FXMLLoader.load(getClass().getResource("interface.fxml"));
                     Scene scene = new Scene(root);
-                    /*SceneChanger stage = (SceneChanger)((Node)event.getSource()).getScene().getWindow();
-                    stage.setScene(scene);
-                    stage.show();
-*/
-}
+                }
             } catch(Exception e) {
                 e.printStackTrace();
             }
         }
     }
     
-    @FXML
-    void Back(ActionEvent event) throws IOException {
-        URL url = new File("src/inhalapp/logIn.fxml").toURI().toURL();
-        Parent root = FXMLLoader.load(url);
-        Scene scene = new Scene(root);
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setScene(scene);
-        stage.show();
+    public void backtoMenu(ActionEvent event) {
+        sc = new SceneChanger();
+        sc.changeScenes(event, "logIn.fxml");
     }
-
 
     public static void infoMessage(String infoMessage, String headerText, String title) {
         Alert alert = new Alert(AlertType.CONFIRMATION);
@@ -128,13 +122,13 @@ public class RegisterController {
     }
        
        public void sendEmail (String asunto, String cuerpo, String destinatario){
-        String remitente = "Inhalapp@gmail.com";
+        String remitente = "inhalapp@gmail.com";
 
         Properties props = System.getProperties();
         props.put("mail.smtp.user", remitente);
         props.put("mail.smtp.host", "smtp.gmail.com");
         props.put("mail.smtp.port", "587");
-        props.put("mail.smtp.clave", "Heartpharmacyapp2022*");
+        props.put("mail.smtp.clave", "Inhalapp2023*");
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
          //El puerto SMTP seguro de Google
@@ -144,11 +138,11 @@ public class RegisterController {
 
         try {
             message.setFrom(new InternetAddress(remitente));
-            message.addRecipients(Message.RecipientType.TO, destinatario);   //Se podr�an a�adir varios de la misma manera
+            message.addRecipients(Message.RecipientType.TO, destinatario);
             message.setSubject(asunto);
             message.setText(cuerpo);
             Transport transport = session.getTransport("smtp");
-            transport.connect("smtp.gmail.com", remitente, "Heartpharmacyapp2022*");
+            transport.connect("smtp.gmail.com", remitente, "Inhalapp2023*");
             transport.sendMessage(message, message.getAllRecipients());
             transport.close();
         }

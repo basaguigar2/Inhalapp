@@ -24,6 +24,14 @@ public class EPOC {
         this.condition_string = condition_string;
     }
 
+    public EPOC(String condition_string, boolean eosinophilia, int mMRC, int CAT, int exa) {
+        this.condition_string = condition_string;
+        this.eosinophilia = eosinophilia;
+        this.mMRC = mMRC;
+        this.CAT = CAT;
+        this.exa = exa;
+    }
+
     public EPOC(String condition, int mMRC, int EOS, int CAT, int exa, boolean exacerb, boolean eosinophilia, int FEV) {
         this.condition_string = condition;
         this.mMRC = mMRC;
