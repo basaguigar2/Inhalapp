@@ -13,6 +13,189 @@ public class Treatment {
     private String drug;
     private String dose;//in miligrams
     private String therapy;
+    
+    public static final Treatment CHRONIC_OXIGEN_THERAPY;
+    public static final Treatment BULLECTOMY;
+    public static final Treatment PULMONAR_VOLUME_REDUCTION;
+    public static final Treatment BRONCHOSCOPIC_INTERVENTION;
+    public static final Treatment PULMONAR_TRANSPLANT;
+    public static final Treatment SABA_LAMA;
+    public static final Treatment LABA_LAMA;
+    public static final Treatment LAMA;
+    public static final Treatment LABA;
+    public static final Treatment IC;
+    public static final Treatment AZIMOTRICINE;
+    public static final Treatment ROFLUMILAST;
+    public static final Treatment MUSC_ANTAGONISTS;
+    public static final Treatment NO_MED;
+    public static final Treatment GCI_LOW_C;
+    public static final Treatment GCI_LOW_A;
+    public static final Treatment GCI_MED_C;
+    public static final Treatment GCI_MED_A;
+    public static final Treatment GCI_HIGH_C;
+    public static final Treatment GCI_HIGH_A;
+    public static final Treatment ARLT_C;
+    public static final Treatment ARLT_A;
+    public static final Treatment BAAL;
+    public static final Treatment GCO_C;
+    public static final Treatment GCO_A;
+    public static final Treatment BAAC_C;
+    public static final Treatment BAAC_A;
+    public static final Treatment BAAC_CRISIS;
+    public static final Treatment SYSTEMIC_CORTICOIDS_C;
+    public static final Treatment SYSTEMIC_CORTICOIDS_A;
+    public static final Treatment SUPLEMENTARY_O2;
+    
+    static{
+    String therapy="Chronic home oxygen therapy";
+    CHRONIC_OXIGEN_THERAPY= new Treatment(therapy);
+    }
+    static{
+    String therapy="Bullectomy";
+    BULLECTOMY= new Treatment(therapy);
+    }
+    static{
+    String therapy="Pulmonar volume reduction";
+    PULMONAR_VOLUME_REDUCTION= new Treatment(therapy);
+    }
+    static{
+    String therapy="Bronchoscopic intervention";
+    BRONCHOSCOPIC_INTERVENTION= new Treatment(therapy);
+    }
+    static{
+    String therapy="Pulmonar transplant";
+    PULMONAR_TRANSPLANT= new Treatment(therapy);
+    }
+    static{
+    String drug="SABA/LAMA";
+    String dose="2-4 inhalations/day";
+    SABA_LAMA= new Treatment(drug,dose);
+    }
+    static{
+    String drug="LABA/LAMA";
+    String dose="1-2 inhalations/day";
+    LABA_LAMA= new Treatment(drug,dose);
+    }
+    static{
+    String drug="LAMA";
+    String dose="1-2 inhalations/day";
+    LAMA= new Treatment(drug,dose);
+    }
+    static{
+    String drug="LABA";
+    String dose="1-2 inhalations/day";
+    LABA= new Treatment(drug,dose);
+    }
+    static{
+    String drug="IC";
+    String dose="1-2 inhalations/day";
+    IC= new Treatment(drug,dose);
+    }
+    static{
+    String drug="Azimotricine";
+    String dose="250 mg/day";
+    AZIMOTRICINE= new Treatment(drug,dose);
+    }
+    static{
+    String drug="Roflumilast";
+    String dose="500 mcg/day";
+    ROFLUMILAST= new Treatment(drug,dose);
+    }
+    static{
+    String drug="Muscarinic receptor antagonists";
+    String dose="18 mcg/day";
+    MUSC_ANTAGONISTS= new Treatment(drug,dose);
+    }
+    static{
+    String drug="No control medication";
+    String dose="none";
+    NO_MED= new Treatment(drug,dose);
+    }
+    static{
+    String drug="GCI";
+    String dose="0.1 mg/day";
+    GCI_LOW_C= new Treatment(drug,dose);
+    }
+    static{
+    String drug="GCI";
+    String dose="0.2 mg/day";
+    GCI_LOW_A= new Treatment(drug,dose);
+    }
+    static{
+    String drug="GCI";
+    String dose="0.2 mg/day";
+    GCI_MED_C= new Treatment(drug,dose);
+    }
+    static{
+    String drug="GCI";
+    String dose="0.3- 0.4mg/day";
+    GCI_MED_A= new Treatment(drug,dose);
+    }
+    static{
+    String drug="GCI";
+    String dose="0.4 mg/day";
+    GCI_HIGH_C= new Treatment(drug,dose);
+    }
+    static{
+    String drug="GCI";
+    String dose="0.5 mg/day";
+    GCI_HIGH_A= new Treatment(drug,dose);
+    }
+    static{
+    String drug="ARLT";
+    String dose="0.02 mg/day";
+    ARLT_C= new Treatment(drug,dose);
+    }
+    static{
+    String drug="ARLT";
+    String dose="0.04 mg/day";
+    ARLT_A= new Treatment(drug,dose);
+    }
+    static{
+    String drug="BAAL";
+    String dose="0.05 mg/day";
+    BAAL= new Treatment(drug,dose);
+    }
+    static{
+    String drug="GCO";
+    String dose="0.5-2 mg/kg/day";
+    GCO_C= new Treatment(drug,dose);
+    }
+    static{
+    String drug="GCO";
+    String dose="40-60 mg/kg/day";
+    GCO_A= new Treatment(drug,dose);
+    }
+    static{
+    String drug="BAAC";
+    String dose="0.15-2.5 mg/kg on demand";
+    BAAC_C= new Treatment(drug,dose);
+    }
+    static{
+    String drug="BAAC";
+    String dose="0.5-1 mg/kg on demand";
+    BAAC_A= new Treatment(drug,dose);
+    }
+    static{
+    String drug="BAAC";
+    String dose="2-4 inhalations on demand during crisis";
+    BAAC_CRISIS= new Treatment(drug,dose);
+    }
+    static{
+    String drug="Sistemic corticoids";
+    String dose="1 mg/kg/day";
+    SYSTEMIC_CORTICOIDS_C= new Treatment(drug,dose);
+    }
+    static{
+    String drug="Sistemic corticoids";
+    String dose="3 mg/kg/day";
+    SYSTEMIC_CORTICOIDS_A= new Treatment(drug,dose);
+    }
+    static{
+    String drug="Suplementary O2";
+    String dose="On demand";
+    SUPLEMENTARY_O2= new Treatment(drug,dose);
+    }
 
     public Treatment() {
     }
