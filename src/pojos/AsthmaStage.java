@@ -13,5 +13,6 @@ public enum AsthmaStage {
     MILD_PERSISTENT,
     MODERATE_PERSISTENT,
     SEVERE_PERSISTENT,
+    CRISIS,
     NONE
 }
