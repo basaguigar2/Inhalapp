@@ -36,21 +36,13 @@ public class Application {
         // uncomment the next line
         // KieRuntimeLogger logger = ks.getLoggers().newThreadedFileLogger( ksession, "./helloworld", 1000 );
         // The application can insert facts into the session
-     /*
-        Patient p = new Patient(1234, "Gisela", "Aragon", 4, "Female", 
-                FALSE, FALSE, FALSE, FALSE, "Asthma", 6);
+     
+        /*Patient p = new Patient(1234,"Gisela",4,"Female", FALSE, FALSE, FALSE,FALSE,FALSE,FALSE,"Asthma", 6);
         Asthma a = new Asthma();
         Treatment t = new Treatment("LABA", "1-2 inhalations/day");
         p.addTreatment(t);
         
-        p.setAsthma(a);
-        a.setDayTimeSymptoms_w(9);
-        a.setrescueMedication_w(9);
-        a.setnocturnalSymptoms_w(7);
-        a.setlimitations(3);
-        a.setpulmonar_function(50);
-        a.setexarcebations_y(3);
-        
+       
         a.setPS(5);
         a.setPEF(70);
         a.setSAT_O2(93);
@@ -65,7 +57,34 @@ public class Application {
         Comorbidity c1 = new Comorbidity("cardiovascular disease");
         //p.addComorbidity(c1);
         p.setSymptoms_controlled(false);
+        *//*
+        Patient p = new Patient(1234,"Maria",4,"Female", FALSE, FALSE, TRUE,"EPOC");
+        Comorbidity c = new Comorbidity(3,"pulmonary tuberculosis");
+        Comorbidity s = new Comorbidity(4,"viral infection");
+        p.addComorbidity(c);
+        p.addComorbidity(s);
+        EPOC epoc = new EPOC(); 
+        epoc.setmMRC(2);
+        epoc.setCAT(21);
+        epoc.setExa(3);
+        epoc.setEOS(400);
+        epoc.setEosinophilia(false);
+        p.setEpoc(epoc);
+        epoc.setCondition_string("none");*/
         
+       Patient p = new Patient(1234,"Marta",6,"Female", FALSE, FALSE, FALSE,"Asthma");
+       //p.setTreatment_stage(2);
+       p.setSymptoms_controlled(true);
+       Asthma a = new Asthma();
+       a.setDayTimeSymptoms_w(1);
+       a.setrescueMedication_w(1);
+       a.setnocturnalSymptoms_w(0);
+       a.setlimitations(0);
+       a.setpulmonar_function(85);
+       a.setexarcebations_y(0);
+       p.setAsthma(a);
+       a.setStage_string("NONE");
+       
         // Inserta el objeto de paciente en la sesión de drools
         ksession.insert(p);
         //System.out.println(t.getDrug());
@@ -73,7 +92,7 @@ public class Application {
         // and fire the rules
         ksession.fireAllRules();
 
-        System.out.println(p.getRespiratorydisease());
+        /*System.out.println(p.getRespiratorydisease());
         System.out.println(p.treatment_list.isEmpty());
         System.out.println(p.string_treatments);
         System.out.println(p.string_comorbidities);
@@ -88,11 +107,14 @@ public class Application {
         System.out.println(p.getAsthma().PS);
         System.out.println(p.getAsthma().PEF);
         System.out.println(p.getAsthma().SAT_O2);
-
-        
-
+        System.out.println(p.getTreatment_List());
+        System.out.println(p.getComorbidity());
+        System.out.println(epoc.getmMRC());
+        System.out.println(epoc.getCAT());*/
+        System.out.println(p.getTreatment_List());
+        System.out.println(a.getStage_string());
         // and then dispose the session
         ksession.dispose();
-*/
+
     }
 }

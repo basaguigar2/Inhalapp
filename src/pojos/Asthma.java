@@ -83,7 +83,10 @@ public class Asthma {
         } else if(stage_string.equalsIgnoreCase("NONE")){
             setStage(this.stage.NONE);
             this.stage_string = "NONE";
-        } else {
+        }else if(stage_string.equalsIgnoreCase("CRISIS")){
+            setStage(this.stage.CRISIS);
+            this.stage_string = "CRISIS";
+        }  else {
             throw new NotBoundException("Not valid stge. Introduce a valid condition: Intermittent, Mild persistent, Moderate persistent, Severe persistent or NONE");
         }
     }
