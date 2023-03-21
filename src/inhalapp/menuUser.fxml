@@ -19,7 +19,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="530.0" prefWidth="694.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafx.InterfaceController">
+<AnchorPane id="AnchorPane" prefHeight="530.0" prefWidth="694.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="inhalapp.MenuUserController">
    <children>
       <ImageView fitHeight="547.0" fitWidth="694.0" layoutY="-4.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -45,7 +45,7 @@
                               <TableColumn fx:id="diseaseCol" prefWidth="149.0" text="Respiratory Disease" />
                           </columns>
                         </TableView>
-                        <Button fx:id="obtainTreatmentButton" layoutX="370.0" layoutY="400.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="190.0" text="Obtain Treatment">
+                        <Button fx:id="obtainTreatmentButton" layoutX="370.0" layoutY="400.0" mnemonicParsing="false" onAction="#obtainTreatmentButtonPushed" prefHeight="24.0" prefWidth="190.0" text="Obtain Treatment">
                            <effect>
                               <Blend mode="BLUE">
                                  <topInput>
@@ -57,7 +57,7 @@
                               <Font name="System Bold" size="14.0" />
                            </font>
                         </Button>
-                        <Button fx:id="seePatientButton" layoutX="147.0" layoutY="400.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="190.0" text="See Patient">
+                        <Button fx:id="seePatientButton" layoutX="147.0" layoutY="400.0" mnemonicParsing="false" onAction="#seePatientButtonPushed" prefHeight="24.0" prefWidth="190.0" text="See Patient">
                            <effect>
                               <Blend mode="BLUE">
                                  <topInput>
@@ -134,7 +134,7 @@
                                     <Font name="System Bold" size="18.0" />
                                  </font>
                               </Label>
-                              <Button fx:id="addPatientButton" layoutX="492.0" layoutY="423.0" mnemonicParsing="false" onAction="#add_Patient" prefHeight="12.0" prefWidth="162.0" text="Add Patient">
+                              <Button fx:id="addPatientButton" layoutX="492.0" layoutY="423.0" mnemonicParsing="false" onAction="#addPatientButtonPushed" prefHeight="12.0" prefWidth="162.0" text="Add Patient">
                                  <effect>
                                     <Blend mode="BLUE">
                                        <topInput>

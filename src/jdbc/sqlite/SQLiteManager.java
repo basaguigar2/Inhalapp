@@ -102,19 +102,19 @@ public class SQLiteManager implements DBManager{
     @Override
     public boolean createTables() {
         try{
-            Statement stmt2 = c.createStatement();
-            String sql2 = "CREATE TABLE users " 
+            Statement stmt1 = c.createStatement();
+            String sql1 = "CREATE TABLE users " 
                 + "(userid INTEGER PRIMARY KEY AUTOINCREMENT, " 
                 + "userName TEXT NOT NULL, " 
                 + "userPassword TEXT NOT NULL , "
-                + "name TEXT NOT NULL ";
-            stmt2.executeUpdate(sql2);
-            stmt2.close();
+                + "name TEXT NOT NULL) ";
+            stmt1.executeUpdate(sql1);
+            stmt1.close();
             
             Statement stmt3 = c.createStatement();
             String sql3 = "CREATE TABLE patient " 
                     + "(patientid INTEGER PRIMARY KEY AUTOINCREMENT, "
-                    + "medical_card_number INTEGER PRIMARY KEY, " 
+                    + "medical_card_number INTEGER NOT NULL, " 
                     + "name TEXT NOT NULL, " 
                     + "age INTEGER NOT NULL, "
                     + "gender TEXT NOT NULL, "

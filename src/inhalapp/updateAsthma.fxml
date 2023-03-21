@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="530.0" prefWidth="694.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafx.InterfaceController">
+<AnchorPane id="AnchorPane" prefHeight="530.0" prefWidth="694.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="inhalapp.UpdateAsthmaController">
    <children>
       <ImageView fitHeight="547.0" fitWidth="694.0" layoutY="-4.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -26,7 +26,7 @@
       </ImageView>
       <TabPane fx:id="TabPane" prefHeight="530.0" prefWidth="694.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
-            <Tab fx:id="Update_Asthma1" text="Update Asthma">
+            <Tab fx:id="Update_Asthma1" onSelectionChanged="#go_to_updateAsthma" text="Update Asthma">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -68,7 +68,7 @@
                                     <Font name="System Bold" size="18.0" />
                                  </font>
                               </Label>
-                              <Button fx:id="checkTreatmentButton3" layoutX="267.0" layoutY="446.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="163.0" text="Check treatment">
+                              <Button fx:id="checkTreatmentButton3" layoutX="267.0" layoutY="446.0" mnemonicParsing="false" onAction="#checkAsthma" prefHeight="32.0" prefWidth="163.0" text="Check treatment">
                                  <font>
                                     <Font name="System Bold" size="14.0" />
                                  </font>
@@ -100,7 +100,7 @@
                                     <CheckBox fx:id="osteoporosis_tab1" mnemonicParsing="false" prefHeight="68.0" prefWidth="146.0" text="Osteoporosis" />
                                  </children>
                               </VBox>
-                              <Button fx:id="backButton" layoutX="27.0" layoutY="448.0" mnemonicParsing="false" prefHeight="19.0" prefWidth="88.0" text="Back">
+                              <Button fx:id="backButton" layoutX="27.0" layoutY="448.0" mnemonicParsing="false" onAction="#backtoMenu" prefHeight="19.0" prefWidth="88.0" text="Back">
                                  <font>
                                     <Font name="System Bold" size="14.0" />
                                  </font>
@@ -118,7 +118,7 @@
                   </AnchorPane>
               </content>
             </Tab>
-            <Tab fx:id="Update_Asthma2" text="Update control of the symptoms of Asthma">
+            <Tab fx:id="Update_Asthma2" onSelectionChanged="#go_to_updateControlSymptoms" text="Update control of the symptoms of Asthma">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -197,7 +197,7 @@
                               <Font size="14.0" />
                            </font>
                         </CheckBox>
-                        <Button fx:id="checkTreatment4" layoutX="256.0" layoutY="376.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="199.0" text="Check treatment">
+                        <Button fx:id="checkTreatment4" layoutX="256.0" layoutY="376.0" mnemonicParsing="false" onAction="#checkAsthmaControlled" prefHeight="32.0" prefWidth="199.0" text="Check treatment">
                            <font>
                               <Font name="System Bold" size="15.0" />
                            </font>
@@ -214,7 +214,7 @@
                               <Font name="System Bold" size="20.0" />
                            </font>
                         </Label>
-                        <Button fx:id="backButton2" layoutX="26.0" layoutY="448.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="97.0" text="Back">
+                        <Button fx:id="backButton2" layoutX="26.0" layoutY="448.0" mnemonicParsing="false" onAction="#backtoMenu" prefHeight="29.0" prefWidth="97.0" text="Back">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>
@@ -230,7 +230,7 @@
                   </AnchorPane>
               </content>
             </Tab>
-            <Tab fx:id="AsthmaCrisis" text="Asthma Crisis">
+            <Tab fx:id="AsthmaCrisis" onSelectionChanged="#go_to_crisis" text="Asthma Crisis">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -253,7 +253,7 @@
                                  </font>
                               </Label>
                               <TextField fx:id="psTextField" layoutX="261.0" layoutY="304.0" prefHeight="22.0" prefWidth="352.0" promptText="Introduce the pulmonary score (0-9)" />
-                              <Button fx:id="checkTreatmentButton5" layoutX="240.0" layoutY="373.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="216.0" text="Check treatment">
+                              <Button fx:id="checkTreatmentButton5" layoutX="240.0" layoutY="373.0" mnemonicParsing="false" onAction="#checkAsthmaCrisis" prefHeight="29.0" prefWidth="216.0" text="Check treatment">
                                  <font>
                                     <Font name="System Bold" size="14.0" />
                                  </font>
@@ -281,7 +281,7 @@
                                     <Font name="System Bold" size="18.0" />
                                  </font>
                               </Label>
-                              <Button fx:id="backButton3" layoutX="35.0" layoutY="439.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="93.0" text="Back">
+                              <Button fx:id="backButton3" layoutX="35.0" layoutY="439.0" mnemonicParsing="false" onAction="#backtoMenu" prefHeight="29.0" prefWidth="93.0" text="Back">
                                  <font>
                                     <Font name="System Bold" size="14.0" />
                                  </font>

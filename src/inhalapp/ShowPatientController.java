@@ -59,16 +59,19 @@ public class ShowPatientController implements Initializable, Controller{
     private static TreatmentManager treatmentmanager;
     private static SceneChanger sc;
     
+    @FXML
     public void backtoMenu(ActionEvent event) {
         sc = new SceneChanger();
         sc.changeScenes(event, "menuUser.fxml");
     }
     
+    @FXML
     public void updateCOPDButtonPushed(ActionEvent event) {
         sc = new SceneChanger();
         sc.changeScenes(event, "updateEPOC.fxml");
     }
     
+    @FXML
     public void updateAsthmaButtonPushed(ActionEvent event) {
         sc = new SceneChanger();
         sc.changeScenes(event, "updateAsthma.fxml");

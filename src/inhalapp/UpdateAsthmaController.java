@@ -96,6 +96,7 @@ public class UpdateAsthmaController implements Initializable{
         TabPane.getSelectionModel().select(Update_Asthma2);
     }
     
+    @FXML
     public void backtoMenu(ActionEvent event) {
         sc = new SceneChanger();
         sc.changeScenes(event, "showPatient.fxml");

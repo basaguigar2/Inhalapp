@@ -10,9 +10,11 @@ import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -37,7 +39,7 @@ public class LogInController {
     private PasswordField passwordlogin;
 
     @FXML
-    private Button loginbutton, back;
+    private Button loginbutton;
 
     @FXML
     private TextField usernamelogin;
@@ -47,7 +49,7 @@ public class LogInController {
     
     
     @FXML
-    void loginUser(ActionEvent event) {
+    public void loginUser(ActionEvent event) {
         Window owner = loginbutton.getScene().getWindow();
         if (usernamelogin.getText().isEmpty()) {
             showAlert(Alert.AlertType.ERROR, owner, "Error!", "Please enter your username.");
@@ -81,7 +83,17 @@ public class LogInController {
     }
     
     @FXML
-    private void go_to_register(MouseEvent event) throws IOException {
+    public void setBoldOnMouseEnter(MouseEvent event) {
+        register_no_log_in.setStyle("-fx-font-weight: bold;");
+    }
+    
+    @FXML
+    public void setNormalOnMouseExit(MouseEvent event) {
+        register_no_log_in.setStyle("-fx-font-weight: normal;");
+    }
+    
+    @FXML
+    public void go_to_register(MouseEvent event) throws IOException {
         URL url = new File("src/inhalapp/register.fxml").toURI().toURL();
         Parent root = FXMLLoader.load(url);
         Scene scene = new Scene(root);

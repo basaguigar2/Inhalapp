@@ -13,7 +13,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="heartpharmacyapp.LoginController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="inhalapp.LogInController">
    <children>
       <ImageView fitHeight="400.0" fitWidth="606.0" layoutX="-3.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -37,7 +37,7 @@
             <Font name="Arial Black" size="18.0" />
          </font>
       </Text>
-      <Button fx:id="loginbutton" layoutX="72.0" layoutY="225.0" mnemonicParsing="false" onAction="#go_to_crisis" prefHeight="18.0" prefWidth="182.0" text="Log In" textFill="#03407e">
+      <Button fx:id="loginbutton" layoutX="72.0" layoutY="225.0" mnemonicParsing="false" onAction="loginUser" prefHeight="18.0" prefWidth="182.0" text="Log In" textFill="#03407e">
          <effect>
             <Blend mode="BLUE">
                <topInput>
@@ -52,7 +52,7 @@
             <Insets />
          </opaqueInsets>
       </Button>
-      <Label fx:id="register_no_log_in" layoutX="138.0" layoutY="259.0" onMouseClicked="#go_to_register" onMouseEntered="#setBoldOnMouseEnter" onMouseExited="#setNormalOnMouseExit" prefHeight="26.0" prefWidth="99.0" text="Register?" textFill="#570df7" underline="true">
+      <Label fx:id="register_no_log_in" layoutX="138.0" layoutY="259.0" onDragDetected="#go_to_register" onMouseClicked="#go_to_register" onMouseEntered="#setBoldOnMouseEnter" onMouseExited="#setNormalOnMouseExit" prefHeight="26.0" prefWidth="99.0" text="Register?" textFill="#570df7" underline="true">
          <font>
             <Font size="14.0" />
          </font>

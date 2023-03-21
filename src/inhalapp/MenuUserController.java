@@ -137,7 +137,7 @@ public class MenuUserController implements Initializable{
 
         patientTable.setEditable(true);
 
-        listPatients(name_tab4.getText());
+        listPatients(filter_patient.getText());
         patientTable.setItems(patients);
         
         sex_comboBox = new ComboBox<>();
@@ -175,7 +175,8 @@ public class MenuUserController implements Initializable{
         this.obtainTreatmentButton.setDisable(false);
     }
     
-    public void obtainMedicationButtonPushed(ActionEvent event) throws SQLException {
+    @FXML
+    public void obtainTreatmentButtonPushed(ActionEvent event) throws SQLException {
 
         Patient p = this.patientTable.getSelectionModel().getSelectedItem();
         int initial_length = p.treatment_list.size();
@@ -212,6 +213,7 @@ public class MenuUserController implements Initializable{
         }
     }
     
+    @FXML
     public void addPatientButtonPushed(ActionEvent event) throws NotBoundException, SQLException {
         dbManager = new SQLiteManager();
         patientmanager = dbManager.getPatientManager();

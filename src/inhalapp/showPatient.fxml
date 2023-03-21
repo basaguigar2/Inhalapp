@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="530.0" prefWidth="694.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafx.InterfaceController">
+<AnchorPane id="AnchorPane" prefHeight="530.0" prefWidth="694.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="inhalapp.ShowPatientController">
    <children>
       <ImageView fitHeight="547.0" fitWidth="694.0" layoutY="-4.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -34,7 +34,7 @@
             </Label>
             <TextField fx:id="medCardeTextField" layoutX="263.0" layoutY="114.0" prefHeight="25.0" prefWidth="375.0" />
             <TextField fx:id="last_treatment_tab4" promptText="Enter your last treatment..." visible="false" />
-            <Button fx:id="updateCOPD" layoutX="298.0" layoutY="426.0" mnemonicParsing="false" onAction="#add_Patient" prefHeight="12.0" prefWidth="162.0" text="Update COPD">
+            <Button fx:id="updateCOPD" layoutX="298.0" layoutY="426.0" mnemonicParsing="false" onAction="#updateCOPDButtonPushed" prefHeight="12.0" prefWidth="162.0" text="Update COPD">
                <effect>
                   <Blend mode="BLUE">
                      <topInput>
@@ -51,7 +51,7 @@
                 <TableColumn fx:id="treatmentCol" prefWidth="272.0" text="Treatmets" />
               </columns>
             </TableView>
-            <Button fx:id="updateAsthma" layoutX="481.0" layoutY="425.0" mnemonicParsing="false" onAction="#add_Patient" prefHeight="12.0" prefWidth="162.0" text="Update Asthma">
+            <Button fx:id="updateAsthma" layoutX="481.0" layoutY="425.0" mnemonicParsing="false" onAction="#updateAsthmaButtonPushed" prefHeight="12.0" prefWidth="162.0" text="Update Asthma">
                <effect>
                   <Blend mode="BLUE">
                      <topInput>
@@ -68,7 +68,7 @@
                   <TableColumn fx:id="comorbidityCol" prefWidth="286.0" text="Comorbidities" />
                </columns>
             </TableView>
-            <Button fx:id="backButton" layoutX="38.0" layoutY="470.0" mnemonicParsing="false" onAction="#add_Patient" prefHeight="29.0" prefWidth="89.0" text="Back">
+            <Button fx:id="backButton" layoutX="38.0" layoutY="470.0" mnemonicParsing="false" onAction="#backtoMenu" prefHeight="29.0" prefWidth="89.0" text="Back">
                <effect>
                   <Blend mode="RED">
                      <topInput>

@@ -13,6 +13,7 @@ import java.net.URL;
 import java.security.MessageDigest;
 import java.util.Arrays;
 import java.util.Properties;
+import java.util.ResourceBundle;
 import javafx.event.*;
 import javafx.fxml.*;
 import javafx.scene.*;
@@ -39,7 +40,7 @@ public class RegisterController {
     private PasswordField password, repeatpassword;
 
     @FXML
-    private Button register;
+    private Button register, backButton;
 
     @FXML
     private TextField username,emailtxt;
@@ -108,6 +109,7 @@ public class RegisterController {
         }
     }
     
+    @FXML
     public void backtoMenu(ActionEvent event) {
         sc = new SceneChanger();
         sc.changeScenes(event, "logIn.fxml");

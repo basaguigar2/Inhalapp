@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="530.0" prefWidth="694.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafx.InterfaceController">
+<AnchorPane id="AnchorPane" prefHeight="530.0" prefWidth="694.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="inhalapp.UpdateEPOCController">
    <children>
       <ImageView fitHeight="547.0" fitWidth="694.0" layoutY="-4.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -25,7 +25,7 @@
       </ImageView>
       <TabPane fx:id="TabPane" prefHeight="530.0" prefWidth="694.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
-            <Tab fx:id="Update_EPOC1" text="Update COPD">
+            <Tab fx:id="Update_EPOC1" onSelectionChanged="#go_to_updateEPOC" text="Update COPD">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -73,7 +73,7 @@
                               <Font size="14.0" />
                            </font>
                         </CheckBox>
-                        <Button fx:id="checkTreatment1" layoutX="228.0" layoutY="413.0" mnemonicParsing="false" onAction="#check_EPOC1" prefHeight="14.0" prefWidth="195.0" text="Check Treatment">
+                        <Button fx:id="checkTreatment1" layoutX="228.0" layoutY="413.0" mnemonicParsing="false" onAction="#checkCOPD" prefHeight="14.0" prefWidth="195.0" text="Check Treatment">
                            <effect>
                               <Blend mode="BLUE">
                                  <topInput>
@@ -120,7 +120,7 @@
                               <Font name="System Bold" size="18.0" />
                            </font>
                         </Label>
-                        <Button fx:id="backButton" layoutX="28.0" layoutY="442.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="78.0" text="Back">
+                        <Button fx:id="backButton" layoutX="28.0" layoutY="442.0" mnemonicParsing="false" onAction="#backtoMenu" prefHeight="29.0" prefWidth="78.0" text="Back">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>
@@ -135,7 +135,7 @@
                      </children></AnchorPane>
               </content>
             </Tab>
-            <Tab fx:id="Update_EPOC2" text="Update COPD with deterioration">
+            <Tab fx:id="Update_EPOC2" onSelectionChanged="#go_to_updateEPOCWithDeterioration" text="Update COPD with deterioration">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -189,7 +189,7 @@
                                     <Font name="System Bold" size="18.0" />
                                  </font>
                               </Label>
-                              <Button fx:id="checkTreatment2" layoutX="250.0" layoutY="421.0" mnemonicParsing="false" onAction="#check_EPOC2" prefHeight="27.0" prefWidth="183.0" text="Check Treatment">
+                              <Button fx:id="checkTreatment2" layoutX="250.0" layoutY="421.0" mnemonicParsing="false" onAction="#checkCOPDWithDeterioration" prefHeight="27.0" prefWidth="183.0" text="Check Treatment">
                                  <font>
                                     <Font name="System Bold" size="14.0" />
                                  </font>
@@ -226,7 +226,7 @@
                                     <Font name="System Bold" size="18.0" />
                                  </font>
                               </Label>
-                              <Button fx:id="backButton1" layoutX="23.0" layoutY="450.0" mnemonicParsing="false" prefHeight="19.0" prefWidth="88.0" text="Back">
+                              <Button fx:id="backButton1" layoutX="23.0" layoutY="450.0" mnemonicParsing="false" onAction="#backtoMenu" prefHeight="19.0" prefWidth="88.0" text="Back">
                                  <font>
                                     <Font name="System Bold" size="14.0" />
                                  </font>
