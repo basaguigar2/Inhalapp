@@ -19,7 +19,7 @@ public class Treatment {
     public static final Treatment PULMONAR_VOLUME_REDUCTION;
     public static final Treatment BRONCHOSCOPIC_INTERVENTION;
     public static final Treatment PULMONAR_TRANSPLANT;
-    public static final Treatment SABA_LAMA;
+    public static final Treatment SABA_SAMA;
     public static final Treatment LABA_LAMA;
     public static final Treatment LAMA;
     public static final Treatment LABA;
@@ -50,6 +50,7 @@ public class Treatment {
     String therapy="Chronic home oxygen therapy";
     CHRONIC_OXIGEN_THERAPY= new Treatment(therapy);
     }
+    
     static{
     String therapy="Bullectomy";
     BULLECTOMY= new Treatment(therapy);
@@ -67,9 +68,9 @@ public class Treatment {
     PULMONAR_TRANSPLANT= new Treatment(therapy);
     }
     static{
-    String drug="SABA/LAMA";
+    String drug="SABA/SAMA";
     String dose="2-4 inhalations/day";
-    SABA_LAMA= new Treatment(drug,dose);
+    SABA_SAMA= new Treatment(drug,dose);
     }
     static{
     String drug="LABA/LAMA";
@@ -265,6 +266,6 @@ public class Treatment {
     
     @Override
     public String toString() {
-        return "Treatment{" + "drug=" + drug + ", dose=" + dose + '}';
+        return "Treatment{" + "drug=" + drug + ", dose=" + dose + ", therapy:" + therapy +"}";
     }
 }
