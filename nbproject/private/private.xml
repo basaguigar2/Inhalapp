@@ -2,16 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/C:/Users/gisel/OneDrive/Documentos/InhalApp/src/pojos/Patient.java</file>
-            <file>file:/C:/Users/gisel/OneDrive/Documentos/InhalApp/src/inhalapp/InterfaceController.java</file>
-            <file>file:/C:/Users/gisel/OneDrive/Documentos/InhalApp/src/java/rules/diagnosis/diagnosis.drl</file>
-            <file>file:/C:/Users/gisel/OneDrive/Documentos/InhalApp/src/example/Application.java</file>
-            <file>file:/C:/Users/gisel/OneDrive/Documentos/InhalApp/src/pojos/EPOC.java</file>
-            <file>file:/C:/Users/gisel/OneDrive/Documentos/InhalApp/src/pojos/ConstantTreatments.java</file>
-            <file>file:/C:/Users/gisel/OneDrive/Documentos/InhalApp/src/inhalapp/RegisterController.java</file>
-            <file>file:/C:/Users/gisel/OneDrive/Documentos/InhalApp/src/inhalapp/interface.fxml</file>
-            <file>file:/C:/Users/gisel/OneDrive/Documentos/InhalApp/test/pojos/UserTest.java</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>

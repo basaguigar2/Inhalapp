@@ -140,7 +140,7 @@ public abstract class InterfaceController implements Initializable, DBManager {
     public void setInfoPatient(Patient p) {
         medical_card_tab3.setText(String.valueOf(p.getMedical_card_number()));
         name_tab_3.setText(p.getPatientName());
-        age_tab3.setText(p.getPatientAge().toString());
+        //age_tab3.setText(p.getPatientAge().toString());
         sex_tab3.setText(p.getPatientGender());
         if (p.isPregnant()) {
             pregnancy_tab3.setSelected(true);
@@ -170,7 +170,7 @@ public abstract class InterfaceController implements Initializable, DBManager {
         Patient p = new Patient();
         p.setPatientName(name_tab4.getText());
         p.setMedical_card_number(Integer.valueOf(medical_card_tab4.getText()));
-        p.setPatientAge(age_picker.getValue());
+        //p.setPatientAge(age_picker.getValue());
         p.setPatientGender(sex_comboBox.getValue());
         if (!pregnancy_tab4.isSelected()) {
             p.setPregnancy(false);

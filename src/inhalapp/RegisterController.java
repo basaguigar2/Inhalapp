@@ -122,7 +122,7 @@ public class RegisterController {
     }
        
        public void sendEmail (String asunto, String cuerpo, String destinatario){
-        String remitente = "inhalapp@gmail.com";
+        String remitente = "inhalapp23@gmail.com";
 
         Properties props = System.getProperties();
         props.put("mail.smtp.user", remitente);
