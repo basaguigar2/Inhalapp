@@ -16,12 +16,12 @@ import pojos.*;
 
 public class Application {
     
-        public static void main(String[] args) throws NotBoundException {
-        KieServices ks = KieServices.Factory.get();
-        KieContainer kc = ks.getKieClasspathContainer();
-        execute(ks, kc);
+    //    public static void main(String[] args) throws NotBoundException {
+    //    KieServices ks = KieServices.Factory.get();
+      //  KieContainer kc = ks.getKieClasspathContainer();
+      //  execute(ks, kc);
         
-    }
+   // }
 
     public static void execute(KieServices ks, KieContainer kc) throws NotBoundException {
         // From the container, a session is created based on
