@@ -18,6 +18,7 @@ public class Patient {
    public Integer medical_card_number;
    public String name;
    public int age;
+   public LocalDate calendar;
    public String gender;
    public boolean pregnancy;
    public boolean influenza_vaccine, pneumonia_vaccine;
@@ -143,6 +144,14 @@ public class Patient {
 
     public int getPatientAge() {
         return age;
+    }
+
+    public LocalDate getCalendar() {
+        return calendar;
+    }
+
+    public void setCalendar(LocalDate calendar) {
+        this.calendar = calendar;
     }
 
     public void setPatientAge(int age) {
@@ -325,6 +334,8 @@ public class Patient {
                 this.string_comorbidities.add(c);
         }
     }
+    
+    
 
     @Override
     public String toString() {

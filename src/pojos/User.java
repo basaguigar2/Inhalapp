@@ -17,8 +17,6 @@ import java.util.regex.Pattern;
 public class User implements Serializable{
     
     private static final long serialVersionUID = -1156840724257282729L;
-    
-    private int role;
     private String username;
     private String password;
     private String email;
@@ -31,20 +29,11 @@ public class User implements Serializable{
         this.username = username;
         this.password = password;
     }
-    
-    public User(int role, String username, String password, int userId) {
-        this.role = role;
+
+    public User(String username, String password, String email) {
         this.username = username;
         this.password = password;
-        this.userId = userId;
-    }
-    
-    public int getRole() {
-        return role;
-    }
-
-    public void setRole(int role) {
-        this.role = role;
+        this.email = email;
     }
 
     public String getUsername() {

@@ -44,9 +44,6 @@ public class LogInController {
     @FXML
     private TextField usernamelogin;
     
-    @FXML
-    private Label register_no_log_in;
-    
     
     @FXML
     public void loginUser(ActionEvent event) {
@@ -73,7 +70,6 @@ public class LogInController {
               Parent root = FXMLLoader.load(getClass().getResource("menuUser.fxml"));
               Scene scene = new Scene(root);
               Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-
               stage.setScene(scene);
               stage.show();
             } catch(IOException e) {
@@ -83,19 +79,8 @@ public class LogInController {
     }
     
     @FXML
-    public void setBoldOnMouseEnter(MouseEvent event) {
-        register_no_log_in.setStyle("-fx-font-weight: bold;");
-    }
-    
-    @FXML
-    public void setNormalOnMouseExit(MouseEvent event) {
-        register_no_log_in.setStyle("-fx-font-weight: normal;");
-    }
-    
-    @FXML
-    public void go_to_register(MouseEvent event) throws IOException {
-        URL url = new File("src/inhalapp/register.fxml").toURI().toURL();
-        Parent root = FXMLLoader.load(url);
+    public void goToRegister(MouseEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("register.fxml"));
         Scene scene = new Scene(root);
         Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         stage.setScene(scene);

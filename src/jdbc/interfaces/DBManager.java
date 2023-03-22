@@ -4,6 +4,7 @@
  */
 package db.interfaces;
 
+import db.sqlite.SQLiteUserManager;
 import java.sql.Connection;
 
 /**
@@ -20,7 +21,7 @@ public interface DBManager {
     public EpocManager getEPOCManager();
     public AsthmaManager getAsthmaManager();
     public Connection getConnection();
-    public UserManager getUserMAnager();
+    public SQLiteUserManager getUserManager();
     public boolean createTables();
     public int getLastId();
 }

@@ -4,6 +4,7 @@
  */
 package db.interfaces;
 
+import java.sql.Connection;
 import pojos.User;
 
 /**

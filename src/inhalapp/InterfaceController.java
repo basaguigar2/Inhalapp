@@ -48,7 +48,7 @@ public abstract class InterfaceController implements Initializable, DBManager {
 
     /**
      * Initializes the controller class.
-     */
+    
     private User u = null;
     private Patient p = null;
     ObservableList<String> observable_names;
@@ -350,5 +350,5 @@ public abstract class InterfaceController implements Initializable, DBManager {
                 }
             }
         });
-    }
+    }*/
 }

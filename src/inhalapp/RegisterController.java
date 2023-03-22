@@ -4,13 +4,16 @@
  */
 package inhalapp;
 
+import db.interfaces.DBManager;
 import db.interfaces.UserManager;
+import db.sqlite.SQLiteManager;
 import db.sqlite.SQLiteUserManager;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.MessageDigest;
+import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Properties;
 import java.util.ResourceBundle;
@@ -32,10 +35,9 @@ import pojos.User;
  *
  * @author gisel
  */
-public class RegisterController {
-    
-    private static  UserManager userman= new SQLiteUserManager();
-    
+public class RegisterController implements Initializable {
+
+    private static DBManager userman = InhalApp.getDBManager();
     @FXML
     private PasswordField password, repeatpassword;
 
@@ -43,72 +45,78 @@ public class RegisterController {
     private Button register, backButton;
 
     @FXML
-    private TextField username,emailtxt;
-    
-    private boolean check=true;
+    private TextField username, emailtxt;
+
+    private boolean check = true;
     private static SceneChanger sc;
 
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        System.out.println("Metodo initialize");
+    }
+
     @FXML
-    void RegisterUser(ActionEvent event) throws IOException {
-        
+    public void RegisterUser(ActionEvent event) throws IOException, SQLException {
         Window window = register.getScene().getWindow();
 
-        if((username.getText().isEmpty())) {
+        if ((username.getText().isEmpty())) {
             showAlert(Alert.AlertType.ERROR, window, "Error!", "Please enter your username");
             return;
         }
-        
+
         if (password.getText().isEmpty()) {
             showAlert(Alert.AlertType.ERROR, window, "Error!", "Please enter your password");
             return;
         }
-        
+
         if (repeatpassword.getText().isEmpty()) {
             showAlert(Alert.AlertType.ERROR, window, "Error!", "Please enter your password repeated");
-            
+
             return;
         }
-        
+
         String username = this.username.getText();
-        String email= this.emailtxt.getText();
-        
-        if(checkData(email)==false){
+        String email = this.emailtxt.getText();
+
+        if (checkData(email) == false) {
             showAlert(Alert.AlertType.ERROR, window, "Error!", "Please enter an existent gmail.com account");
             return;
         }
-        
+
         String password = this.password.getText();
         String confirmPassword = this.repeatpassword.getText();
-        
-        if(!password.equals(confirmPassword)) {
-            check=false;
-            showAlert(Alert.AlertType.ERROR, window, "Error!", "he passwords introduced do not match");
-            return;
-        }else{
-               check=true;
-        }
-        if(check==true){
-            try{
-                boolean userRepeated= userman.existingUserName(username);
 
-                if(userRepeated) {
+        if (!password.equals(confirmPassword)) {
+            check = false;
+            showAlert(Alert.AlertType.ERROR, window, "Error!", "The passwords introduced do not match");
+            return;
+        } else {
+            check = true;
+        }
+        if (check == true) {
+            try {
+                boolean userRepeated = userman.getUserManager().existingUserName(username);
+                if (userRepeated) {
                     infoMessage("ERROR, existing user", null, "Failed");
-                }else {
+                } else {
                     MessageDigest md = MessageDigest.getInstance("MD5");
                     md.update(password.getBytes());
                     byte[] hash = md.digest();
-                    User user = new User(username, Arrays.toString(hash));
-                    userman.addUser(user);
-                    sendEmail("Welcome to Inhalapp!", "Your user is: "+username+"\n"+"Your password is: "+password,email);
-                    Parent root = FXMLLoader.load(getClass().getResource("interface.fxml"));
+                    User user = new User(username, Arrays.toString(hash), email);
+                    userman.getUserManager().addUser(user);
+                    //sendEmail("Welcome to Inhalapp!", "Your user is: " + username + "\n" + "Your password is: " + password, email);
+                    Parent root = FXMLLoader.load(getClass().getResource("menuUser.fxml"));
                     Scene scene = new Scene(root);
+                    Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                    stage.setScene(scene);
+                    stage.show();
                 }
-            } catch(Exception e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
     }
-    
+
     @FXML
     public void backtoMenu(ActionEvent event) {
         sc = new SceneChanger();
@@ -122,8 +130,8 @@ public class RegisterController {
         alert.setHeaderText(headerText);
         alert.showAndWait();
     }
-       
-       public void sendEmail (String asunto, String cuerpo, String destinatario){
+
+    public void sendEmail(String asunto, String cuerpo, String destinatario) {
         String remitente = "inhalapp23@gmail.com";
 
         Properties props = System.getProperties();
@@ -133,7 +141,7 @@ public class RegisterController {
         props.put("mail.smtp.clave", "Inhalapp2023*");
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
-         //El puerto SMTP seguro de Google
+        //El puerto SMTP seguro de Google
 
         Session session = Session.getInstance(props);
         MimeMessage message = new MimeMessage(session);
@@ -147,29 +155,28 @@ public class RegisterController {
             transport.connect("smtp.gmail.com", remitente, "Inhalapp2023*");
             transport.sendMessage(message, message.getAllRecipients());
             transport.close();
-        }
-        catch (MessagingException me) {
+        } catch (MessagingException me) {
             me.printStackTrace();
         }
     }
 
-       public static void showAlert(Alert.AlertType alertType, Window owner, String title, String message ) {
-       Alert alert = new Alert(alertType);
-       alert.setTitle(title);
-       alert.setHeaderText(null);
-       alert.setContentText(message);
-       alert.initOwner(owner);
-       alert.show();
-       }
-       
-       public boolean checkData(String email){
-           boolean data= true;
-           if(email.contains("@gmail.com")==false){
-               data=false;
-               check=false;
-           }else{
-               check=true;
-           }
-           return data;
-       }
+    public static void showAlert(Alert.AlertType alertType, Window owner, String title, String message) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.initOwner(owner);
+        alert.show();
+    }
+
+    public boolean checkData(String email) {
+        boolean data = true;
+        if (email.contains("@gmail.com") == false) {
+            data = false;
+            check = false;
+        } else {
+            check = true;
+        }
+        return data;
+    }
 }

@@ -39,6 +39,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import org.kie.api.KieServices;
@@ -65,7 +66,7 @@ public class MenuUserController implements Initializable{
     private TextField filter_patient, medical_card_tab4, name_tab4;
     
     @FXML
-    private TableView<Patient> patientTable = null;
+    private TableView<Patient> patientTable;
     
     @FXML
     private TableColumn<Patient, Integer> medCol;
@@ -94,10 +95,13 @@ public class MenuUserController implements Initializable{
     @FXML
     private Label nameError, medCardError;
     
-    private static DBManager dbManager;
-    private static PatientManager patientmanager;
-    private static ComorbidityManager comorbiditymanager;
-    private static TreatmentManager treatmentmanager;    
+    @FXML 
+    private Pane addPatient_pane;
+    
+    private static DBManager dbManager = InhalApp.getDBManager();
+    private static PatientManager patientmanager = dbManager.getPatientManager();
+    private static ComorbidityManager comorbiditymanager = dbManager.getComorbidityManager();
+    private static TreatmentManager treatmentmanager = dbManager.getTreatmentManager();    
     private static SceneChanger sc;
     
     private ObservableList<Patient> patients = FXCollections.observableArrayList();
@@ -122,19 +126,15 @@ public class MenuUserController implements Initializable{
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        System.out.println(dbManager.getConnection());
         this.seePatientButton.setDisable(true);
         this.obtainTreatmentButton.setDisable(true);
-        this.addPatientButton.setDisable(true);
-
-        dbManager = new SQLiteManager();
-        patientmanager = dbManager.getPatientManager();
-        comorbiditymanager = dbManager.getComorbidityManager();
-        treatmentmanager = dbManager.getTreatmentManager();
-
+        System.out.println("Entro a listar");
+        patientTable = new TableView<>();
         medCol.setCellValueFactory(new PropertyValueFactory<Patient, Integer>("medical_card_number"));
         nameCol.setCellValueFactory(new PropertyValueFactory<Patient, String>("name"));
         diseaseCol.setCellValueFactory(new PropertyValueFactory<Patient, String>("respiratorydisease"));
-
+        
         patientTable.setEditable(true);
 
         listPatients(filter_patient.getText());
@@ -142,7 +142,7 @@ public class MenuUserController implements Initializable{
         
         sex_comboBox = new ComboBox<>();
         sex_comboBox.getItems().addAll("Male", "Female");
-        
+        addPatient_pane.getChildren().add(sex_comboBox);
         //Creation of raioButtons groups
         respiratory_disease_tab4 = new ToggleGroup();
         copd_tab4.setToggleGroup(respiratory_disease_tab4);
@@ -151,6 +151,7 @@ public class MenuUserController implements Initializable{
         previously_diagnosed = new ToggleGroup();
         pD_true.setToggleGroup(previously_diagnosed);
         pD_false.setToggleGroup(previously_diagnosed);
+        System.out.println("Termino de listar");
     }
     
     public void listPatients(String name) {
@@ -215,12 +216,6 @@ public class MenuUserController implements Initializable{
     
     @FXML
     public void addPatientButtonPushed(ActionEvent event) throws NotBoundException, SQLException {
-        dbManager = new SQLiteManager();
-        patientmanager = dbManager.getPatientManager();
-        
-        ObservableList<String> genderList = FXCollections.observableArrayList("Male","Female");
-        sex_comboBox.setItems(genderList);
-        
         String name = name_tab4.getText();
         Integer medCard = Integer.parseInt(medical_card_tab4.getText());
         LocalDate dob = age_picker.getValue();
@@ -259,12 +254,13 @@ public class MenuUserController implements Initializable{
         Boolean validData = validate(name);
         
         if (validData == true && (copd_tab4.isSelected()||asthma_tab4.isSelected()) && (pD_true.isSelected()||pD_false.isSelected())) {
-            this.nameError.setText("");
-            this.medCardError.setText("");
-            this.addPatientButton.setDisable(false);
+            
             Patient p = new Patient(medCard, name, age, gender, pregnancy, smoker, hospitalization, respiratoryDisease);
             patientmanager.addPatient(p);
             TabPane.getSelectionModel().select(ListPatient);
+            this.nameError.setText("");
+            this.medCardError.setText("");
+            this.addPatientButton.setDisable(false);
         } else {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Missing data");

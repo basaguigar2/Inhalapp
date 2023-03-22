@@ -4,6 +4,7 @@
  */
 package db.sqlite;
 
+import db.interfaces.DBManager;
 import db.interfaces.UserManager;
 import java.rmi.NotBoundException;
 import java.security.NoSuchAlgorithmException;
@@ -19,9 +20,9 @@ import pojos.User;
  *
  * @author gisel
  */
-public class SQLiteUserManager implements UserManager{
-  
-    private Connection c;
+public class SQLiteUserManager implements UserManager {
+
+    public Connection c;
 
     public SQLiteUserManager(Connection c) {
         this.c = c;
@@ -30,17 +31,18 @@ public class SQLiteUserManager implements UserManager{
     public SQLiteUserManager() {
         super();
     }
-    
+
     @Override
     public void addUser(User u) {
         try {
-            String sq1 = "INSERT INTO users ( userName, userPassword, email) VALUES (?, ?, ?)";
+            String sq1 = "INSERT INTO users ( userName, userPassword, name) VALUES (?, ?, ?)";
             PreparedStatement preparedStatement = c.prepareStatement(sq1);
             preparedStatement.setString(1, u.getUsername());
             preparedStatement.setString(2, u.getPassword());
             preparedStatement.setString(3, u.getEmail());
             preparedStatement.executeUpdate();
             preparedStatement.close();
+            System.out.println("Registrado");
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -65,8 +67,8 @@ public class SQLiteUserManager implements UserManager{
             return user;
 //            } catch (NoSuchAlgorithmException e) {
 //                    e.printStackTrace();
-       // } catch (NoResultException e) {
-        //    user = null;
+            // } catch (NoResultException e) {
+            //    user = null;
 
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -90,7 +92,6 @@ public class SQLiteUserManager implements UserManager{
         }
         return id;
     }
-    
 
     @Override
     public boolean existingUserName(String username) {
@@ -118,7 +119,6 @@ public class SQLiteUserManager implements UserManager{
             User u = new User();
             if (rs.next()) {
                 u.setPassword(rs.getString("userPassword"));
-                u.setRole(rs.getInt("userRoleid"));
                 u.setUserId(userId);
                 u.setUsername(rs.getString("userName"));
                 u.setEmail(rs.getString("email"));
@@ -134,7 +134,7 @@ public class SQLiteUserManager implements UserManager{
             return null;
         }
     }
-    
+
     @Override
     public void createLinkUserRole(int roleId, int userId) {
         try {
@@ -147,6 +147,10 @@ public class SQLiteUserManager implements UserManager{
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
+    }
+
+    public SQLiteUserManager getUserManager() {
+        return new SQLiteUserManager(c);
     }
 
 }

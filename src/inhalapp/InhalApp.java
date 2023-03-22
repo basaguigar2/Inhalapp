@@ -6,6 +6,8 @@ package inhalapp;
 
 import db.interfaces.DBManager;
 import db.sqlite.SQLiteManager;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -16,15 +18,22 @@ import javafx.stage.Stage;
  *
  * @author gisel
  */
-public class InhalApp extends Application{
+public class InhalApp extends Application {
+
     private static DBManager dbManager = new SQLiteManager();
-    
+
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("logIn.fxml"));
-        Scene scene = new Scene(root); 
-        stage.setScene(scene);
-        stage.show();
+        if (!dbManager.getConnection().isClosed()) {
+            Parent root = FXMLLoader.load(getClass().getResource("register.fxml"));
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        }
+    }
+
+    public static DBManager getDBManager() {
+        return dbManager;
     }
 
     public static void main(String[] args) {
@@ -33,4 +42,5 @@ public class InhalApp extends Application{
         launch(args);
         dbManager.disconnect();
     }
+
 }

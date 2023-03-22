@@ -181,7 +181,7 @@ public class SQLitePatientManager implements PatientManager {
     public ArrayList<Patient> ListPatients(String name) {
         ArrayList<Patient> pList = new ArrayList<Patient>();
         try {
-            String sql = "SELECT * FROM patients WHERE name = ?";
+            String sql = "SELECT * FROM patient WHERE name = ?";
             PreparedStatement p = c.prepareStatement(sql);
             p.setString(1, name);
             ResultSet rs = p.executeQuery();
@@ -323,7 +323,7 @@ public class SQLitePatientManager implements PatientManager {
     public ArrayList patient_names(int user_id) {
           try {
             ArrayList<String> names = new ArrayList<>();
-            String sql = "SELECT name FROM pacientes WHERE id_doctor = ?";
+            String sql = "SELECT name FROM patient WHERE id_doctor = ?";
             PreparedStatement pStatement = c.prepareStatement(sql);
             pStatement.setInt(1, user_id);
             ResultSet rs = pStatement.executeQuery();
