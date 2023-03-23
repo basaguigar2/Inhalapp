@@ -106,13 +106,12 @@ public class UpdateEPOCController implements Initializable{
         this.backButton.setDisable(false);
         this.backButton1.setDisable(false);
         
-        dbManager = new SQLiteManager();
+        dbManager = InhalApp.getDBManager();
         patientmanager = dbManager.getPatientManager();
         comorbiditymanager = dbManager.getComorbidityManager();
         treatmentmanager = dbManager.getTreatmentManager();
         epocmanager = dbManager.getEPOCManager();
         
-        pulmonary_condition_comboBox = new ComboBox<>();
         pulmonary_condition_comboBox.getItems().addAll(Arrays.asList(PulmonaryCondition.values()));
         
         eosinophilia = new ToggleGroup();

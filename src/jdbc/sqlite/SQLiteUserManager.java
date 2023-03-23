@@ -65,11 +65,6 @@ public class SQLiteUserManager implements UserManager {
             preparedStatement.close();
             rs.close();
             return user;
-//            } catch (NoSuchAlgorithmException e) {
-//                    e.printStackTrace();
-            // } catch (NoResultException e) {
-            //    user = null;
-
         } catch (SQLException ex) {
             ex.printStackTrace();
             user = null;

@@ -36,7 +36,7 @@
             <Font name="Arial Black" size="18.0" />
          </font>
       </Text>
-      <Button fx:id="loginbutton" layoutX="72.0" layoutY="225.0" mnemonicParsing="false" onAction="loginUser" prefHeight="18.0" prefWidth="182.0" text="Log In" textFill="#03407e">
+      <Button fx:id="loginbutton" layoutX="72.0" layoutY="225.0" mnemonicParsing="false" onAction="#login_User" prefHeight="18.0" prefWidth="182.0" text="Log In" textFill="#03407e">
          <effect>
             <Blend mode="BLUE">
                <topInput>
@@ -51,7 +51,7 @@
             <Insets />
          </opaqueInsets>
       </Button>
-      <Button fx:id="register_no_log_in" layoutX="108.0" layoutY="259.0" mnemonicParsing="false" onAction="goToRegister" prefHeight="26.0" prefWidth="109.0" text="Register?" textFill="#03407e">
+      <Button fx:id="register_no_log_in" layoutX="108.0" layoutY="259.0" mnemonicParsing="false" onAction="#go_ToRegister" prefHeight="26.0" prefWidth="109.0" text="Register?" textFill="#03407e">
          <effect>
             <Blend mode="BLUE">
                <topInput>

@@ -116,6 +116,12 @@ public class Patient {
         this.respiratorydisease = respiratorydisease;
     }
 
+    public Patient(Integer medical_card_number, String name, String respiratorydisease) {
+        this.medical_card_number = medical_card_number;
+        this.name = name;
+        this.respiratorydisease = respiratorydisease;
+    }
+
     
 
     public Integer getId() {
@@ -134,11 +140,11 @@ public class Patient {
         this.medical_card_number = medical_card_number;
     }
 
-    public String getPatientName() {
+    public String getName() {
         return name;
     }
 
-    public void setPatientName(String name) {
+    public void setName(String name) {
         this.name = name;
     }
 

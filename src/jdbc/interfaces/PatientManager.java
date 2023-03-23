@@ -23,7 +23,6 @@ public interface PatientManager {
     public ArrayList<Patient> selectAllPatients(int userId);
     public boolean editPatient(Integer medCardNum, String name, Integer age, String gender, boolean pregnancy, boolean smoker, boolean symptoms_controlled, boolean hospitalization, String respiratorydisease, Integer treatment_stage);
     public void createLinkUserPatient(int userId, int medCardNumber);
-    public void createLinkDoctorPatient(int medCardNumber, int doctorId);
     public ArrayList patient_names(int doc_id);
     public ArrayList<Patient> ListPatients(String name);
 }

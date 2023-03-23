@@ -38,6 +38,7 @@ import pojos.User;
 public class RegisterController implements Initializable {
 
     private static DBManager userman = InhalApp.getDBManager();
+    private User u = new User();
     @FXML
     private PasswordField password, repeatpassword;
 
@@ -105,7 +106,7 @@ public class RegisterController implements Initializable {
                     User user = new User(username, Arrays.toString(hash), email);
                     userman.getUserManager().addUser(user);
                     //sendEmail("Welcome to Inhalapp!", "Your user is: " + username + "\n" + "Your password is: " + password, email);
-                    Parent root = FXMLLoader.load(getClass().getResource("menuUser.fxml"));
+                    Parent root = FXMLLoader.load(getClass().getResource("logIn.fxml"));
                     Scene scene = new Scene(root);
                     Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                     stage.setScene(scene);

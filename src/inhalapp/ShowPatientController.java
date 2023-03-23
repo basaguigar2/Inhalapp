@@ -9,18 +9,26 @@ import db.interfaces.DBManager;
 import db.interfaces.PatientManager;
 import db.interfaces.TreatmentManager;
 import db.sqlite.SQLiteManager;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 import pojos.Comorbidity;
 import pojos.Patient;
 import pojos.Treatment;
@@ -67,8 +75,17 @@ public class ShowPatientController implements Initializable, Controller{
     
     @FXML
     public void updateCOPDButtonPushed(ActionEvent event) {
-        sc = new SceneChanger();
-        sc.changeScenes(event, "updateEPOC.fxml");
+        try {
+            sc = new SceneChanger();
+            //sc.changeScenes(event, "updateEPOC.fxml");
+            Parent root = FXMLLoader.load(getClass().getResource("updateEPOC.fxml"));
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException ex) {
+            Logger.getLogger(ShowPatientController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     @FXML
@@ -80,7 +97,7 @@ public class ShowPatientController implements Initializable, Controller{
     @Override
     public void setInfoPatient(Patient patient) {
         this.selectedPatient = patient;
-        this.nameSurnameTextField.setText(selectedPatient.getPatientName());
+        this.nameSurnameTextField.setText(selectedPatient.getName());
         this.medCardeTextField.setText(selectedPatient.getMedical_card_number().toString());
         this.respDiseaseTextField.setText(selectedPatient.getRespiratorydisease());
         
@@ -91,23 +108,23 @@ public class ShowPatientController implements Initializable, Controller{
         
         if(selectedPatient.getRespiratorydisease().equalsIgnoreCase("Asthma")){
             this.updateCOPD.setDisable(true);
-        } else if (selectedPatient.getRespiratorydisease().equalsIgnoreCase("EPOC")){
+        } else if (selectedPatient.getRespiratorydisease().equalsIgnoreCase("COPD")){
             this.updateAsthma.setDisable(true);
         }
-        this.nameSurnameTextField.setDisable(true);
-        this.medCardeTextField.setDisable(true);
-        this.respDiseaseTextField.setDisable(true);
+        this.nameSurnameTextField.setEditable(false);
+        this.medCardeTextField.setEditable(false);
+        this.respDiseaseTextField.setEditable(false);
         this.treatmentTable.setDisable(true);
         this.comorbidityTable.setDisable(true);
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        this.updateAsthma.setDisable(true);
-        this.updateCOPD.setDisable(true);
+        /*this.updateAsthma.setDisable(true);
+        this.updateCOPD.setDisable(true);*/
         this.backButton.setDisable(false);
 
-        dbManager = new SQLiteManager();
+        dbManager = InhalApp.getDBManager();
         patientmanager = dbManager.getPatientManager();
         comorbiditymanager = dbManager.getComorbidityManager();
         treatmentmanager = dbManager.getTreatmentManager();
@@ -117,7 +134,7 @@ public class ShowPatientController implements Initializable, Controller{
         
         comorbidityCol.setCellValueFactory(new PropertyValueFactory<Comorbidity, String>("cname"));
         treatmentCol.setCellValueFactory(new PropertyValueFactory<Treatment, String>("drug"));
-
+        selectedPatient = MenuUserController.getP();
         setInfoPatient(selectedPatient);
     }
 }

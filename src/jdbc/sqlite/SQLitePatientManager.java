@@ -41,22 +41,20 @@ public class SQLitePatientManager implements PatientManager {
     @Override
     public void addPatient(Patient p) throws SQLException {
         try {
-            String sq1 = "INSERT INTO patient (medical_card_number, name, age, gender, pregnancy,influenzaV,pneumoniaV, smoker, symptoms_controlled, hospitalization, respiratorydisease, treatment_stage) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            String sq1 = "INSERT INTO patient (medical_card_number, name, age, gender, pregnancy, smoker, symptoms_controlled, hospitalization, respiratorydisease) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement preparedStatement = c.prepareStatement(sq1);
             preparedStatement.setInt(1, p.getMedical_card_number());
-            preparedStatement.setString(2, p.getPatientName());
+            preparedStatement.setString(2, p.getName());
             preparedStatement.setInt(3, p.getPatientAge());
             preparedStatement.setString(4, p.getPatientGender());
             preparedStatement.setBoolean(5, p.isPregnant());
-            preparedStatement.setBoolean(6, p.isPregnant());
-            preparedStatement.setBoolean(7, p.isPregnant());
-            preparedStatement.setBoolean(8, p.isSmoker());
-            preparedStatement.setBoolean(9, p.isSymptoms_controlled());
-            preparedStatement.setBoolean(10, p.isHospitalization());
-            preparedStatement.setString(11, p.getRespiratorydisease());
-            preparedStatement.setInt(12, p.getTreatment_stage());
+            preparedStatement.setBoolean(6, p.isSmoker());
+            preparedStatement.setBoolean(7, p.isSymptoms_controlled());
+            preparedStatement.setBoolean(8, p.isHospitalization());
+            preparedStatement.setString(9, p.getRespiratorydisease());
             preparedStatement.executeUpdate();
             preparedStatement.close();
+            System.out.println("Patient added");
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -167,6 +165,7 @@ public class SQLitePatientManager implements PatientManager {
                         rs.getInt("age"), rs.getString("gender"), rs.getBoolean("pregnancy"),rs.getBoolean("influenzaV"), 
                         rs.getBoolean("pneumoniaV"),rs.getInt("treatment_stage"), rs.getBoolean("smoker"),rs.getBoolean("symptoms_controlled"), 
                         rs.getBoolean("hospitalization"),rs.getString("respiratorydisease")));
+                System.out.println(rs.getString("name"));
             }
             p.close();
             rs.close();
@@ -300,25 +299,6 @@ public class SQLitePatientManager implements PatientManager {
         }
     }
 
-    /**
-     * Associates a doctor with a patient
-     *
-     * @param medCardNumber
-     * @param userId
-     */
-    @Override
-    public void createLinkDoctorPatient(int medCardNumber, int userId) {
-        try {
-            String sql = "INSERT INTO doctor_patient (patient_id, doctor_id) VALUES (?,?)";
-            PreparedStatement pStatement = c.prepareStatement(sql);
-            pStatement.setInt(1, medCardNumber);
-            pStatement.setInt(2, userId);
-            pStatement.executeUpdate();
-            pStatement.close();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-    }
     @Override
     public ArrayList patient_names(int user_id) {
           try {

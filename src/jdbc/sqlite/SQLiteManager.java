@@ -42,7 +42,7 @@ public class SQLiteManager implements DBManager {
     public void connect() {
         try {
             Class.forName("org.sqlite.JDBC");
-            c = DriverManager.getConnection("jdbc:sqlite:./db/InhalApp3.db");
+            c = DriverManager.getConnection("jdbc:sqlite:./db/InhalApp4.db");
             c.createStatement().execute("PRAGMA foreign_keys=ON");
             patient = new SQLitePatientManager(c);
             treatment = new SQLiteTreatmentManager(c);
@@ -146,7 +146,7 @@ public class SQLiteManager implements DBManager {
                             + "drug TEXT , "
                             + "dose TEXT , "
                             + "therapy TEXT , "
-                            + "id_patient FOREING KEY REFERENCES patient(medical_card_number) ON UPDATE CASCADE ON DELETE SET NULL)";
+                            + "id_patient FOREING KEY REFERENCES patient(patientid) ON UPDATE CASCADE ON DELETE SET NULL)";
                     stmt5.executeUpdate(sql5);
                     stmt5.close();
                     
@@ -161,7 +161,7 @@ public class SQLiteManager implements DBManager {
                             + "exacerbations BOOLEAN, "
                             + "eosinophilia BOOLEAN, "
                             + "FEV INTEGER, "
-                            + "id_patient FOREING KEY REFERENCES patient(medical_card_number) ON UPDATE CASCADE ON DELETE SET NULL)";
+                            + "id_patient FOREING KEY REFERENCES patient(patientid) ON UPDATE CASCADE ON DELETE SET NULL)";
                     stmt6.executeUpdate(sql6);
                     stmt6.close();
                     
@@ -178,7 +178,7 @@ public class SQLiteManager implements DBManager {
                             + "limitations INTEGER, "
                             + "pulmonar_function INTEGER, "
                             + "exacerbations INTEGER, "
-                            + "id_patient FOREING KEY REFERENCES patient(medical_card_number) ON UPDATE CASCADE ON DELETE SET NULL)";
+                            + "id_patient FOREING KEY REFERENCES patient(patientid) ON UPDATE CASCADE ON DELETE SET NULL)";
                     stmt7.executeUpdate(sql7);
                     stmt7.close();
                     
@@ -186,13 +186,13 @@ public class SQLiteManager implements DBManager {
                     String sql8 = "CREATE TABLE comorbidity "
                             + "(cid INTEGER PRIMARY KEY AUTOINCREMENT, "
                             + "cname TEXT NOT NULL, "
-                            + "id_patient FOREING KEY REFERENCES patient(medical_card_number) ON UPDATE CASCADE ON DELETE SET NULL)";
+                            + "id_patient FOREING KEY REFERENCES patient(patientid) ON UPDATE CASCADE ON DELETE SET NULL)";
                     stmt8.executeUpdate(sql8);
                     stmt8.close();
                     
                     Statement stmt11 = c.createStatement();
                     String sql11 = "CREATE TABLE treatment_patient "
-                            + "(patient_id REFERENCES patient(medical_card_number) ON UPDATE RESTRICT ON DELETE CASCADE,"
+                            + "(patient_id REFERENCES patient(patientid) ON UPDATE RESTRICT ON DELETE CASCADE,"
                             + " treatment_id REFERENCES treatment(tid) ON UPDATE RESTRICT ON DELETE CASCADE, "
                             + " PRIMARY KEY (patient_id,treatment_id))";
                     stmt11.executeUpdate(sql11);
@@ -200,7 +200,7 @@ public class SQLiteManager implements DBManager {
                     
                     Statement stmt12 = c.createStatement();
                     String sql12 = "CREATE TABLE EPOC_patient "
-                            + "(patient_id REFERENCES patient(medical_card_number) ON UPDATE RESTRICT ON DELETE CASCADE,"
+                            + "(patient_id REFERENCES patient(patientid) ON UPDATE RESTRICT ON DELETE CASCADE,"
                             + " EPOC_id REFERENCES EPOC(EPOC_id) ON UPDATE RESTRICT ON DELETE CASCADE, "
                             + " PRIMARY KEY (patient_id,EPOC_id))";
                     stmt12.executeUpdate(sql12);
@@ -208,7 +208,7 @@ public class SQLiteManager implements DBManager {
                     
                     Statement stmt13 = c.createStatement();
                     String sql13 = "CREATE TABLE asthma_patient "
-                            + "(patient_id REFERENCES patient(medical_card_number) ON UPDATE RESTRICT ON DELETE CASCADE,"
+                            + "(patient_id REFERENCES patient(patientid) ON UPDATE RESTRICT ON DELETE CASCADE,"
                             + " asthma_id REFERENCES asthma(asthma_id) ON UPDATE RESTRICT ON DELETE CASCADE, "
                             + " PRIMARY KEY (patient_id,asthma_id))";
                     stmt13.executeUpdate(sql13);
@@ -216,20 +216,11 @@ public class SQLiteManager implements DBManager {
                     
                     Statement stmt14 = c.createStatement();
                     String sql14 = "CREATE TABLE comorbidity_patient "
-                            + "(patient_id REFERENCES patient(medical_card_number) ON UPDATE RESTRICT ON DELETE CASCADE,"
+                            + "(patient_id REFERENCES patient(patientid) ON UPDATE RESTRICT ON DELETE CASCADE,"
                             + " comorbidity_id REFERENCES comorbidity(cid) ON UPDATE RESTRICT ON DELETE CASCADE, "
                             + " PRIMARY KEY (patient_id,comorbidity_id))";
                     stmt14.executeUpdate(sql14);
                     stmt14.close();
-                    
-                    Statement stmt15 = c.createStatement();
-                    String sql15 = "CREATE TABLE allergy_patient_patient "
-                            + "(patient_id REFERENCES patient(medical_card_number) ON UPDATE RESTRICT ON DELETE CASCADE,"
-                            + " allergy_id REFERENCES allergy(aid) ON UPDATE RESTRICT ON DELETE CASCADE, "
-                            + " PRIMARY KEY (patient_id,allergy_id))";
-                    stmt15.executeUpdate(sql15);
-                    stmt15.close();
-                    
                     return true;
                 } catch (SQLException tables_error) {
                     if (tables_error.getMessage().contains("already exists")) {
