@@ -90,8 +90,16 @@ public class ShowPatientController implements Initializable, Controller{
     
     @FXML
     public void updateAsthmaButtonPushed(ActionEvent event) {
-        sc = new SceneChanger();
-        sc.changeScenes(event, "updateAsthma.fxml");
+        try{
+            sc = new SceneChanger();
+            Parent root = FXMLLoader.load(getClass().getResource("updateAsthma.fxml"));
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException ex) {
+            Logger.getLogger(ShowPatientController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     @Override
@@ -114,8 +122,8 @@ public class ShowPatientController implements Initializable, Controller{
         this.nameSurnameTextField.setEditable(false);
         this.medCardeTextField.setEditable(false);
         this.respDiseaseTextField.setEditable(false);
-        this.treatmentTable.setDisable(true);
-        this.comorbidityTable.setDisable(true);
+        this.treatmentTable.setEditable(false);
+        this.comorbidityTable.setEditable(false);
     }
 
     @Override

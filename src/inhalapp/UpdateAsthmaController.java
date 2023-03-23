@@ -111,18 +111,19 @@ public class UpdateAsthmaController implements Initializable{
         this.backButton2.setDisable(false);
         this.backButton3.setDisable(false);
         
-        dbManager = new SQLiteManager();
+        dbManager = InhalApp.getDBManager();
         patientmanager = dbManager.getPatientManager();
         comorbiditymanager = dbManager.getComorbidityManager();
         treatmentmanager = dbManager.getTreatmentManager();
         asthmamanager = dbManager.getAsthmaManager();
         
-        LimitationsChoiceBox = new ComboBox<>();
         LimitationsChoiceBox.getItems().addAll(Integer.parseInt("0"), Integer.parseInt("1"),Integer.parseInt("2"), Integer.parseInt("3"));
         
         symptoms_controlled = new ToggleGroup();
         symptoms_yes.setToggleGroup(symptoms_controlled);
         symptoms_no.setToggleGroup(symptoms_controlled);
+        
+        selectedPatient = MenuUserController.getP();
     }
     
     @FXML
@@ -232,6 +233,7 @@ public class UpdateAsthmaController implements Initializable{
             a.setlimitations(limitations);
             asthmamanager.addAsthma(a);
             patientmanager.introduceAsthma(selectedPatient.getMedical_card_number(), a.getAsthma_id());
+            this.checkTreatmentButton3.setDisable(false);
             checkTreatmentButtonPushed(event);
         } else {
             Alert alert = new Alert(Alert.AlertType.WARNING);
