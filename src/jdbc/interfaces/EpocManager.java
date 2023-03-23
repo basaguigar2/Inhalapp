@@ -13,6 +13,8 @@ import pojos.EPOC;
  */
 public interface EpocManager {
     public void addEPOC(EPOC e) throws SQLException;
+    public void addEPOC2(EPOC e) throws SQLException;
     public EPOC selectEPOC(Integer EPOC_id);
     public EPOC getEPOCFromPatient(Integer patientId);
+    public int getLastId();
 }

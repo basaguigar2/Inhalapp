@@ -25,7 +25,7 @@
       </ImageView>
       <TabPane fx:id="TabPane" prefHeight="530.0" prefWidth="694.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
-            <Tab fx:id="Update_EPOC1" onSelectionChanged="#go_to_updateEPOC" text="Update COPD">
+            <Tab fx:id="Update_EPOC1" text="Update COPD">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -135,7 +135,7 @@
                      </children></AnchorPane>
               </content>
             </Tab>
-            <Tab fx:id="Update_EPOC2" onSelectionChanged="#go_to_updateEPOCWithDeterioration" text="Update COPD with deterioration">
+            <Tab fx:id="Update_EPOC2" text="Update COPD with deterioration">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>

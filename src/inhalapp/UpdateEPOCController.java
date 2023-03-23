@@ -83,15 +83,6 @@ public class UpdateEPOCController implements Initializable{
     private static EpocManager epocmanager;
     private static SceneChanger sc;
     
-    @FXML
-    private void go_to_updateEPOC(ActionEvent event) {
-        TabPane.getSelectionModel().select(Update_EPOC1);
-    }
-    
-    @FXML
-    private void go_to_updateEPOCWithDeterioration(ActionEvent event) {
-        TabPane.getSelectionModel().select(Update_EPOC2);
-    }
     
     @FXML
     public void backtoMenu(ActionEvent event) {
@@ -101,8 +92,20 @@ public class UpdateEPOCController implements Initializable{
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        this.checkTreatment1.setDisable(true);
-        this.checkTreatment2.setDisable(true);
+        /*this.checkTreatment1.setDisable(true);
+        this.checkTreatment2.setDisable(true);*/
+        selectedPatient  = MenuUserController.getP();
+        if (!selectedPatient.isHospitalization()){
+            TabPane.getSelectionModel().select(Update_EPOC1);
+            Update_EPOC2.setDisable(true);
+        } else {
+            TabPane.getSelectionModel().select(Update_EPOC2);
+            Update_EPOC1.setDisable(true);
+        }
+        if(selectedPatient.getPatientAge()>5){
+        pneumonia_tab.setDisable(true);
+        pneumonia_tab5.setDisable(true);
+        }
         this.backButton.setDisable(false);
         this.backButton1.setDisable(false);
         
@@ -113,7 +116,7 @@ public class UpdateEPOCController implements Initializable{
         epocmanager = dbManager.getEPOCManager();
         
         pulmonary_condition_comboBox.getItems().addAll(Arrays.asList(PulmonaryCondition.values()));
-        
+        pulmonary_condition_comboBox.getSelectionModel().select(PulmonaryCondition.NONE);
         eosinophilia = new ToggleGroup();
         eosinophilia_yes.setToggleGroup(eosinophilia);
         eosinophilia_no.setToggleGroup(eosinophilia);
@@ -127,8 +130,12 @@ public class UpdateEPOCController implements Initializable{
         Comorbidity c = new Comorbidity();
         if(influenza_tab5.isSelected()){
             selectedPatient.setInfluenza_vaccine(true);
+        } else{
+            selectedPatient.setInfluenza_vaccine(false);
         }
         if(pneumonia_tab5.isSelected()){
+            selectedPatient.setPneumonia_vaccine(true);
+        } else {
             selectedPatient.setPneumonia_vaccine(true);
         }
         if (cardiovascular_tab5.isSelected()){
@@ -136,28 +143,28 @@ public class UpdateEPOCController implements Initializable{
             selectedPatient.addComorbidity(c);
             comorbiditymanager.addComorbidity(c);
             int comorbidity_id = dbManager.getLastId();
-            patientmanager.introduceComorbidity(selectedPatient.getMedical_card_number(), comorbidity_id);
+            patientmanager.introduceComorbidity(selectedPatient.getId(), comorbidity_id);
         }
         if (tuberculosis_tab5.isSelected()){
             c.setComorbidityName("Tuberculosis");
             selectedPatient.addComorbidity(c);
             comorbiditymanager.addComorbidity(c);
             int comorbidity_id = dbManager.getLastId();
-            patientmanager.introduceComorbidity(selectedPatient.getMedical_card_number(), comorbidity_id);
+            patientmanager.introduceComorbidity(selectedPatient.getId(), comorbidity_id);
         }
         if (viral_tab5.isSelected()){
             c.setComorbidityName("Viral Infection");
             selectedPatient.addComorbidity(c);
             comorbiditymanager.addComorbidity(c);
             int comorbidity_id = dbManager.getLastId();
-            patientmanager.introduceComorbidity(selectedPatient.getMedical_card_number(), comorbidity_id);
+            patientmanager.introduceComorbidity(selectedPatient.getId(), comorbidity_id);
         }
         if (vision_tab5.isSelected()){
             c.setComorbidityName("Vision Disorder");
             selectedPatient.addComorbidity(c);
             comorbiditymanager.addComorbidity(c);
             int comorbidity_id = dbManager.getLastId();
-            patientmanager.introduceComorbidity(selectedPatient.getMedical_card_number(), comorbidity_id);
+            patientmanager.introduceComorbidity(selectedPatient.getId(), comorbidity_id);
         }
         
         String condition = pulmonary_condition_comboBox.getValue().toString();
@@ -176,18 +183,19 @@ public class UpdateEPOCController implements Initializable{
         Boolean validData = validateCOPD(mMRC, CAT, exa);
         
         if (validData == true && (eosinophilia_yes.isSelected()||eosinophilia_no.isSelected()) && pulmonary_condition_comboBox.getValue() != null) {
-            this.mMRCError.setText("");
+            /*this.mMRCError.setText("");
             this.CATError.setText("");
             this.exaError.setText("");
-            this.checkTreatment1.setDisable(false);
+            this.checkTreatment1.setDisable(false);*/
             e.setCondition_string(condition);
             e.setEosinophilia(eosinophilia);
             e.setmMRC(mMRC);
             e.setCAT(CAT);
             e.setExa(exa);
             epocmanager.addEPOC(e);
-            patientmanager.introduceEPOC(selectedPatient.getMedical_card_number(), e.getEPOC_id());
-            checkTreatmentButtonPushed(event);
+            int epoc_Id = epocmanager.getLastId();
+            patientmanager.introduceEPOC(selectedPatient.getId(), epoc_Id);
+            //checkTreatmentButtonPushed();
         } else {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Missing data");
@@ -200,39 +208,43 @@ public class UpdateEPOCController implements Initializable{
     @FXML
     public void checkCOPDWithDeterioration(ActionEvent event) throws SQLException {
         Comorbidity c = new Comorbidity();
-        if(influenza_tab5.isSelected()){
+        if(influenza_tab.isSelected()){
             selectedPatient.setInfluenza_vaccine(true);
+        } else{
+            selectedPatient.setInfluenza_vaccine(false);
         }
-        if(pneumonia_tab5.isSelected()){
+        if(pneumonia_tab.isSelected()){
             selectedPatient.setPneumonia_vaccine(true);
+        } else {
+            selectedPatient.setPneumonia_vaccine(false);
         }
-        if (cardiovascular_tab5.isSelected()){
+        if (cardiovascular_tab.isSelected()){
             c.setComorbidityName("Cardiovascular disease");
             selectedPatient.addComorbidity(c);
             comorbiditymanager.addComorbidity(c);
             int comorbidity_id = dbManager.getLastId();
-            patientmanager.introduceComorbidity(selectedPatient.getMedical_card_number(), comorbidity_id);
+            patientmanager.introduceComorbidity(selectedPatient.getId(), comorbidity_id);
         }
-        if (tuberculosis_tab5.isSelected()){
+        if (tuberculosis_tab.isSelected()){
             c.setComorbidityName("Tuberculosis");
             selectedPatient.addComorbidity(c);
             comorbiditymanager.addComorbidity(c);
             int comorbidity_id = dbManager.getLastId();
-            patientmanager.introduceComorbidity(selectedPatient.getMedical_card_number(), comorbidity_id);
+            patientmanager.introduceComorbidity(selectedPatient.getId(), comorbidity_id);
         }
-        if (viral_tab5.isSelected()){
+        if (viral_tab.isSelected()){
             c.setComorbidityName("Viral Infection");
             selectedPatient.addComorbidity(c);
             comorbiditymanager.addComorbidity(c);
             int comorbidity_id = dbManager.getLastId();
-            patientmanager.introduceComorbidity(selectedPatient.getMedical_card_number(), comorbidity_id);
+            patientmanager.introduceComorbidity(selectedPatient.getId(), comorbidity_id);
         }
-        if (vision_tab5.isSelected()){
+        if (vision_tab.isSelected()){
             c.setComorbidityName("Vision Disorder");
             selectedPatient.addComorbidity(c);
             comorbiditymanager.addComorbidity(c);
             int comorbidity_id = dbManager.getLastId();
-            patientmanager.introduceComorbidity(selectedPatient.getMedical_card_number(), comorbidity_id);
+            patientmanager.introduceComorbidity(selectedPatient.getId(), comorbidity_id);
         }
         
         boolean disnea, exacerbation;
@@ -252,18 +264,20 @@ public class UpdateEPOCController implements Initializable{
         Boolean validData = validateCOPDWithDeterioration(EOS, exa, FEV);
         
         if (validData == true && (disnea_boolean.isSelected()||exacer_boolean.isSelected())) {
-            this.mMRCError.setText("");
+            /*this.mMRCError.setText("");
             this.CATError.setText("");
             this.exaError.setText("");
-            this.checkTreatment1.setDisable(false);
+            this.checkTreatment1.setDisable(false);*/
             e.setEOS(EOS);
             e.setFEV(FEV);
             e.setDisnea(disnea);
             e.setExacerbations(exacerbation);
             e.setExa(exa);
+            System.out.println(e);
             epocmanager.addEPOC(e);
-            patientmanager.introduceEPOC(selectedPatient.getMedical_card_number(), e.getEPOC_id());
-            checkTreatmentButtonPushed(event);
+            int epoc_Id = epocmanager.getLastId();
+            patientmanager.introduceEPOC(selectedPatient.getId(), epoc_Id);
+            //checkTreatmentButtonPushed();
         } else {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Missing data");
@@ -273,7 +287,7 @@ public class UpdateEPOCController implements Initializable{
      clearDataUpdateCOPDWithDeterioration();
     }
     
-    public void checkTreatmentButtonPushed(ActionEvent event) throws SQLException {
+    public void checkTreatmentButtonPushed() throws SQLException {
         
         int initial_length = selectedPatient.treatment_list.size();
         KieServices ks = KieServices.Factory.get();
