@@ -76,8 +76,6 @@ public class ShowPatientController implements Initializable, Controller{
     @FXML
     public void updateCOPDButtonPushed(ActionEvent event) {
         try {
-            sc = new SceneChanger();
-            //sc.changeScenes(event, "updateEPOC.fxml");
             Parent root = FXMLLoader.load(getClass().getResource("updateEPOC.fxml"));
             Scene scene = new Scene(root);
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();

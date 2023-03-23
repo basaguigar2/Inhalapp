@@ -29,6 +29,25 @@ public class SQLiteEpocManager implements EpocManager{
     @Override
     public void addEPOC(EPOC e) throws SQLException {
         try{
+            System.out.println(e);
+            String sq1 = "INSERT INTO EPOC (condition, mMRC,CAT, exa, eosinophilia) VALUES (?, ?, ?, ?, ?)";
+            PreparedStatement preparedStatement = c.prepareStatement(sq1);
+            preparedStatement.setString(1, e.getCondition_string());
+            preparedStatement.setInt(2, e.getmMRC());
+            preparedStatement.setInt(3, e.getCAT());
+            preparedStatement.setInt(4, e.getExa());
+            preparedStatement.setBoolean(5, e.isEosinophilia());
+            preparedStatement.executeUpdate();	
+            preparedStatement.close();
+            System.out.println("EPOC Introducido"); 
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+    
+    @Override
+    public void addEPOC2(EPOC e) throws SQLException {
+        try{
             String sq1 = "INSERT INTO EPOC (condition, mMRC, EOS, CAT, exa, exacerbations,eosinophilia, FEV) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement preparedStatement = c.prepareStatement(sq1);
             preparedStatement.setString(1, e.getCondition_string());
@@ -44,6 +63,19 @@ public class SQLiteEpocManager implements EpocManager{
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
+    }
+    @Override
+    public int getLastId() {
+        int result = 0;
+        try {
+            String query = "SELECT last_insert_rowid() AS lastId";
+            PreparedStatement p = c.prepareStatement(query);
+            ResultSet rs = p.executeQuery();
+            result = rs.getInt("lastId");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 
     @Override

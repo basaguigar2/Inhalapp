@@ -98,6 +98,9 @@ public class EPOC {
         } else if(condition_string.equalsIgnoreCase("NONE")){
             setCondition(this.condition.NONE);
             this.condition_string = "NONE";
+        } else if (this.condition_string == null){
+            setCondition(this.condition.NONE);
+            this.condition_string = "NONE";
         } else {
             throw new NotBoundException("Not valid condition. Introduce a valid condition: Severe chronic hypoxemia, Bulla, Severe heterogeneous emphysema in upper lobes, Advanced emphysema, Severe COPD, or NONE");
         }
@@ -166,13 +169,15 @@ public class EPOC {
     public void setDisnea(boolean disnea) {
         this.disnea = disnea;
     }
-    
-    
 
     @Override
     public String toString() {
-        return "EPOC{" + "condition=" + condition + '}';
+        return "EPOC{" + "condition=" + condition_string + ", eosinophilia=" + eosinophilia + ", mMRC=" + mMRC + ", CAT=" + CAT + ", exa=" + exa + '}';
     }
+    
+    
+
+    
     
     
 }
