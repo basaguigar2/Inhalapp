@@ -61,11 +61,11 @@ public class SQLitePatientManager implements PatientManager {
     }
 
     @Override
-    public void introduceComorbidity(int medCardNumber, int comorbidityId) {
+    public void introduceComorbidity(int patientId, int comorbidityId) {
         try {
             String sql = "INSERT INTO comorbidity_patient (patient_id, comorbidity_id) " + "VALUES (?,?)";
             PreparedStatement prep = c.prepareStatement(sql);
-            prep.setInt(1, medCardNumber);
+            prep.setInt(1, patientId);
             prep.setInt(2, comorbidityId);
             prep.executeUpdate();
             prep.close();

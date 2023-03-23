@@ -186,7 +186,7 @@ public class MenuUserController implements Initializable {
     @FXML
     public void obtainTreatmentButtonPushed(ActionEvent event) throws SQLException {
 
-        Patient p = this.patientTable.getSelectionModel().getSelectedItem();
+        p = this.patientTable.getSelectionModel().getSelectedItem();
         int initial_length = p.treatment_list.size();
 
         KieServices ks = KieServices.Factory.get();
@@ -216,7 +216,8 @@ public class MenuUserController implements Initializable {
                 treatmentmanager.addTreatment(t);
                 int treatmentId = dbManager.getLastId();
                 patientmanager.introduceTreatment(p.medical_card_number, treatmentId);
-                alert.setHeaderText("Drug: " + p.treatment_list.get(final_length - i).getDrug() + "\nDose: " + p.treatment_list.get(final_length - i).getDose() + "\nTherapy: " + p.treatment_list.get(final_length - i).getTherapy());
+                String mensaje = "Drug: " + p.treatment_list.get(final_length - i).getDrug() + "\nDose: " + p.treatment_list.get(final_length - i).getDose() + "\nTherapy: " + p.treatment_list.get(final_length - i).getTherapy() + "";
+                alert.setContentText(mensaje);
             }
         }
     }

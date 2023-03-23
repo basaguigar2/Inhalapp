@@ -15,6 +15,8 @@ import java.rmi.NotBoundException;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -80,21 +82,6 @@ public class UpdateAsthmaController implements Initializable{
     private static TreatmentManager treatmentmanager;
     private static AsthmaManager asthmamanager;
     private static SceneChanger sc;
-
-    @FXML
-    public void go_to_crisis(ActionEvent event) {
-        TabPane.getSelectionModel().select(AsthmaCrisis);
-    }
-    
-    @FXML
-    public void go_to_updateAsthma(ActionEvent event) {
-        TabPane.getSelectionModel().select(Update_Asthma1);
-    }
-    
-    @FXML
-    public void go_to_updateControlSymptoms(ActionEvent event) {
-        TabPane.getSelectionModel().select(Update_Asthma2);
-    }
     
     @FXML
     public void backtoMenu(ActionEvent event) {
@@ -122,12 +109,13 @@ public class UpdateAsthmaController implements Initializable{
         symptoms_controlled = new ToggleGroup();
         symptoms_yes.setToggleGroup(symptoms_controlled);
         symptoms_no.setToggleGroup(symptoms_controlled);
-        
-        selectedPatient = MenuUserController.getP();
+
+        this.selectedPatient = MenuUserController.getP();
     }
     
     @FXML
     public void checkAsthma(ActionEvent event) throws SQLException, NotBoundException {
+        System.out.println("inside check asthma");
         Comorbidity c = new Comorbidity();
 
         if (cardioDIsease_tab1.isSelected()){
@@ -135,77 +123,77 @@ public class UpdateAsthmaController implements Initializable{
             selectedPatient.addComorbidity(c);
             comorbiditymanager.addComorbidity(c);
             int comorbidity_id = dbManager.getLastId();
-            patientmanager.introduceComorbidity(selectedPatient.getMedical_card_number(), comorbidity_id);
+            patientmanager.introduceComorbidity(this.selectedPatient.getId(), comorbidity_id);
         }
         if (tuberculosis_tab1.isSelected()){
             c.setComorbidityName("Tuberculosis");
             selectedPatient.addComorbidity(c);
             comorbiditymanager.addComorbidity(c);
             int comorbidity_id = dbManager.getLastId();
-            patientmanager.introduceComorbidity(selectedPatient.getMedical_card_number(), comorbidity_id);
+            patientmanager.introduceComorbidity(this.selectedPatient.getId(), comorbidity_id);
         }
         if (viralInfection_tab1.isSelected()){
             c.setComorbidityName("Viral Infection");
             selectedPatient.addComorbidity(c);
             comorbiditymanager.addComorbidity(c);
             int comorbidity_id = dbManager.getLastId();
-            patientmanager.introduceComorbidity(selectedPatient.getMedical_card_number(), comorbidity_id);
+            patientmanager.introduceComorbidity(selectedPatient.getId(), comorbidity_id);
         }
         if (glaucoma_tab1.isSelected()){
             c.setComorbidityName("Glaucoma");
             selectedPatient.addComorbidity(c);
             comorbiditymanager.addComorbidity(c);
             int comorbidity_id = dbManager.getLastId();
-            patientmanager.introduceComorbidity(selectedPatient.getMedical_card_number(), comorbidity_id);
+            patientmanager.introduceComorbidity(selectedPatient.getId(), comorbidity_id);
         }
         if (urinary_tab1.isSelected()){
             c.setComorbidityName("Urinary retention");
             selectedPatient.addComorbidity(c);
             comorbiditymanager.addComorbidity(c);
             int comorbidity_id = dbManager.getLastId();
-            patientmanager.introduceComorbidity(selectedPatient.getMedical_card_number(), comorbidity_id);
+            patientmanager.introduceComorbidity(selectedPatient.getId(), comorbidity_id);
         }
         if (hss_tab1.isSelected()){
             c.setComorbidityName("HSS axis disease");
             selectedPatient.addComorbidity(c);
             comorbiditymanager.addComorbidity(c);
             int comorbidity_id = dbManager.getLastId();
-            patientmanager.introduceComorbidity(selectedPatient.getMedical_card_number(), comorbidity_id);
+            patientmanager.introduceComorbidity(selectedPatient.getId(), comorbidity_id);
         }
         if (dbs_tab1.isSelected()){
             c.setComorbidityName("Decreased bone density");
             selectedPatient.addComorbidity(c);
             comorbiditymanager.addComorbidity(c);
             int comorbidity_id = dbManager.getLastId();
-            patientmanager.introduceComorbidity(selectedPatient.getMedical_card_number(), comorbidity_id);
+            patientmanager.introduceComorbidity(selectedPatient.getId(), comorbidity_id);
         }
         if (diabetes_tab1.isSelected()){
             c.setComorbidityName("Diabetes");
             selectedPatient.addComorbidity(c);
             comorbiditymanager.addComorbidity(c);
             int comorbidity_id = dbManager.getLastId();
-            patientmanager.introduceComorbidity(selectedPatient.getMedical_card_number(), comorbidity_id);
+            patientmanager.introduceComorbidity(selectedPatient.getId(), comorbidity_id);
         }
         if (hypertiroidism_tab1.isSelected()){
             c.setComorbidityName("Hypertiroidism");
             selectedPatient.addComorbidity(c);
             comorbiditymanager.addComorbidity(c);
             int comorbidity_id = dbManager.getLastId();
-            patientmanager.introduceComorbidity(selectedPatient.getMedical_card_number(), comorbidity_id);
+            patientmanager.introduceComorbidity(selectedPatient.getId(), comorbidity_id);
         }
         if (pUlcer_tab1.isSelected()){
             c.setComorbidityName("Peptic ulcer");
             selectedPatient.addComorbidity(c);
             comorbiditymanager.addComorbidity(c);
             int comorbidity_id = dbManager.getLastId();
-            patientmanager.introduceComorbidity(selectedPatient.getMedical_card_number(), comorbidity_id);
+            patientmanager.introduceComorbidity(selectedPatient.getId(), comorbidity_id);
         }
         if (osteoporosis_tab1.isSelected()){
             c.setComorbidityName("Osteoporosis");
             selectedPatient.addComorbidity(c);
             comorbiditymanager.addComorbidity(c);
             int comorbidity_id = dbManager.getLastId();
-            patientmanager.introduceComorbidity(selectedPatient.getMedical_card_number(), comorbidity_id);
+            patientmanager.introduceComorbidity(selectedPatient.getId(), comorbidity_id);
         }
         
         int limitations = LimitationsChoiceBox.getValue();
@@ -234,7 +222,7 @@ public class UpdateAsthmaController implements Initializable{
             asthmamanager.addAsthma(a);
             patientmanager.introduceAsthma(selectedPatient.getMedical_card_number(), a.getAsthma_id());
             this.checkTreatmentButton3.setDisable(false);
-            checkTreatmentButtonPushed(event);
+            checkTreatmentButtonPushed();
         } else {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Missing data");
@@ -253,77 +241,77 @@ public class UpdateAsthmaController implements Initializable{
             selectedPatient.addComorbidity(c);
             comorbiditymanager.addComorbidity(c);
             int comorbidity_id = dbManager.getLastId();
-            patientmanager.introduceComorbidity(selectedPatient.getMedical_card_number(), comorbidity_id);
+            patientmanager.introduceComorbidity(selectedPatient.getId(), comorbidity_id);
         }
         if (pUlcer_tab2.isSelected()){
             c.setComorbidityName("Peptic ulcer");
             selectedPatient.addComorbidity(c);
             comorbiditymanager.addComorbidity(c);
             int comorbidity_id = dbManager.getLastId();
-            patientmanager.introduceComorbidity(selectedPatient.getMedical_card_number(), comorbidity_id);
+            patientmanager.introduceComorbidity(selectedPatient.getId(), comorbidity_id);
         }
         if (hypertiroidism_tab2.isSelected()){
             c.setComorbidityName("Hypertiroidism");
             selectedPatient.addComorbidity(c);
             comorbiditymanager.addComorbidity(c);
             int comorbidity_id = dbManager.getLastId();
-            patientmanager.introduceComorbidity(selectedPatient.getMedical_card_number(), comorbidity_id);
+            patientmanager.introduceComorbidity(selectedPatient.getId(), comorbidity_id);
         }
         if (diaetes_tab2.isSelected()){
             c.setComorbidityName("Diabetes");
             selectedPatient.addComorbidity(c);
             comorbiditymanager.addComorbidity(c);
             int comorbidity_id = dbManager.getLastId();
-            patientmanager.introduceComorbidity(selectedPatient.getMedical_card_number(), comorbidity_id);
+            patientmanager.introduceComorbidity(selectedPatient.getId(), comorbidity_id);
         }
         if (urinary_tab2.isSelected()){
             c.setComorbidityName("Urinary retention");
             selectedPatient.addComorbidity(c);
             comorbiditymanager.addComorbidity(c);
             int comorbidity_id = dbManager.getLastId();
-            patientmanager.introduceComorbidity(selectedPatient.getMedical_card_number(), comorbidity_id);
+            patientmanager.introduceComorbidity(selectedPatient.getId(), comorbidity_id);
         }
         if (hss_tab2.isSelected()){
             c.setComorbidityName("HSS axis disease");
             selectedPatient.addComorbidity(c);
             comorbiditymanager.addComorbidity(c);
             int comorbidity_id = dbManager.getLastId();
-            patientmanager.introduceComorbidity(selectedPatient.getMedical_card_number(), comorbidity_id);
+            patientmanager.introduceComorbidity(selectedPatient.getId(), comorbidity_id);
         }
         if (dbd_tab2.isSelected()){
             c.setComorbidityName("Decreased bone density");
             selectedPatient.addComorbidity(c);
             comorbiditymanager.addComorbidity(c);
             int comorbidity_id = dbManager.getLastId();
-            patientmanager.introduceComorbidity(selectedPatient.getMedical_card_number(), comorbidity_id);
+            patientmanager.introduceComorbidity(selectedPatient.getId(), comorbidity_id);
         }
         if (glaucoma_tab2.isSelected()){
             c.setComorbidityName("Glaucoma");
             selectedPatient.addComorbidity(c);
             comorbiditymanager.addComorbidity(c);
             int comorbidity_id = dbManager.getLastId();
-            patientmanager.introduceComorbidity(selectedPatient.getMedical_card_number(), comorbidity_id);
+            patientmanager.introduceComorbidity(selectedPatient.getId(), comorbidity_id);
         }
         if (viralInfection_tab2.isSelected()){
             c.setComorbidityName("Viral infection");
             selectedPatient.addComorbidity(c);
             comorbiditymanager.addComorbidity(c);
             int comorbidity_id = dbManager.getLastId();
-            patientmanager.introduceComorbidity(selectedPatient.getMedical_card_number(), comorbidity_id);
+            patientmanager.introduceComorbidity(selectedPatient.getId(), comorbidity_id);
         }
         if (tuberculosis_tab2.isSelected()){
             c.setComorbidityName("Tuberculosis");
             selectedPatient.addComorbidity(c);
             comorbiditymanager.addComorbidity(c);
             int comorbidity_id = dbManager.getLastId();
-            patientmanager.introduceComorbidity(selectedPatient.getMedical_card_number(), comorbidity_id);
+            patientmanager.introduceComorbidity(selectedPatient.getId(), comorbidity_id);
         }
         if (cardioDisease_tab2.isSelected()){
             c.setComorbidityName("Cardiovascular disease");
             selectedPatient.addComorbidity(c);
             comorbiditymanager.addComorbidity(c);
             int comorbidity_id = dbManager.getLastId();
-            patientmanager.introduceComorbidity(selectedPatient.getMedical_card_number(), comorbidity_id);
+            patientmanager.introduceComorbidity(selectedPatient.getId(), comorbidity_id);
         }
         
         boolean scontrolled;
@@ -338,7 +326,7 @@ public class UpdateAsthmaController implements Initializable{
             this.checkTreatment4.setDisable(false);
             selectedPatient.setSymptoms_controlled(scontrolled);
             patientmanager.editPatient(selectedPatient.getMedical_card_number(), selectedPatient.getName(), selectedPatient.getPatientAge(), selectedPatient.getPatientGender(), selectedPatient.isPregnant(), selectedPatient.isSmoker(), selectedPatient.isSymptoms_controlled(), selectedPatient.isHospitalization(), selectedPatient.getRespiratorydisease(), selectedPatient.getTreatment_stage());
-            checkTreatmentButtonPushed(event);
+            checkTreatmentButtonPushed();
         } else {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Missing data");
@@ -366,8 +354,8 @@ public class UpdateAsthmaController implements Initializable{
             a.setPEF(pef);
             a.setPS(ps);
             asthmamanager.addAsthma(a);
-            patientmanager.introduceAsthma(selectedPatient.getMedical_card_number(), a.getAsthma_id());
-            checkTreatmentButtonPushed(event);
+            patientmanager.introduceAsthma(selectedPatient.getId(), a.getAsthma_id());
+            checkTreatmentButtonPushed();
         } else {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Missing data");
@@ -377,7 +365,7 @@ public class UpdateAsthmaController implements Initializable{
      clearDataAsthmaCrisis();
     }
     
-    public void checkTreatmentButtonPushed(ActionEvent event) throws SQLException {
+    public void checkTreatmentButtonPushed() throws SQLException {
         
         int initial_length = selectedPatient.treatment_list.size();
         KieServices ks = KieServices.Factory.get();
