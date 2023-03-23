@@ -27,7 +27,7 @@ import pojos.*;
 rule "Chornic home oxygen therapy Rule"
     dialect "java"
     when
-        p : Patient(getRespiratorydisease().equals("EPOC"), getEpoc().getCondition_string().equals("Severe chronic hypoxemia"))
+        p : Patient(getRespiratorydisease().equals("EPOC"), getEpoc().getCondition_string().equalsIgnoreCase("Severe chronic hypoxemia")==true)
     then
        
         p.addTreatment(Treatment.CHRONIC_OXIGEN_THERAPY);
@@ -37,7 +37,7 @@ end
 rule "Bullectomy Rule"
     dialect "java"
     when
-        p : Patient(getRespiratorydisease().equals("EPOC"), getEpoc().getCondition_string.equals("Bulla"))
+        p : Patient(getRespiratorydisease().equals("EPOC"), getEpoc().getCondition_string().equalsIgnoreCase("Bulla")==true)
     then
         
         p.addTreatment(Treatment.BULLECTOMY);
@@ -47,7 +47,7 @@ end
 rule "Pulmonar volume reduction Rule"
     dialect "java"
     when
-        p : Patient(getRespiratorydisease().equals("EPOC"), getEpoc().getCondition_string.equals("Severe heterogeneous emphysema in upper lobes"))
+        p : Patient(getRespiratorydisease().equals("EPOC"), getEpoc().getCondition_string().equalsIgnoreCase("Severe heterogeneous emphysema in upper lobes")==true)
     then
         
         p.addTreatment(Treatment.PULMONAR_VOLUME_REDUCTION);
@@ -57,7 +57,7 @@ end
 rule "Bronchoscopic intervention Rule"
     dialect "java"
     when
-        p : Patient(getRespiratorydisease().equals("EPOC"), getEpoc().getCondition_string.equals("Advanced emphysema"))
+        p : Patient(getRespiratorydisease().equals("EPOC"), getEpoc().getCondition_string().equalsIgnoreCase("Advanced emphysema")==true)
     then
         
         p.addTreatment(Treatment.BRONCHOSCOPIC_INTERVENTION);
@@ -67,7 +67,7 @@ end
 rule "Pulmonar transplant Rule"
     dialect "java"
     when
-        p : Patient(getRespiratorydisease().equals("EPOC"), getEpoc().getCondition_string.equals("Severe COPD"))
+        p : Patient(getRespiratorydisease().equals("EPOC"), getEpoc().getCondition_string().equalsIgnoreCase("Severe COPD")==true)
     then
         
         p.addTreatment(Treatment.PULMONAR_TRANSPLANT);
@@ -77,7 +77,7 @@ end
 rule "Influenza vaccine Rule"
     dialect "java"
     when 
-        p: Patient (getRespiratorydisease().equals("EPOC"), getEpoc().getCondition_string.equals("NONE"),  influenza_vaccine == false)
+        p: Patient (getRespiratorydisease().equals("EPOC"), getEpoc().getCondition_string().equalsIgnoreCase("NONE")==true,  influenza_vaccine == false)
     then 
         p.setInfluenza_vaccine(true);
         System.out.println("You should put influenza vaccine");
@@ -86,7 +86,7 @@ end
 rule "Pneumonia vaccine Rule"
     dialect "java"
     when 
-        p: Patient (getRespiratorydisease().equals("EPOC"), getEpoc().getCondition_string.equals("NONE"), pneumonia_vaccine == false, age>65)
+        p: Patient (getRespiratorydisease().equals("EPOC"), getEpoc().getCondition_string().equalsIgnoreCase("NONE")==true, pneumonia_vaccine == false, age>65)
     then 
         p.setPneumonia_vaccine(true);
         System.out.println("You should put pneumonia vaccine");
@@ -95,7 +95,7 @@ end
 rule "SABA/SAMA Rule"
     dialect "java"
     when 
-        p: Patient(getRespiratorydisease().equals("EPOC"), getEpoc().getCondition_string.equals("NONE"), treatment_list.isEmpty() == true, hospitalization == false, getString_comorbidities().contains("cardiovascular diseases") == false, getEpoc().getmMRC() <= 1, getEpoc().getCAT() < 10)
+        p: Patient(getRespiratorydisease().equals("EPOC"), getEpoc().getCondition_string().equalsIgnoreCase("NONE")==true, treatment_list.isEmpty() == true, hospitalization == false, getString_comorbidities().contains("cardiovascular diseases") == false, getEpoc().getmMRC() <= 1, getEpoc().getCAT() < 10)
     then 
         
         p.addTreatment(Treatment.SABA_SAMA);
@@ -105,7 +105,7 @@ end
 rule "LABA/LAMA Rule"
     dialect "java"
     when 
-        p: Patient(getRespiratorydisease().equals("EPOC"), getEpoc().getCondition_string.equals("NONE"), treatment_list.isEmpty() == true, hospitalization == false,  getString_comorbidities().contains("cardiovascular diseases") == false, getEpoc().getmMRC() > 1, getEpoc().getCAT() > 10)
+        p: Patient(getRespiratorydisease().equals("EPOC"), getEpoc().getCondition_string().equalsIgnoreCase("NONE")==true, treatment_list.isEmpty() == true, hospitalization == false,  getString_comorbidities().contains("cardiovascular diseases") == false, getEpoc().getmMRC() > 1, getEpoc().getCAT() > 10)
     then 
         
         p.addTreatment(Treatment.LABA_LAMA);
@@ -114,7 +114,7 @@ end
 rule "LAMA Rule 1"
     dialect "java"
     when 
-        p: Patient(getRespiratorydisease().equals("EPOC"), getEpoc().getCondition_string.equals("NONE"), treatment_list.isEmpty() == true, hospitalization == true,  getString_comorbidities().contains("cardiovascular diseases") == false, getEpoc().getmMRC() <= 1, getEpoc().getCAT() < 10)
+        p: Patient(getRespiratorydisease().equals("EPOC"), getEpoc().getCondition_string().equalsIgnoreCase("NONE")==true, treatment_list.isEmpty() == true, hospitalization == true,  getString_comorbidities().contains("cardiovascular diseases") == false, getEpoc().getmMRC() <= 1, getEpoc().getCAT() < 10)
     then 
         
         p.addTreatment(Treatment.LAMA);
@@ -124,7 +124,7 @@ end
 rule "LABA+IC Rule 1"
     dialect "java"
     when 
-        p: Patient(getRespiratorydisease().equals("EPOC"), getEpoc().getCondition_string.equals("NONE"), treatment_list.isEmpty() == true, hospitalization == true, getString_comorbidities().contains("cardiovascular diseases") == false, getString_comorbidities().contains("pulmonar tuberculosis") == false, getString_comorbidities().contains("viral infection") == false, getEpoc().getmMRC() > 1, getEpoc().getCAT() > 10, getEpoc().isEosinophilia() == true)
+        p: Patient(getRespiratorydisease().equals("EPOC"), getEpoc().getCondition_string().equalsIgnoreCase("NONE"), treatment_list.isEmpty() == true, hospitalization == true, getString_comorbidities().contains("cardiovascular diseases") == false, getString_comorbidities().contains("pulmonar tuberculosis") == false, getString_comorbidities().contains("viral infection") == false, getEpoc().getmMRC() > 1, getEpoc().getCAT() > 10, getEpoc().isEosinophilia() == true)
     then 
        
         p.addTreatment(Treatment.LABA);
@@ -135,7 +135,7 @@ end
 rule "LAMA Rule 2"
     dialect "java"
     when 
-        p: Patient(getRespiratorydisease().equals("EPOC"), getEpoc().getCondition_string.equals("NONE"), treatment_list.isEmpty() == true, hospitalization == true, getString_comorbidities().contains("cardiovascular diseases") == false, getEpoc().getmMRC() > 1, getEpoc().getCAT() > 10, getEpoc().getCAT() < 20, getEpoc().isEosinophilia() == false)
+        p: Patient(getRespiratorydisease().equals("EPOC"), getEpoc().getCondition_string.equalsIgnoreCase("NONE"), treatment_list.isEmpty() == true, hospitalization == true, getString_comorbidities().contains("cardiovascular diseases") == false, getEpoc().getmMRC() > 1, getEpoc().getCAT() > 10, getEpoc().getCAT() < 20, getEpoc().isEosinophilia() == false)
     then 
         
         p.addTreatment(Treatment.LAMA);
@@ -145,7 +145,7 @@ end
 rule "LABA+LAMA Rule 1"
     dialect "java"
     when 
-        p: Patient(getRespiratorydisease().equals("EPOC"), getEpoc().getCondition_string.equals("NONE"), treatment_list.isEmpty() == true, hospitalization == true, getString_comorbidities().contains("cardiovascular diseases") == false, getEpoc().getmMRC() > 1, getEpoc().getCAT() > 20, getEpoc().isEosinophilia() == false)
+        p: Patient(getRespiratorydisease().equals("EPOC"), getEpoc().getCondition_string.equalsIgnoreCase("NONE"), treatment_list.isEmpty() == true, hospitalization == true, getString_comorbidities().contains("cardiovascular diseases") == false, getEpoc().getmMRC() > 1, getEpoc().getCAT() > 20, getEpoc().isEosinophilia() == false)
     then 
         
         p.addTreatment(Treatment.LABA);
@@ -164,7 +164,7 @@ end
 rule "LABA+LAMA Rule 2"
     dialect "java"
     when
-        p: Patient(getRespiratorydisease().equals("EPOC"), getEpoc().getCondition_string.equals("NONE"), symptoms_controlled == false, treatment_list.isEmpty() == false, string_treatments.contains("LABA/LAMA") == true, string_comorbidities.contains("disnea") == true, getString_comorbidities().contains("cardiovascular diseases") == false)
+        p: Patient(getRespiratorydisease().equals("EPOC"), getEpoc().getCondition_string.equalsIgnoreCase("NONE"), symptoms_controlled == false, treatment_list.isEmpty() == false, string_treatments.contains("LABA/LAMA") == true, string_comorbidities.contains("disnea") == true, getString_comorbidities().contains("cardiovascular diseases") == false)
     then
         p.addTreatment(Treatment.LABA);
         p.addTreatment(Treatment.LAMA);
@@ -174,7 +174,7 @@ end
 rule "LABA+LAMA+IC Rule 1"
     dialect "java"
     when
-        p: Patient(getRespiratorydisease().equals("EPOC"), getEpoc().getCondition_string.equals("NONE"), symptoms_controlled==false, treatment_list.isEmpty() == false, string_treatments.contains("LABA/LAMA") == true, string_comorbidities.contains("disnea") == true, string_comorbidities.contains("cardiovascular diseases") == false, string_comorbidities.contains("pulmonar tuberculosis") == false,  string_comorbidities.contains("viral infection") == false)
+        p: Patient(getRespiratorydisease().equals("EPOC"), getEpoc().getCondition_string.equalsIgnoreCase("NONE"), symptoms_controlled==false, treatment_list.isEmpty() == false, string_treatments.contains("LABA/LAMA") == true, string_comorbidities.contains("disnea") == true, string_comorbidities.contains("cardiovascular diseases") == false, string_comorbidities.contains("pulmonar tuberculosis") == false,  string_comorbidities.contains("viral infection") == false)
     then
         p.addTreatment(Treatment.LABA);
         p.addTreatment(Treatment.LAMA);
@@ -201,7 +201,7 @@ end
 rule "LABA+IC Rule 2"
     dialect "java"
     when
-        p: Patient(getRespiratorydisease().equals("EPOC"), getEpoc().getCondition_string.equals("NONE"), symptoms_controlled==false, treatment_list.isEmpty()==false, string_comorbidities.contains("cardiovascular diseases")==false, string_comorbidities.contains("pulmonar tuberculosis")==false,  string_comorbidities.contains("viral infection")==false, getEpoc().exacerbations == true, getEpoc().EOS >= 300 || (getEpoc().EOS >= 100 && getEpoc().exa == 2))
+        p: Patient(getRespiratorydisease().equals("EPOC"), getEpoc().getCondition_string().equalsIgnoreCase("NONE")==true, symptoms_controlled==false, treatment_list.isEmpty()==false, string_comorbidities.contains("cardiovascular diseases")==false, string_comorbidities.contains("pulmonar tuberculosis")==false,  string_comorbidities.contains("viral infection")==false, getEpoc().exacerbations == true, getEpoc().EOS >= 300 || (getEpoc().EOS >= 100 && getEpoc().exa == 2))
     then
         p.addTreatment(Treatment.LABA);
         p.addTreatment(Treatment.IC);
@@ -211,7 +211,7 @@ end
 rule "LABA+LAMA Rule 3"
     dialect "java"
     when
-        p: Patient(getRespiratorydisease().equals("EPOC"), getEpoc().getCondition_string.equals("NONE"), symptoms_controlled==false, treatment_list.isEmpty()==false, string_comorbidities.contains("cardiovascular diseases")==false, getEpoc().exacerbations == true, getEpoc().EOS < 300 || getEpoc().exa < 2)
+        p: Patient(getRespiratorydisease().equals("EPOC"), getEpoc().getCondition_string().equalsIgnoreCase("NONE")==true, symptoms_controlled==false, treatment_list.isEmpty()==false, string_comorbidities.contains("cardiovascular diseases")==false, getEpoc().exacerbations == true, getEpoc().EOS < 300 || getEpoc().exa < 2)
     then
         p.addTreatment(Treatment.LABA);
         p.addTreatment(Treatment.LAMA);
@@ -221,7 +221,7 @@ end
 rule "Azimotricine Rule 1"
     dialect "java"
     when
-        p: Patient(getRespiratorydisease().equals("EPOC"), getEpoc().getCondition_string.equals("NONE"), symptoms_controlled==false, treatment_list.isEmpty()==false, smoker==false, string_treatments.contains("LABA")==true, string_treatments.contains("LAMA")==true, string_comorbidities.contains("cardiovascular diseases")==false, string_comorbidities.contains("vision disorders")==false, getEpoc().exacerbations == true, getEpoc().EOS < 100)
+        p: Patient(getRespiratorydisease().equals("EPOC"), getEpoc().getCondition_string().equalsIgnoreCase("NONE")==true, symptoms_controlled==false, treatment_list.isEmpty()==false, smoker==false, string_treatments.contains("LABA")==true, string_treatments.contains("LAMA")==true, string_comorbidities.contains("cardiovascular diseases")==false, string_comorbidities.contains("vision disorders")==false, getEpoc().exacerbations == true, getEpoc().EOS < 100)
     then
         
         p.addTreatment(Treatment.AZIMOTRICINE);
@@ -231,7 +231,7 @@ end
 rule "Roflumilast Rule 1"
     dialect "java"
     when
-        p: Patient(getRespiratorydisease().equals("EPOC"), getEpoc().getCondition_string.equals("NONE"), symptoms_controlled==false, treatment_list.isEmpty() == false, smoker==true, string_treatments.contains("LABA")==true, string_treatments.contains("LAMA")==true, string_comorbidities.contains("cardiovascular diseases")==false, getEpoc().exacerbations == true, getEpoc().EOS < 100, getEpoc().FEV < 50)
+        p: Patient(getRespiratorydisease().equals("EPOC"), getEpoc().getCondition_string().equalsIgnoreCase("NONE")==true, symptoms_controlled==false, treatment_list.isEmpty() == false, smoker==true, string_treatments.contains("LABA")==true, string_treatments.contains("LAMA")==true, string_comorbidities.contains("cardiovascular diseases")==false, getEpoc().exacerbations == true, getEpoc().EOS < 100, getEpoc().FEV < 50)
     then
         
         p.addTreatment(Treatment.ROFLUMILAST);
@@ -241,7 +241,7 @@ end
 rule "Change device Rule 3"
     dialect "java"
     when
-        p: Patient(getRespiratorydisease().equals("EPOC"), getEpoc().getCondition_string.equals("NONE"), symptoms_controlled==false, treatment_list.isEmpty()==false, smoker==true, string_treatments.contains("LABA")==true, string_treatments.contains("LAMA")==true, getEpoc().exacerbations == true, getEpoc().EOS < 100, getEpoc().FEV > 50)
+        p: Patient(getRespiratorydisease().equals("EPOC"), getEpoc().getCondition_string().equalsIgnoreCase("NONE")==true, symptoms_controlled==false, treatment_list.isEmpty()==false, smoker==true, string_treatments.contains("LABA")==true, string_treatments.contains("LAMA")==true, getEpoc().exacerbations == true, getEpoc().EOS < 100, getEpoc().FEV > 50)
     then
         System.out.println("Change device and investigate other causes");
 end
@@ -249,7 +249,7 @@ end
 rule "LABA+LAMA+IC Rule 2"
     dialect "java"
     when
-        p: Patient(getRespiratorydisease().equals("EPOC"), getEpoc().getCondition_string.equals("NONE"), symptoms_controlled==false, treatment_list.isEmpty()==false, string_treatments.contains("LABA")==true, string_treatments.contains("LAMA")==true, string_comorbidities.contains("cardiovascular diseases")==false, getEpoc().exacerbations == true, getEpoc().EOS > 100)
+        p: Patient(getRespiratorydisease().equals("EPOC"), getEpoc().getCondition_string().equalsIgnoreCase("NONE")==true, symptoms_controlled==false, treatment_list.isEmpty()==false, string_treatments.contains("LABA")==true, string_treatments.contains("LAMA")==true, string_comorbidities.contains("cardiovascular diseases")==false, getEpoc().exacerbations == true, getEpoc().EOS > 100)
     then
         p.addTreatment(Treatment.LABA);
         p.addTreatment(Treatment.LAMA);
@@ -260,7 +260,7 @@ end
 rule "Azimotricine Rule 2"
     dialect "java"
     when
-        p: Patient(getRespiratorydisease().equals("EPOC"), getEpoc().getCondition_string.equals("NONE"), symptoms_controlled==false, treatment_list.isEmpty()==false, smoker==false, string_treatments.contains("LABA")==true, string_treatments.contains("LAMA")==true, string_treatments.contains("IC")==true, string_comorbidities.contains("cardiovascular diseases")==false, string_comorbidities.contains("pulmonar tuberculosis")==false,  string_comorbidities.contains("viral infection")==false, string_comorbidities.contains("vision disorders")==false, getEpoc().exacerbations == true, getEpoc().EOS > 100)
+        p: Patient(getRespiratorydisease().equals("EPOC"), getEpoc().getCondition_string().equalsIgnoreCase("NONE")==true, symptoms_controlled==false, treatment_list.isEmpty()==false, smoker==false, string_treatments.contains("LABA")==true, string_treatments.contains("LAMA")==true, string_treatments.contains("IC")==true, string_comorbidities.contains("cardiovascular diseases")==false, string_comorbidities.contains("pulmonar tuberculosis")==false,  string_comorbidities.contains("viral infection")==false, string_comorbidities.contains("vision disorders")==false, getEpoc().exacerbations == true, getEpoc().EOS > 100)
     then
         p.addTreatment(Treatment.AZIMOTRICINE);
         System.out.println("The patient has to be treated with 250 mg/day of Azimotricine ");
@@ -269,7 +269,7 @@ end
 rule "Roflumilast Rule 2"
     dialect "java"
     when
-        p: Patient(getRespiratorydisease().equals("EPOC"), getEpoc().getCondition_string.equals("NONE"), symptoms_controlled==false, treatment_list.isEmpty()==false, smoker==true, string_treatments.contains("LABA")==true, string_treatments.contains("LAMA")==true, string_treatments.contains("IC")==true, string_comorbidities.contains("cardiovascular diseases")==false, string_comorbidities.contains("pulmonar tuberculosis")==false,  string_comorbidities.contains("viral infection")==false, getEpoc().exacerbations == true, getEpoc().EOS > 100, getEpoc().FEV < 50)
+        p: Patient(getRespiratorydisease().equals("EPOC"), getEpoc().getCondition_string().equalsIgnoreCase("NONE")==true, symptoms_controlled==false, treatment_list.isEmpty()==false, smoker==true, string_treatments.contains("LABA")==true, string_treatments.contains("LAMA")==true, string_treatments.contains("IC")==true, string_comorbidities.contains("cardiovascular diseases")==false, string_comorbidities.contains("pulmonar tuberculosis")==false,  string_comorbidities.contains("viral infection")==false, getEpoc().exacerbations == true, getEpoc().EOS > 100, getEpoc().FEV < 50)
     then
         p.addTreatment(Treatment.ROFLUMILAST);
         System.out.println("The patient has to be treated with 500 mcg/day of Roflumilast");
@@ -278,7 +278,7 @@ end
 rule "Change device Rule 4"
     dialect "java"
     when
-        p: Patient(getRespiratorydisease().equals("EPOC"), getEpoc().getCondition_string.equals("NONE"), symptoms_controlled==false, treatment_list.isEmpty()==false, smoker==true, string_treatments.contains("LABA")==true, string_treatments.contains("LAMA")==true, string_treatments.contains("IC")==true, getEpoc().exacerbations == true, getEpoc().EOS > 100, getEpoc().FEV > 50)
+        p: Patient(getRespiratorydisease().equals("EPOC"), getEpoc().getCondition_string().equalsIgnoreCase("NONE")==true, symptoms_controlled==false, treatment_list.isEmpty()==false, smoker==true, string_treatments.contains("LABA")==true, string_treatments.contains("LAMA")==true, string_treatments.contains("IC")==true, getEpoc().exacerbations == true, getEpoc().EOS > 100, getEpoc().FEV > 50)
     then
         System.out.println("Change device and investigate other causes");
 end
@@ -286,7 +286,7 @@ end
 rule "LABA+LAMA+IC Rule 3"
     dialect "java"
     when
-        p: Patient(getRespiratorydisease().equals("EPOC"), getEpoc().getCondition_string.equals("NONE"), symptoms_controlled==false, treatment_list.isEmpty()==false, string_treatments.contains("LABA")==true, string_treatments.contains("IC")==true, string_comorbidities.contains("cardiovascular diseases")==false, string_comorbidities.contains("pulmonar tuberculosis")==false,  string_comorbidities.contains("viral infection")==false, getEpoc().exacerbations == true)
+        p: Patient(getRespiratorydisease().equals("EPOC"), getEpoc().getCondition_string().equalsIgnoreCase("NONE")==true, symptoms_controlled==false, treatment_list.isEmpty()==false, string_treatments.contains("LABA")==true, string_treatments.contains("IC")==true, string_comorbidities.contains("cardiovascular diseases")==false, string_comorbidities.contains("pulmonar tuberculosis")==false,  string_comorbidities.contains("viral infection")==false, getEpoc().exacerbations == true)
     then
         p.addTreatment(Treatment.LABA);
         p.addTreatment(Treatment.LAMA);
@@ -298,7 +298,7 @@ end
 rule "Cardiovascular disease"
     dialect "java"
     when
-        p: Patient(getRespiratorydisease().equals("EPOC"), getEpoc().getCondition_string.equals("NONE"), string_comorbidities.contains("cardiovascular diseases")==true, string_comorbidities.contains("vision disorders")==false)
+        p: Patient(getRespiratorydisease().equals("EPOC"), getEpoc().getCondition_string().equalsIgnoreCase("NONE")==true, string_comorbidities.contains("cardiovascular diseases")==true, string_comorbidities.contains("vision disorders")==false)
     then 
         p.addTreatment(Treatment.AZIMOTRICINE);
         System.out.println("The patient has to be treated with 250 mg/day of Azimotricine ");
@@ -307,7 +307,7 @@ end
 rule "Vision disorders"
     dialect "java"
     when
-        p: Patient(getRespiratorydisease().equals("EPOC"), getEpoc().getCondition_string.equals("NONE"), string_comorbidities.contains("cardiovascular diseases")==true, string_comorbidities.contains("vision disorders")==true)
+        p: Patient(getRespiratorydisease().equals("EPOC"), getEpoc().getCondition_string().equalsIgnoreCase("NONE")==true, string_comorbidities.contains("cardiovascular diseases")==true, string_comorbidities.contains("vision disorders")==true)
     then 
         p.addTreatment(Treatment.CHRONIC_OXIGEN_THERAPY);
         System.out.println("The patient has to be treated with Chronic home oxygen therapy");
@@ -316,7 +316,7 @@ end
 rule "Tuberculosis and Infection"
     dialect "java"
     when
-        p: Patient(getRespiratorydisease().equals("EPOC"), getEpoc().getCondition_string.equals("NONE"), string_comorbidities.contains("pulmonary tuberculosis")==true, string_comorbidities.contains("viral infection")==true)
+        p: Patient(getRespiratorydisease().equals("EPOC"), getEpoc().getCondition_string().equalsIgnoreCase("NONE")==true, string_comorbidities.contains("pulmonary tuberculosis")==true, string_comorbidities.contains("viral infection")==true)
     then 
         
         p.addTreatment(Treatment.MUSC_ANTAGONISTS);
@@ -326,7 +326,7 @@ end
 rule "No medication 1"
     dialect "java"
     when
-        p : Patient(getRespiratorydisease().equals("Asthma"), treatment_list.isEmpty()==false, treat_stage == 1, getAsthma().getStage_string.equals("INTERMITTENT"), symptoms_controlled==true)
+        p : Patient(getRespiratorydisease().equals("Asthma"), treatment_list.isEmpty()==false, treat_stage == 1, getAsthma().getStage_string().equalsIgnoreCase("INTERMITTENT")==true, symptoms_controlled==true)
     then
         
         p.addTreatment(Treatment.NO_MED);
@@ -336,7 +336,7 @@ end
 rule "No medication 2"
     dialect "java"
     when
-        p : Patient(getRespiratorydisease().equals("Asthma"), treatment_list.isEmpty()==false, getAsthma().getStage_string.equals("MILD PERSISTENT"), treat_stage== 2, symptoms_controlled==true)
+        p : Patient(getRespiratorydisease().equals("Asthma"), treatment_list.isEmpty()==false, getAsthma().getStage_string().equalsIgnoreCase("MILD PERSISTENT")==true, treat_stage== 2, symptoms_controlled==true)
     then
         p.addTreatment(Treatment.NO_MED);
         p.setTreatment_stage(1);
@@ -347,7 +347,7 @@ end
 rule "No medication 3"
     dialect "java"
     when
-        p : Patient(getRespiratorydisease().equals("Asthma"), treatment_list.isEmpty()==true, getAsthma().getStage_string.equals("NONE"), symptoms_controlled==true, age > 5, string_comorbidities.contains("hypertension")==false, getAsthma().dayTimeSymptoms_w < 2, getAsthma().rescueMedication_w < 2, getAsthma().nocturnalSymptoms_w < 1, getAsthma().limitations==0, getAsthma().pulmonar_function > 80, getAsthma().exarcebations_y==0)
+        p : Patient(getRespiratorydisease().equals("Asthma"), treatment_list.isEmpty()==true, getAsthma().getStage_string().equalsIgnoreCase("NONE")==true, symptoms_controlled==true, age > 5, string_comorbidities.contains("hypertension")==false, getAsthma().dayTimeSymptoms_w < 2, getAsthma().rescueMedication_w < 2, getAsthma().nocturnalSymptoms_w < 1, getAsthma().limitations==0, getAsthma().pulmonar_function > 80, getAsthma().exarcebations_y==0)
     then
         p.addTreatment(Treatment.NO_MED);
         p.setTreatment_stage(1);
@@ -358,7 +358,7 @@ end
 rule "GCI low dosis 1"
     dialect "java"
     when
-        p : Patient(getRespiratorydisease().equals("Asthma"), treatment_list.isEmpty()==false,getAsthma().getStage_string.equals("INTERMITTENT"), treat_stage==1, age <=5, symptoms_controlled==false, string_comorbidities.contains("viral infection")==false, string_comorbidities.contains("pulmonary tuberculosis")==false)
+        p : Patient(getRespiratorydisease().equals("Asthma"), treatment_list.isEmpty()==false,getAsthma().getStage_string().equalsIgnoreCase("INTERMITTENT")==true, treat_stage==1, age <=5, symptoms_controlled==false, string_comorbidities.contains("viral infection")==false, string_comorbidities.contains("pulmonary tuberculosis")==false)
     then
         
         p.addTreatment(Treatment.GCI_LOW_C);
@@ -370,7 +370,7 @@ end
 rule "GCI low dosis 2"
     dialect "java"
     when
-        p : Patient(getRespiratorydisease().equals("Asthma"), treatment_list.isEmpty()==false,getAsthma().getStage_string.equals("INTERMITTENT"),treat_stage==1, age >5, symptoms_controlled==false, string_comorbidities.contains("viral infection")==false, string_comorbidities.contains("pulmonary tuberculosis")==false)
+        p : Patient(getRespiratorydisease().equals("Asthma"), treatment_list.isEmpty()==false,getAsthma().getStage_string().equalsIgnoreCase("INTERMITTENT")==true,treat_stage==1, age >5, symptoms_controlled==false, string_comorbidities.contains("viral infection")==false, string_comorbidities.contains("pulmonary tuberculosis")==false)
     then
         
         p.addTreatment(Treatment.GCI_LOW_A);
@@ -382,7 +382,7 @@ end
 rule "GCI low dosis 3"
     dialect "java"
     when
-        p : Patient(getRespiratorydisease().equals("Asthma"), treatment_list.isEmpty()==false,getAsthma().getStage_string.equals("MODERATE PERSISTENT"), treat_stage==3, age <=5, symptoms_controlled==true, string_comorbidities.contains("viral infection")==false, string_comorbidities.contains("pulmonary tuberculosis")==false)
+        p : Patient(getRespiratorydisease().equals("Asthma"), treatment_list.isEmpty()==false,getAsthma().getStage_string().equalsIgnoreCase("MODERATE PERSISTENT")==true, treat_stage==3, age <=5, symptoms_controlled==true, string_comorbidities.contains("viral infection")==false, string_comorbidities.contains("pulmonary tuberculosis")==false)
     then
         p.addTreatment(Treatment.GCI_LOW_C);
         p.setTreatment_stage(2);
@@ -393,7 +393,7 @@ end
 rule "GCI low dosis 4"
     dialect "java"
     when
-        p : Patient(getRespiratorydisease().equals("Asthma"), treatment_list.isEmpty()==false, getAsthma().getStage_string.equals("MODERATE PERSISTENT"), treat_stage==3, age >5, symptoms_controlled==true, string_comorbidities.contains("viral infection")==false, string_comorbidities.contains("pulmonary tuberculosis")==false)
+        p : Patient(getRespiratorydisease().equals("Asthma"), treatment_list.isEmpty()==false, getAsthma().getStage_string().equalsIgnoreCase("MODERATE PERSISTENT")==true, treat_stage==3, age >5, symptoms_controlled==true, string_comorbidities.contains("viral infection")==false, string_comorbidities.contains("pulmonary tuberculosis")==false)
     then
         p.addTreatment(Treatment.GCI_LOW_A);
         p.getAsthma().setStage_string("MILD PERSISTENT");
@@ -404,7 +404,7 @@ end
 rule "GCI low dosis 5"
     dialect "java"
     when
-        p : Patient(getRespiratorydisease().equals("Asthma"), treatment_list.isEmpty()==true,getAsthma().getStage_string.equals("NONE"),  age <= 5, string_comorbidities.contains("viral infection")==false, string_comorbidities.contains("pulmonary tuberculosis")==false, getAsthma().dayTimeSymptoms_w >= 2, getAsthma().dayTimeSymptoms_w < 4, getAsthma().rescueMedication_w >= 2, getAsthma().rescueMedication_w < 4, getAsthma().nocturnalSymptoms_w >= 1, getAsthma().nocturnalSymptoms_w < 2, getAsthma().limitations==1, getAsthma().pulmonar_function > 80, getAsthma().exarcebations_y>=0, getAsthma().exarcebations_y<2)
+        p : Patient(getRespiratorydisease().equals("Asthma"), treatment_list.isEmpty()==true,getAsthma().getStage_string().equalsIgnoreCase("NONE")==true,  age <= 5, string_comorbidities.contains("viral infection")==false, string_comorbidities.contains("pulmonary tuberculosis")==false, getAsthma().dayTimeSymptoms_w >= 2, getAsthma().dayTimeSymptoms_w < 4, getAsthma().rescueMedication_w >= 2, getAsthma().rescueMedication_w < 4, getAsthma().nocturnalSymptoms_w >= 1, getAsthma().nocturnalSymptoms_w < 2, getAsthma().limitations==1, getAsthma().pulmonar_function > 80, getAsthma().exarcebations_y>=0, getAsthma().exarcebations_y<2)
     then
         p.addTreatment(Treatment.GCI_LOW_C);
         p.setTreatment_stage(2);
@@ -415,7 +415,7 @@ end
 rule "GCI low dosis 6"
     dialect "java"
     when
-        p : Patient(getRespiratorydisease().equals("Asthma"), treatment_list.isEmpty()==true, getAsthma().getStage_string.equals("NONE"), age > 5, string_comorbidities.contains("viral infection")==false, string_comorbidities.contains("pulmonary tuberculosis")==false, getAsthma().dayTimeSymptoms_w >= 2, getAsthma().dayTimeSymptoms_w < 4, getAsthma().rescueMedication_w >= 2, getAsthma().rescueMedication_w < 4, getAsthma().nocturnalSymptoms_w >= 1, getAsthma().nocturnalSymptoms_w < 2, getAsthma().limitations==1, getAsthma().pulmonar_function > 80, getAsthma().exarcebations_y>=0, getAsthma().exarcebations_y<2)
+        p : Patient(getRespiratorydisease().equals("Asthma"), treatment_list.isEmpty()==true, getAsthma().getStage_string().equalsIgnoreCase("NONE")==true, age > 5, string_comorbidities.contains("viral infection")==false, string_comorbidities.contains("pulmonary tuberculosis")==false, getAsthma().dayTimeSymptoms_w >= 2, getAsthma().dayTimeSymptoms_w < 4, getAsthma().rescueMedication_w >= 2, getAsthma().rescueMedication_w < 4, getAsthma().nocturnalSymptoms_w >= 1, getAsthma().nocturnalSymptoms_w < 2, getAsthma().limitations==1, getAsthma().pulmonar_function > 80, getAsthma().exarcebations_y>=0, getAsthma().exarcebations_y<2)
     then
         p.addTreatment(Treatment.GCI_LOW_A);
         p.setTreatment_stage(2);
@@ -427,7 +427,7 @@ end
 rule "GCI medium dosis 1"
     dialect "java"
     when
-        p : Patient(getRespiratorydisease().equals("Asthma"), treatment_list.isEmpty()==false, getAsthma().getStage_string.equals("Mild persistent"), treat_stage==2, age <=5, symptoms_controlled==false, string_comorbidities.contains("viral infection")==false, string_comorbidities.contains("pulmonary tuberculosis")==false)
+        p : Patient(getRespiratorydisease().equals("Asthma"), treatment_list.isEmpty()==false, getAsthma().getStage_string().equalsIgnoreCase("MILD PERSISTENT")==true, treat_stage==2, age <=5, symptoms_controlled==false, string_comorbidities.contains("viral infection")==false, string_comorbidities.contains("pulmonary tuberculosis")==false)
     then
        
         p.addTreatment(Treatment.GCI_MED_C);
@@ -439,7 +439,7 @@ end
 rule "GCI medium dosis 2"
     dialect "java"
     when
-        p : Patient(getRespiratorydisease().equals("Asthma"),getAsthma().getStage_string.equals("Mild persistent"), treatment_list.isEmpty()==false, treat_stage==2, age >5, symptoms_controlled==false, string_comorbidities.contains("viral infection")==false, string_comorbidities.contains("pulmonary tuberculosis")==false)
+        p : Patient(getRespiratorydisease().equals("Asthma"),getAsthma().getStage_string().equalsIgnoreCase("MILD PERSISTENT")==true, treatment_list.isEmpty()==false, treat_stage==2, age >5, symptoms_controlled==false, string_comorbidities.contains("viral infection")==false, string_comorbidities.contains("pulmonary tuberculosis")==false)
     then
         p.addTreatment(Treatment.GCI_MED_A);
         p.setTreatment_stage(3);
@@ -450,7 +450,7 @@ end
 rule "GCI medium dosis 3"
     dialect "java"
     when
-        p : Patient(getRespiratorydisease().equals("Asthma"), getAsthma().getStage_string.equals("SEVERE PERSISTENT"),treatment_list.isEmpty()==false, treat_stage==4, age <=5, symptoms_controlled==true, string_comorbidities.contains("viral infection")==false, string_comorbidities.contains("pulmonary tuberculosis")==false)
+        p : Patient(getRespiratorydisease().equals("Asthma"), getAsthma().getStage_string().equalsIgnoreCase("SEVERE PERSISTENT")==true,treatment_list.isEmpty()==false, treat_stage==4, age <=5, symptoms_controlled==true, string_comorbidities.contains("viral infection")==false, string_comorbidities.contains("pulmonary tuberculosis")==false)
     then
         p.addTreatment(Treatment.GCI_MED_C);
         p.setTreatment_stage(3);
@@ -462,7 +462,7 @@ end
 rule "GCI medium dosis 4"
     dialect "java"
     when
-        p : Patient(getRespiratorydisease().equals("Asthma"), treatment_list.isEmpty()==false, getAsthma().getStage_string.equals("SEVERE PERSISTENT"), treat_stage==4, age >5, symptoms_controlled==true, string_comorbidities.contains("viral infection")==false, string_comorbidities.contains("pulmonary tuberculosis")==false)
+        p : Patient(getRespiratorydisease().equals("Asthma"), treatment_list.isEmpty()==false, getAsthma().getStage_string().equalsIgnoreCase("SEVERE PERSISTENT")==true, treat_stage==4, age >5, symptoms_controlled==true, string_comorbidities.contains("viral infection")==false, string_comorbidities.contains("pulmonary tuberculosis")==false)
     then
         p.addTreatment(Treatment.GCI_MED_A);
         p.setTreatment_stage(3);
@@ -473,7 +473,7 @@ end
 rule "GCI medium dosis 5"
     dialect "java"
     when
-        p : Patient(getRespiratorydisease().equals("Asthma"), getAsthma().getStage_string.equals("NONE"),treatment_list.isEmpty()==true,  age <= 5, string_comorbidities.contains("viral infection")==false, string_comorbidities.contains("pulmonary tuberculosis")==false, getAsthma().dayTimeSymptoms_w > 3, getAsthma().dayTimeSymptoms_w < 8, getAsthma().rescueMedication_w > 3, getAsthma().rescueMedication_w < 8, getAsthma().nocturnalSymptoms_w >=2, getAsthma().nocturnalSymptoms_w < 6, getAsthma().limitations==2, getAsthma().pulmonar_function < 80, getAsthma().exarcebations_y>=2)
+        p : Patient(getRespiratorydisease().equals("Asthma"), getAsthma().getStage_string().equalsIgnoreCase("NONE")==true, treatment_list.isEmpty()==true,  age <= 5, string_comorbidities.contains("viral infection")==false, string_comorbidities.contains("pulmonary tuberculosis")==false, getAsthma().dayTimeSymptoms_w > 3, getAsthma().dayTimeSymptoms_w < 8, getAsthma().rescueMedication_w > 3, getAsthma().rescueMedication_w < 8, getAsthma().nocturnalSymptoms_w >=2, getAsthma().nocturnalSymptoms_w < 6, getAsthma().limitations==2, getAsthma().pulmonar_function < 80, getAsthma().exarcebations_y>=2)
     then
         p.addTreatment(Treatment.GCI_MED_C);
         p.setTreatment_stage(3);
@@ -484,7 +484,7 @@ end
 rule "GCI medium dosis 6"
     dialect "java"
     when
-        p : Patient(getRespiratorydisease().equals("Asthma"),getAsthma().getStage_string.equals("NONE"), treatment_list.isEmpty() == true,  age > 5, string_comorbidities.contains("viral infection")==false, string_comorbidities.contains("pulmonary tuberculosis")==false, 
+        p : Patient(getRespiratorydisease().equals("Asthma"),getAsthma().getStage_string().equalsIgnoreCase("NONE")==true, treatment_list.isEmpty() == true,  age > 5, string_comorbidities.contains("viral infection")==false, string_comorbidities.contains("pulmonary tuberculosis")==false, 
 getAsthma().dayTimeSymptoms_w > 3, getAsthma().dayTimeSymptoms_w < 8, getAsthma().rescueMedication_w > 3, getAsthma().rescueMedication_w < 8, getAsthma().nocturnalSymptoms_w >=2, getAsthma().nocturnalSymptoms_w < 6, getAsthma().limitations==2, getAsthma().pulmonar_function < 80, getAsthma().exarcebations_y>=2)
     then
         p.addTreatment(Treatment.GCI_MED_A);
@@ -496,7 +496,7 @@ end
 rule "GCI high dosis + ARLT 1"
     dialect "java"
     when
-        p : Patient(getRespiratorydisease().equals("Asthma"),getAsthma().getStage_string.equals("SEVERE PERSISTENT"), treatment_list.isEmpty()==false, treat_stage==4, age <=5, symptoms_controlled==false, string_comorbidities.contains("viral infection")==false, string_comorbidities.contains("pulmonary tuberculosis")==false, string_comorbidities.contains("cardiovascular diseases")==false)
+        p : Patient(getRespiratorydisease().equals("Asthma"),getAsthma().getStage_string().equalsIgnoreCase("SEVERE PERSISTENT")==true, treatment_list.isEmpty()==false, treat_stage==4, age <=5, symptoms_controlled==false, string_comorbidities.contains("viral infection")==false, string_comorbidities.contains("pulmonary tuberculosis")==false, string_comorbidities.contains("cardiovascular diseases")==false)
     then
         
         p.addTreatment(Treatment.GCI_HIGH_C);
@@ -508,7 +508,7 @@ end
 rule "GCI high dosis + ARLT 2"
     dialect "java"
     when
-        p : Patient(getRespiratorydisease().equals("Asthma"), getAsthma().getStage_string.equals("SEVERE PERSISTENT"),treatment_list.isEmpty()==false, treat_stage==6, age <=5, symptoms_controlled==true, string_comorbidities.contains("viral infection")==false, string_comorbidities.contains("pulmonary tuberculosis")==false, string_comorbidities.contains("cardiovascular diseases")==false)
+        p : Patient(getRespiratorydisease().equals("Asthma"), getAsthma().getStage_string().equalsIgnoreCase("SEVERE PERSISTENT")==true,treatment_list.isEmpty()==false, treat_stage==6, age <=5, symptoms_controlled==true, string_comorbidities.contains("viral infection")==false, string_comorbidities.contains("pulmonary tuberculosis")==false, string_comorbidities.contains("cardiovascular diseases")==false)
     then
         p.addTreatment(Treatment.GCI_HIGH_C);
         p.addTreatment(Treatment.ARLT_C);
@@ -519,7 +519,7 @@ end
 rule "GCI high dosis + BAAL 1"
     dialect "java"
     when
-        p : Patient(getRespiratorydisease().equals("Asthma"), getAsthma().getStage_string.equals("SEVERE PERSISTENT"),treatment_list.isEmpty()==false, treat_stage==4, age > 5, symptoms_controlled==false, string_comorbidities.contains("viral infection")==false, string_comorbidities.contains("pulmonary tuberculosis")==false, string_comorbidities.contains("glaucoma")==false, string_comorbidities.contains("urinary retention")==false)
+        p : Patient(getRespiratorydisease().equals("Asthma"), getAsthma().getStage_string().equalsIgnoreCase("SEVERE PERSISTENT")==true,treatment_list.isEmpty()==false, treat_stage==4, age > 5, symptoms_controlled==false, string_comorbidities.contains("viral infection")==false, string_comorbidities.contains("pulmonary tuberculosis")==false, string_comorbidities.contains("glaucoma")==false, string_comorbidities.contains("urinary retention")==false)
     then
         p.addTreatment(Treatment.GCI_HIGH_A);
         p.addTreatment(Treatment.BAAL);
@@ -530,7 +530,7 @@ end
 rule "GCI high dosis + BAAL 2"
     dialect "java"
     when
-        p : Patient(getRespiratorydisease().equals("Asthma"),getAsthma().getStage_string.equals("SEVERE PERSISTENT"), treatment_list.isEmpty()==false, treat_stage==6, age >5, symptoms_controlled==true, string_comorbidities.contains("viral infection")==false, string_comorbidities.contains("pulmonary tuberculosis")==false, string_comorbidities.contains("glaucoma")==false, string_comorbidities.contains("urinary retention")==false)
+        p : Patient(getRespiratorydisease().equals("Asthma"),getAsthma().getStage_string().equalsIgnoreCase("SEVERE PERSISTENT")==true, treatment_list.isEmpty()==false, treat_stage==6, age >5, symptoms_controlled==true, string_comorbidities.contains("viral infection")==false, string_comorbidities.contains("pulmonary tuberculosis")==false, string_comorbidities.contains("glaucoma")==false, string_comorbidities.contains("urinary retention")==false)
     then
         p.addTreatment(Treatment.GCI_HIGH_A);
         p.addTreatment(Treatment.BAAL);
@@ -541,7 +541,7 @@ end
 rule "GCI high dosis 1"
     dialect "java"
     when
-        p : Patient(getRespiratorydisease().equals("Asthma"),getAsthma().getStage_string.equals("NONE"), treatment_list.isEmpty()==true,  age > 5, string_comorbidities.contains("viral infection")==false, string_comorbidities.contains("pulmonary tuberculosis")==false, getAsthma().dayTimeSymptoms_w >= 8, getAsthma().rescueMedication_w >= 6, getAsthma().nocturnalSymptoms_w >= 6, getAsthma().limitations==3, getAsthma().pulmonar_function < 60, getAsthma().exarcebations_y>2)
+        p : Patient(getRespiratorydisease().equals("Asthma"),getAsthma().getStage_string().equalsIgnoreCase("NONE")==true, treatment_list.isEmpty()==true,  age > 5, string_comorbidities.contains("viral infection")==false, string_comorbidities.contains("pulmonary tuberculosis")==false, getAsthma().dayTimeSymptoms_w >= 8, getAsthma().rescueMedication_w >= 6, getAsthma().nocturnalSymptoms_w >= 6, getAsthma().limitations==3, getAsthma().pulmonar_function < 60, getAsthma().exarcebations_y>2)
     then
         p.addTreatment(Treatment.GCI_HIGH_A);
         p.setTreatment_stage(4);
@@ -552,7 +552,7 @@ end
 rule "GCI high dosis 2"
     dialect "java"
     when
-        p : Patient(getRespiratorydisease().equals("Asthma"), getAsthma().getStage_string.equals("NONE"),treatment_list.isEmpty()==true,  age <= 5, string_comorbidities.contains("viral infection")==false, string_comorbidities.contains("pulmonary tuberculosis")==false, 
+        p : Patient(getRespiratorydisease().equals("Asthma"), getAsthma().getStage_string().equalsIgnoreCase("NONE")==true,treatment_list.isEmpty()==true,  age <= 5, string_comorbidities.contains("viral infection")==false, string_comorbidities.contains("pulmonary tuberculosis")==false, 
 getAsthma().dayTimeSymptoms_w >= 8, getAsthma().rescueMedication_w >= 6, getAsthma().nocturnalSymptoms_w >= 6, getAsthma().limitations==3, getAsthma().pulmonar_function < 60, getAsthma().exarcebations_y>2)
     then
         p.addTreatment(Treatment.GCI_HIGH_C);
@@ -564,7 +564,7 @@ end
 rule "ARLT 1"
     dialect "java"
     when
-        p : Patient(getRespiratorydisease().equals("Asthma"), treatment_list.isEmpty()==false, getAsthma().getStage_string.equals("INTERMITTENT"),treat_stage==1, age <=5, symptoms_controlled==false, string_comorbidities.contains("viral infection")==true || string_comorbidities.contains("pulmonary tuberculosis")==true, string_comorbidities.contains("cardiovascular disease")==false)
+        p : Patient(getRespiratorydisease().equals("Asthma"), treatment_list.isEmpty()==false, getAsthma().getStage_string().equalsIgnoreCase("INTERMITTENT")==true,treat_stage==1, age <=5, symptoms_controlled==false, string_comorbidities.contains("viral infection")==true || string_comorbidities.contains("pulmonary tuberculosis")==true, string_comorbidities.contains("cardiovascular disease")==false)
     then
         
         p.addTreatment(Treatment.ARLT_C);
@@ -576,7 +576,7 @@ end
 rule "ARLT 2"
     dialect "java"
     when
-        p : Patient(getRespiratorydisease().equals("Asthma"), getAsthma().getStage_string.equals("INTERMITTENT"),treatment_list.isEmpty()==false, treat_stage==1, age >5, symptoms_controlled==false, string_comorbidities.contains("viral infection")==true || string_comorbidities.contains("pulmonary tuberculosis")==true, string_comorbidities.contains("cardiovascular disease")==false)
+        p : Patient(getRespiratorydisease().equals("Asthma"), getAsthma().getStage_string().equalsIgnoreCase("INTERMITTENT")==true,treatment_list.isEmpty()==false, treat_stage==1, age >5, symptoms_controlled==false, string_comorbidities.contains("viral infection")==true || string_comorbidities.contains("pulmonary tuberculosis")==true, string_comorbidities.contains("cardiovascular disease")==false)
     then
         p.addTreatment(Treatment.ARLT_A);
         p.setTreatment_stage(2);
@@ -587,7 +587,7 @@ end
 rule "ARLT 3"
     dialect "java"
     when
-        p : Patient(getRespiratorydisease().equals("Asthma"), treatment_list.isEmpty()==false, getAsthma().getStage_string.equals("MODERATE PERSISTENT"),treat_stage==3, age <=5, symptoms_controlled==true, string_comorbidities.contains("viral infection")==true || string_comorbidities.contains("pulmonary tuberculosis")==true, string_comorbidities.contains("cardiovascular disease")==false)
+        p : Patient(getRespiratorydisease().equals("Asthma"), treatment_list.isEmpty()==false, getAsthma().getStage_string().equalsIgnoreCase("MODERATE PERSISTENT")==true,treat_stage==3, age <=5, symptoms_controlled==true, string_comorbidities.contains("viral infection")==true || string_comorbidities.contains("pulmonary tuberculosis")==true, string_comorbidities.contains("cardiovascular disease")==false)
     then
         p.addTreatment(Treatment.ARLT_C);
         p.setTreatment_stage(2);
@@ -598,7 +598,7 @@ end
 rule "ARLT 4"
     dialect "java"
     when
-        p : Patient(getRespiratorydisease().equals("Asthma"), treatment_list.isEmpty()==false, getAsthma().getStage_string.equals("MODERATE PERSISTENT"),treat_stage==3, age >5, symptoms_controlled==true, string_comorbidities.contains("viral infection")==true || string_comorbidities.contains("pulmonary tuberculosis")==true, string_comorbidities.contains("cardiovascular disease")==false)
+        p : Patient(getRespiratorydisease().equals("Asthma"), treatment_list.isEmpty()==false, getAsthma().getStage_string().equalsIgnoreCase("MODERATE PERSISTENT")==true,treat_stage==3, age >5, symptoms_controlled==true, string_comorbidities.contains("viral infection")==true || string_comorbidities.contains("pulmonary tuberculosis")==true, string_comorbidities.contains("cardiovascular disease")==false)
     then
         p.addTreatment(Treatment.ARLT_A);
         p.setTreatment_stage(2);
@@ -609,7 +609,7 @@ end
 rule "ARLT 5"
     dialect "java"
     when
-        p : Patient(getRespiratorydisease().equals("Asthma"), treatment_list.isEmpty()==true, getAsthma().getStage_string.equals("NONE"), age <= 5, string_comorbidities.contains("viral infection")==true || string_comorbidities.contains("pulmonary tuberculosis")==true, string_comorbidities.contains("cardiovascular disease")==false, getAsthma().dayTimeSymptoms_w >= 2, getAsthma().dayTimeSymptoms_w < 4, getAsthma().rescueMedication_w >= 2, getAsthma().rescueMedication_w < 4, getAsthma().nocturnalSymptoms_w >= 1, getAsthma().nocturnalSymptoms_w < 2, getAsthma().limitations==1, getAsthma().pulmonar_function > 80, getAsthma().exarcebations_y>=0, getAsthma().exarcebations_y<2)
+        p : Patient(getRespiratorydisease().equals("Asthma"), treatment_list.isEmpty()==true, getAsthma().getStage_string().equalsIgnoreCase("NONE")==true, age <= 5, string_comorbidities.contains("viral infection")==true || string_comorbidities.contains("pulmonary tuberculosis")==true, string_comorbidities.contains("cardiovascular disease")==false, getAsthma().dayTimeSymptoms_w >= 2, getAsthma().dayTimeSymptoms_w < 4, getAsthma().rescueMedication_w >= 2, getAsthma().rescueMedication_w < 4, getAsthma().nocturnalSymptoms_w >= 1, getAsthma().nocturnalSymptoms_w < 2, getAsthma().limitations==1, getAsthma().pulmonar_function > 80, getAsthma().exarcebations_y>=0, getAsthma().exarcebations_y<2)
     then
         p.addTreatment(Treatment.ARLT_C);
         p.setTreatment_stage(2);
@@ -620,7 +620,7 @@ end
 rule "ARLT 6"
     dialect "java"
     when
-        p : Patient(getRespiratorydisease().equals("Asthma"), treatment_list.isEmpty()==true,  getAsthma().getStage_string.equals("NONE"),age > 5, string_comorbidities.contains("viral infection")==true || string_comorbidities.contains("pulmonary tuberculosis")==true, string_comorbidities.contains("cardiovascular disease")==false, getAsthma().dayTimeSymptoms_w >= 2, getAsthma().dayTimeSymptoms_w < 4, getAsthma().rescueMedication_w >= 2, getAsthma().rescueMedication_w < 4, getAsthma().nocturnalSymptoms_w >= 1, getAsthma().nocturnalSymptoms_w < 2, getAsthma().limitations==1, getAsthma().pulmonar_function > 80, getAsthma().exarcebations_y>=0, getAsthma().exarcebations_y<2)
+        p : Patient(getRespiratorydisease().equals("Asthma"), treatment_list.isEmpty()==true,  getAsthma().getStage_string().equalsIgnoreCase("NONE")==true,age > 5, string_comorbidities.contains("viral infection")==true || string_comorbidities.contains("pulmonary tuberculosis")==true, string_comorbidities.contains("cardiovascular disease")==false, getAsthma().dayTimeSymptoms_w >= 2, getAsthma().dayTimeSymptoms_w < 4, getAsthma().rescueMedication_w >= 2, getAsthma().rescueMedication_w < 4, getAsthma().nocturnalSymptoms_w >= 1, getAsthma().nocturnalSymptoms_w < 2, getAsthma().limitations==1, getAsthma().pulmonar_function > 80, getAsthma().exarcebations_y>=0, getAsthma().exarcebations_y<2)
     then
         p.addTreatment(Treatment.ARLT_A);
         p.setTreatment_stage(2);
@@ -631,7 +631,7 @@ end
 rule "GCI low dosis + ARLT 1"
     dialect "java"
     when
-        p : Patient(getRespiratorydisease().equals("Asthma"), treatment_list.isEmpty()==false,getAsthma().getStage_string.equals("MILD PERSISTENT"), treat_stage==2, age <=5, symptoms_controlled==false, string_comorbidities.contains("HSS axis diseases")==true || string_comorbidities.contains("Decreased bone mineral density")==true, string_comorbidities.contains("viral infection")==false, string_comorbidities.contains("pulmonary tuberculosis")==false, string_comorbidities.contains("cardiovascular disease")==false)
+        p : Patient(getRespiratorydisease().equals("Asthma"), treatment_list.isEmpty()==false,getAsthma().getStage_string().equalsIgnoreCase("MILD PERSISTENT")==true, treat_stage==2, age <=5, symptoms_controlled==false, string_comorbidities.contains("HSS axis diseases")==true || string_comorbidities.contains("Decreased bone mineral density")==true, string_comorbidities.contains("viral infection")==false, string_comorbidities.contains("pulmonary tuberculosis")==false, string_comorbidities.contains("cardiovascular disease")==false)
     then
         p.addTreatment(Treatment.GCI_LOW_C);
         p.addTreatment(Treatment.ARLT_C);
@@ -643,7 +643,7 @@ end
 rule "GCI low dosis + ARLT 2"
     dialect "java"
     when
-        p : Patient(getRespiratorydisease().equals("Asthma"), treatment_list.isEmpty()==false, getAsthma().getStage_string.equals("MILD PERSISTENT"),treat_stage==2, age >5, symptoms_controlled==false, string_comorbidities.contains("HSS axis diseases")==true || string_comorbidities.contains("Decreased bone mineral density")==true, string_comorbidities.contains("viral infection")==false, string_comorbidities.contains("pulmonary tuberculosis")==false, string_comorbidities.contains("cardiovascular disease")==false)
+        p : Patient(getRespiratorydisease().equals("Asthma"), treatment_list.isEmpty()==false, getAsthma().getStage_string().equalsIgnoreCase("MILD PERSISTENT")==true,treat_stage==2, age >5, symptoms_controlled==false, string_comorbidities.contains("HSS axis diseases")==true || string_comorbidities.contains("Decreased bone mineral density")==true, string_comorbidities.contains("viral infection")==false, string_comorbidities.contains("pulmonary tuberculosis")==false, string_comorbidities.contains("cardiovascular disease")==false)
     then
         p.addTreatment(Treatment.GCI_LOW_A);
         p.addTreatment(Treatment.ARLT_A);
@@ -655,7 +655,7 @@ end
 rule "GCI low dosis + ARLT 3"
     dialect "java"
     when
-        p : Patient(getRespiratorydisease().equals("Asthma"), treatment_list.isEmpty()==false,getAsthma().getStage_string.equals("SEVERE PERSISTENT"), treat_stage==4, age >5, symptoms_controlled==true, string_comorbidities.contains("HSS axis diseases")==true || string_comorbidities.contains("Decreased bone mineral density")==true, string_comorbidities.contains("viral infection")==false, string_comorbidities.contains("pulmonary tuberculosis")==false, string_comorbidities.contains("cardiovascular disease")==false)
+        p : Patient(getRespiratorydisease().equals("Asthma"), treatment_list.isEmpty()==false,getAsthma().getStage_string().equalsIgnoreCase("SEVERE PERSISTENT")==true, treat_stage==4, age >5, symptoms_controlled==true, string_comorbidities.contains("HSS axis diseases")==true || string_comorbidities.contains("Decreased bone mineral density")==true, string_comorbidities.contains("viral infection")==false, string_comorbidities.contains("pulmonary tuberculosis")==false, string_comorbidities.contains("cardiovascular disease")==false)
     then
         p.addTreatment(Treatment.GCI_LOW_A);
         p.addTreatment(Treatment.ARLT_A);
@@ -667,7 +667,7 @@ end
 rule "GCI low dosis + ARLT 4"
     dialect "java"
     when
-        p : Patient(getRespiratorydisease().equals("Asthma"),getAsthma().getStage_string.equals("SEVERE PERSISTENT"), treatment_list.isEmpty()==false, treat_stage==4, age <=5, symptoms_controlled==true, string_comorbidities.contains("HSS axis diseases")==true || string_comorbidities.contains("Decreased bone mineral density")==true, string_comorbidities.contains("viral infection")==false, string_comorbidities.contains("pulmonary tuberculosis")==false, string_comorbidities.contains("cardiovascular disease")==false)
+        p : Patient(getRespiratorydisease().equals("Asthma"),getAsthma().getStage_string().equalsIgnoreCase("SEVERE PERSISTENT")==true, treatment_list.isEmpty()==false, treat_stage==4, age <=5, symptoms_controlled==true, string_comorbidities.contains("HSS axis diseases")==true || string_comorbidities.contains("Decreased bone mineral density")==true, string_comorbidities.contains("viral infection")==false, string_comorbidities.contains("pulmonary tuberculosis")==false, string_comorbidities.contains("cardiovascular disease")==false)
     then
         p.addTreatment(Treatment.GCI_LOW_C);
         p.addTreatment(Treatment.ARLT_C);
@@ -679,7 +679,7 @@ end
 rule "GCI low dosis + BAAL 1"
     dialect "java"
     when
-        p : Patient(getRespiratorydisease().equals("Asthma"), getAsthma().getStage_string.equals("MILD PERSISTENT"),treatment_list.isEmpty()==false, treat_stage==2, age >5, symptoms_controlled==false, string_comorbidities.contains("HSS axis diseases")==true || string_comorbidities.contains("Decreased bone mineral density")==true || string_comorbidities.contains("cardiovascular disease")==true, string_comorbidities.contains("viral infection")==false, string_comorbidities.contains("pulmonary tuberculosis")==false, string_comorbidities.contains("glaucoma")==false, string_comorbidities.contains("urinary retention")==false)
+        p : Patient(getRespiratorydisease().equals("Asthma"), getAsthma().getStage_string().equalsIgnoreCase("MILD PERSISTENT")==true,treatment_list.isEmpty()==false, treat_stage==2, age >5, symptoms_controlled==false, string_comorbidities.contains("HSS axis diseases")==true || string_comorbidities.contains("Decreased bone mineral density")==true || string_comorbidities.contains("cardiovascular disease")==true, string_comorbidities.contains("viral infection")==false, string_comorbidities.contains("pulmonary tuberculosis")==false, string_comorbidities.contains("glaucoma")==false, string_comorbidities.contains("urinary retention")==false)
     then
         p.addTreatment(Treatment.GCI_LOW_A);
         p.addTreatment(Treatment.BAAL);
@@ -691,7 +691,7 @@ end
 rule "GCI low dosis + BAAL 2"
     dialect "java"
     when
-        p : Patient(getRespiratorydisease().equals("Asthma"), getAsthma().getStage_string.equals("SEVERE PERSISTENT"),treatment_list.isEmpty()==false, treat_stage==4, age >5, symptoms_controlled==true, string_comorbidities.contains("HSS axis diseases")==true || string_comorbidities.contains("Decreased bone mineral density")==true || string_comorbidities.contains("cardiovascular disease")==true, string_comorbidities.contains("viral infection")==false, string_comorbidities.contains("pulmonary tuberculosis")==false, string_comorbidities.contains("glaucoma")==false, string_comorbidities.contains("urinary retention")==false)
+        p : Patient(getRespiratorydisease().equals("Asthma"), getAsthma().getStage_string().equalsIgnoreCase("SEVERE PERSISTENT")==true,treatment_list.isEmpty()==false, treat_stage==4, age >5, symptoms_controlled==true, string_comorbidities.contains("HSS axis diseases")==true || string_comorbidities.contains("Decreased bone mineral density")==true || string_comorbidities.contains("cardiovascular disease")==true, string_comorbidities.contains("viral infection")==false, string_comorbidities.contains("pulmonary tuberculosis")==false, string_comorbidities.contains("glaucoma")==false, string_comorbidities.contains("urinary retention")==false)
     then
         p.addTreatment(Treatment.GCI_LOW_A);
         p.addTreatment(Treatment.BAAL);
@@ -703,7 +703,7 @@ end
 rule "GCI low dosis + BAAL 3"
     dialect "java"
     when
-        p : Patient(getRespiratorydisease().equals("Asthma"), getAsthma().getStage_string.equals("NONE"),treatment_list.isEmpty()==true,  age > 5, string_comorbidities.contains("HSS axis diseases")==true || string_comorbidities.contains("Decreased bone mineral density")==true || string_comorbidities.contains("cardiovascular disease")==true, string_comorbidities.contains("viral infection")==false, string_comorbidities.contains("pulmonary tuberculosis")==false, string_comorbidities.contains("glaucoma")==false, string_comorbidities.contains("urinary retention")==false, 
+        p : Patient(getRespiratorydisease().equals("Asthma"), getAsthma().getStage_string().equalsIgnoreCase("NONE")==true,treatment_list.isEmpty()==true,  age > 5, string_comorbidities.contains("HSS axis diseases")==true || string_comorbidities.contains("Decreased bone mineral density")==true || string_comorbidities.contains("cardiovascular disease")==true, string_comorbidities.contains("viral infection")==false, string_comorbidities.contains("pulmonary tuberculosis")==false, string_comorbidities.contains("glaucoma")==false, string_comorbidities.contains("urinary retention")==false, 
 getAsthma().dayTimeSymptoms_w > 3, getAsthma().dayTimeSymptoms_w < 8, getAsthma().rescueMedication_w > 3, getAsthma().rescueMedication_w < 8, getAsthma().nocturnalSymptoms_w >=2, getAsthma().nocturnalSymptoms_w < 6, getAsthma().limitations==2, getAsthma().pulmonar_function < 80, getAsthma().exarcebations_y>=2)
     then
         p.addTreatment(Treatment.GCI_LOW_A);
@@ -716,7 +716,7 @@ end
 rule "GCI low dosis + ARLT 5"
     dialect "java"
     when
-        p : Patient(getRespiratorydisease().equals("Asthma"), getAsthma().getStage_string.equals("NONE"),treatment_list.isEmpty()==true,  age <= 5, string_comorbidities.contains("HSS axis diseases")==true || string_comorbidities.contains("Decreased bone mineral density")==true, string_comorbidities.contains("viral infection")==false, string_comorbidities.contains("pulmonary tuberculosis")==false, string_comorbidities.contains("cardiovascular disease")==false, 
+        p : Patient(getRespiratorydisease().equals("Asthma"), getAsthma().getStage_string().equalsIgnoreCase("NONE")==true,treatment_list.isEmpty()==true,  age <= 5, string_comorbidities.contains("HSS axis diseases")==true || string_comorbidities.contains("Decreased bone mineral density")==true, string_comorbidities.contains("viral infection")==false, string_comorbidities.contains("pulmonary tuberculosis")==false, string_comorbidities.contains("cardiovascular disease")==false, 
 getAsthma().dayTimeSymptoms_w > 3, getAsthma().dayTimeSymptoms_w < 8, getAsthma().rescueMedication_w > 3, getAsthma().rescueMedication_w < 8, getAsthma().nocturnalSymptoms_w >=2, getAsthma().nocturnalSymptoms_w < 6, getAsthma().limitations==2, getAsthma().pulmonar_function < 80, getAsthma().exarcebations_y>=2)
     then
         p.addTreatment(Treatment.GCI_LOW_C);
@@ -729,7 +729,7 @@ end
 rule "GCI low dosis + ARLT 6"
     dialect "java"
     when
-        p : Patient(getRespiratorydisease().equals("Asthma"), getAsthma().getStage_string.equals("NONE"),treatment_list.isEmpty()==true,  age > 5, string_comorbidities.contains("HSS axis diseases")==true || string_comorbidities.contains("Decreased bone mineral density")==true, string_comorbidities.contains("viral infection")==false, string_comorbidities.contains("pulmonary tuberculosis")==false, string_comorbidities.contains("cardiovascular disease")==false, 
+        p : Patient(getRespiratorydisease().equals("Asthma"), getAsthma().getStage_string().equalsIgnoreCase("NONE")==true,treatment_list.isEmpty()==true,  age > 5, string_comorbidities.contains("HSS axis diseases")==true || string_comorbidities.contains("Decreased bone mineral density")==true, string_comorbidities.contains("viral infection")==false, string_comorbidities.contains("pulmonary tuberculosis")==false, string_comorbidities.contains("cardiovascular disease")==false, 
 getAsthma().dayTimeSymptoms_w > 3, getAsthma().dayTimeSymptoms_w < 8, getAsthma().rescueMedication_w > 3, getAsthma().rescueMedication_w < 8, getAsthma().nocturnalSymptoms_w >=2, getAsthma().nocturnalSymptoms_w < 6, getAsthma().limitations==2, getAsthma().pulmonar_function < 80, getAsthma().exarcebations_y>=2)
     then
         p.addTreatment(Treatment.GCI_LOW_A);
@@ -742,7 +742,7 @@ end
 rule "GCI medium dosis + BAAL 1"
     dialect "java"
     when
-        p : Patient(getRespiratorydisease().equals("Asthma"), getAsthma().getStage_string.equals("NONE"),treatment_list.isEmpty()==true,  age > 5, string_comorbidities.contains("HSS axis diseases")==true || string_comorbidities.contains("Decreased bone mineral density")==true, string_comorbidities.contains("viral infection")==false, string_comorbidities.contains("pulmonary tuberculosis")==false, string_comorbidities.contains("glaucoma")==false, string_comorbidities.contains("urinary retention")==false, 
+        p : Patient(getRespiratorydisease().equals("Asthma"), getAsthma().getStage_string().equalsIgnoreCase("NONE")==true,treatment_list.isEmpty()==true,  age > 5, string_comorbidities.contains("HSS axis diseases")==true || string_comorbidities.contains("Decreased bone mineral density")==true, string_comorbidities.contains("viral infection")==false, string_comorbidities.contains("pulmonary tuberculosis")==false, string_comorbidities.contains("glaucoma")==false, string_comorbidities.contains("urinary retention")==false, 
 getAsthma().dayTimeSymptoms_w >= 8, getAsthma().rescueMedication_w >= 6, getAsthma().nocturnalSymptoms_w >= 6, getAsthma().limitations==3, getAsthma().pulmonar_function < 60, getAsthma().exarcebations_y>2)
    
     then
@@ -756,7 +756,7 @@ end
 rule "GCI medium dosis + ARLT 1"
     dialect "java"
     when
-        p : Patient(getRespiratorydisease().equals("Asthma"),getAsthma().getStage_string.equals("MODERATE PERSISTENT"), treatment_list.isEmpty()==false, treat_stage==3, age >5,symptoms_controlled==false, string_comorbidities.contains("viral infection")==false, string_comorbidities.contains("pulmonary tuberculosis")==false, string_comorbidities.contains("cardiovascular disease")==false)
+        p : Patient(getRespiratorydisease().equals("Asthma"),getAsthma().getStage_string().equalsIgnoreCase("MODERATE PERSISTENT")==true, treatment_list.isEmpty()==false, treat_stage==3, age >5,symptoms_controlled==false, string_comorbidities.contains("viral infection")==false, string_comorbidities.contains("pulmonary tuberculosis")==false, string_comorbidities.contains("cardiovascular disease")==false)
     then
         p.addTreatment(Treatment.GCI_MED_A);
         p.addTreatment(Treatment.ARLT_A);
@@ -768,7 +768,7 @@ end
 rule "GCI medium dosis + ARLT 2"
     dialect "java"
     when
-        p : Patient(getRespiratorydisease().equals("Asthma"),getAsthma().getStage_string.equals("MODERATE PERSISTENT"), treatment_list.isEmpty()==false, treat_stage==3, age <=5,symptoms_controlled==false, string_comorbidities.contains("viral infection")==false, string_comorbidities.contains("pulmonary tuberculosis")==false, string_comorbidities.contains("cardiovascular disease")==false)
+        p : Patient(getRespiratorydisease().equals("Asthma"),getAsthma().getStage_string().equalsIgnoreCase("MODERATE PERSISTENT")==true, treatment_list.isEmpty()==false, treat_stage==3, age <=5,symptoms_controlled==false, string_comorbidities.contains("viral infection")==false, string_comorbidities.contains("pulmonary tuberculosis")==false, string_comorbidities.contains("cardiovascular disease")==false)
     then
         p.addTreatment(Treatment.GCI_MED_C);
         p.addTreatment(Treatment.ARLT_C);
@@ -780,7 +780,7 @@ end
 rule "GCI medium dosis + ARLT 3"
     dialect "java"
     when
-        p : Patient(getRespiratorydisease().equals("Asthma"),getAsthma().getStage_string.equals("SEVERE PERSISTENT"), treatment_list.isEmpty()==false, treat_stage==5, age <=5,symptoms_controlled==true, string_comorbidities.contains("viral infection")==false, string_comorbidities.contains("pulmonary tuberculosis")==false, string_comorbidities.contains("cardiovascular disease")==false)
+        p : Patient(getRespiratorydisease().equals("Asthma"),getAsthma().getStage_string().equalsIgnoreCase("SEVERE PERSISTENT")==true, treatment_list.isEmpty()==false, treat_stage==5, age <=5,symptoms_controlled==true, string_comorbidities.contains("viral infection")==false, string_comorbidities.contains("pulmonary tuberculosis")==false, string_comorbidities.contains("cardiovascular disease")==false)
     then
         p.addTreatment(Treatment.GCI_MED_C);
         p.addTreatment(Treatment.ARLT_C);;
@@ -791,7 +791,7 @@ end
 rule "GCI medium dosis + ARLT 4"
     dialect "java"
     when
-        p : Patient(getRespiratorydisease().equals("Asthma"), getAsthma().getStage_string.equals("SEVERE PERSISTENT"),treatment_list.isEmpty()==false, treat_stage==5, age >5,symptoms_controlled==true, string_comorbidities.contains("viral infection")==false, string_comorbidities.contains("pulmonary tuberculosis")==false, string_comorbidities.contains("cardiovascular disease")==false)
+        p : Patient(getRespiratorydisease().equals("Asthma"), getAsthma().getStage_string().equalsIgnoreCase("SEVERE PERSISTENT")==true,treatment_list.isEmpty()==false, treat_stage==5, age >5,symptoms_controlled==true, string_comorbidities.contains("viral infection")==false, string_comorbidities.contains("pulmonary tuberculosis")==false, string_comorbidities.contains("cardiovascular disease")==false)
     then
         p.addTreatment(Treatment.GCI_MED_A);
         p.addTreatment(Treatment.ARLT_A);
@@ -802,7 +802,7 @@ end
 rule "GCI medium dosis + BAAL 2"
     dialect "java"
     when
-        p : Patient(getRespiratorydisease().equals("Asthma"),getAsthma().getStage_string.equals("MODERATE PERSISTENT"), treatment_list.isEmpty()==false, treat_stage==3, age >5,symptoms_controlled==false, string_comorbidities.contains("cardiovascular disease")==true, string_comorbidities.contains("viral infection")==false, string_comorbidities.contains("pulmonary tuberculosis")==false, string_comorbidities.contains("glaucoma")==false, string_comorbidities.contains("urinary retention")==false)
+        p : Patient(getRespiratorydisease().equals("Asthma"),getAsthma().getStage_string().equalsIgnoreCase("MODERATE PERSISTENT")==true, treatment_list.isEmpty()==false, treat_stage==3, age >5,symptoms_controlled==false, string_comorbidities.contains("cardiovascular disease")==true, string_comorbidities.contains("viral infection")==false, string_comorbidities.contains("pulmonary tuberculosis")==false, string_comorbidities.contains("glaucoma")==false, string_comorbidities.contains("urinary retention")==false)
     then
         p.addTreatment(Treatment.GCI_MED_A);
         p.addTreatment(Treatment.BAAL);
@@ -814,7 +814,7 @@ end
 rule "GCI medium dosis + BAAL 3"
     dialect "java"
     when
-        p : Patient(getRespiratorydisease().equals("Asthma"), getAsthma().getStage_string.equals("SEVERE PERSISTENT"),treatment_list.isEmpty()==false, treat_stage==5, age >5,symptoms_controlled==true, string_comorbidities.contains("cardiovascular disease")==true, string_comorbidities.contains("viral infection")==false, string_comorbidities.contains("pulmonary tuberculosis")==false, string_comorbidities.contains("glaucoma")==false, string_comorbidities.contains("urinary retention")==false)
+        p : Patient(getRespiratorydisease().equals("Asthma"), getAsthma().getStage_string().equalsIgnoreCase("SEVERE PERSISTENT")==true,treatment_list.isEmpty()==false, treat_stage==5, age >5,symptoms_controlled==true, string_comorbidities.contains("cardiovascular disease")==true, string_comorbidities.contains("viral infection")==false, string_comorbidities.contains("pulmonary tuberculosis")==false, string_comorbidities.contains("glaucoma")==false, string_comorbidities.contains("urinary retention")==false)
     then
         p.addTreatment(Treatment.GCI_MED_A);
         p.addTreatment(Treatment.BAAL);
@@ -825,7 +825,7 @@ end
 rule "GCO 1"
     dialect "java"
     when
-        p : Patient(getRespiratorydisease().equals("Asthma"), getAsthma().getStage_string.equals("SEVERE PERSISTENT"),treatment_list.isEmpty()==false, treat_stage==5, age <5, symptoms_controlled==false, string_comorbidities.contains("diabetes")==false, string_comorbidities.contains("osteoporosis")==false, string_comorbidities.contains("cardiovascular disease")==false)
+        p : Patient(getRespiratorydisease().equals("Asthma"), getAsthma().getStage_string().equalsIgnoreCase("SEVERE PERSISTENT")==true, treatment_list.isEmpty()==false, treat_stage==5, age <5, symptoms_controlled==false, string_comorbidities.contains("diabetes")==false, string_comorbidities.contains("osteoporosis")==false, string_comorbidities.contains("cardiovascular disease")==false)
     then
         
         p.addTreatment(Treatment.GCO_C);
@@ -836,7 +836,7 @@ end
 rule "GCO 2"
     dialect "java"
     when
-        p : Patient(getRespiratorydisease().equals("Asthma"), getAsthma().getStage_string.equals("SEVERE PERSISTENT"),treatment_list.isEmpty()==false, treat_stage==5, age>5, symptoms_controlled==false, string_comorbidities.contains("diabetes")==false, string_comorbidities.contains("osteoporosis")==false, string_comorbidities.contains("cardiovascular disease")==false)
+        p : Patient(getRespiratorydisease().equals("Asthma"), getAsthma().getStage_string().equalsIgnoreCase("SEVERE PERSISTENT")==true, treatment_list.isEmpty()==false, treat_stage==5, age>5, symptoms_controlled==false, string_comorbidities.contains("diabetes")==false, string_comorbidities.contains("osteoporosis")==false, string_comorbidities.contains("cardiovascular disease")==false)
     then
         p.addTreatment(Treatment.GCO_A);
         p.setTreatment_stage(6);
@@ -846,7 +846,7 @@ end
 rule "BAAC 1"
     dialect "java"
     when
-        p : Patient(getRespiratorydisease().equals("Asthma"), p.getAsthma().getStage_string.equals("CRISIS"), treatment_list.isEmpty()==true,  age <= 5, string_comorbidities.contains("diabetes")==false, string_comorbidities.contains("glaucoma")==false, string_comorbidities.contains("cardiovascular disease")==false, string_comorbidities.contains("hypertiroidism")==false, getAsthma().PS>0, getAsthma().PS<3, getAsthma().PEF<80, getAsthma().SAT_O2<94)
+        p : Patient(getRespiratorydisease().equals("Asthma"), p.getAsthma().getStage_string().equalsIgnoreCase("CRISIS")==true, treatment_list.isEmpty()==true,  age <= 5, string_comorbidities.contains("diabetes")==false, string_comorbidities.contains("glaucoma")==false, string_comorbidities.contains("cardiovascular disease")==false, string_comorbidities.contains("hypertiroidism")==false, getAsthma().PS>0, getAsthma().PS<3, getAsthma().PEF<80, getAsthma().SAT_O2<94)
     then
         
         p.addTreatment(Treatment.BAAC_C);
@@ -856,7 +856,7 @@ end
 rule "BAAC 2"
     dialect "java"
     when
-        p : Patient(getRespiratorydisease().equals("Asthma"), p.getAsthma().getStage_string.equals("CRISIS"), treatment_list.isEmpty()==true,  age > 5, string_comorbidities.contains("diabetes")==false, string_comorbidities.contains("glaucoma")==false, string_comorbidities.contains("cardiovascular disease")==false, string_comorbidities.contains("hypertiroidism")==false, getAsthma().PS>0, getAsthma().PS<3, getAsthma().PEF<80, getAsthma().SAT_O2<94)
+        p : Patient(getRespiratorydisease().equals("Asthma"), p.getAsthma().getStage_string().equalsIgnoreCase("CRISIS")==true, treatment_list.isEmpty()==true,  age > 5, string_comorbidities.contains("diabetes")==false, string_comorbidities.contains("glaucoma")==false, string_comorbidities.contains("cardiovascular disease")==false, string_comorbidities.contains("hypertiroidism")==false, getAsthma().PS>0, getAsthma().PS<3, getAsthma().PEF<80, getAsthma().SAT_O2<94)
     then
         p.addTreatment(Treatment.BAAC_A);
         System.out.println("The patient has to be treated with 0.5-1 mg/kg of BAAC on demand ");
@@ -865,7 +865,7 @@ end
 rule "BAAC + Sistemic Corticoids 1"
     dialect "java"
     when
-        p : Patient(getRespiratorydisease().equals("Asthma"), p.getAsthma().getStage_string.equals("CRISIS"), treatment_list.isEmpty()==true,  age <= 5, string_comorbidities.contains("diabetes")==false, 
+        p : Patient(getRespiratorydisease().equals("Asthma"), p.getAsthma().getStage_string().equalsIgnoreCase("CRISIS")==true, treatment_list.isEmpty()==true,  age <= 5, string_comorbidities.contains("diabetes")==false, 
         string_comorbidities.contains("glaucoma")==false, string_comorbidities.contains("cardiovascular disease")==false, string_comorbidities.contains("hypertiroidism")==false,
         string_comorbidities.contains("infecction")==false, string_comorbidities.contains("osteoporosis")==false, string_comorbidities.contains("peptic ulcer")==false, getAsthma().PS>4, getAsthma().PS<6, getAsthma().PEF<80, getAsthma().SAT_O2>91, getAsthma().SAT_O2<94)
     then
@@ -877,7 +877,7 @@ end
 rule "BAAC + Sistemic Corticoids 2"
     dialect "java"
     when
-        p : Patient(getRespiratorydisease().equals("Asthma"), p.getAsthma().getStage_string.equals("CRISIS"), treatment_list.isEmpty()==true,  age >5, string_comorbidities.contains("diabetes")==false, 
+        p : Patient(getRespiratorydisease().equals("Asthma"), p.getAsthma().getStage_string().equalsIgnoreCase("CRISIS")==true, treatment_list.isEmpty()==true,  age >5, string_comorbidities.contains("diabetes")==false, 
         string_comorbidities.contains("glaucoma")==false, string_comorbidities.contains("cardiovascular disease")==false, 
         string_comorbidities.contains("hypertiroidism")==false, string_comorbidities.contains("infecction")==false, string_comorbidities.contains("osteoporosis")==false, string_comorbidities.contains("peptic ulcer")==false, getAsthma().PS>4, getAsthma().PS<6, getAsthma().PEF>60, getAsthma().SAT_O2>91, getAsthma().SAT_O2<94)
     then
@@ -889,7 +889,7 @@ end
 rule "BAAC + Sistemic Corticoids + Suplementary O2 1"
     dialect "java"
     when
-        p : Patient(getRespiratorydisease().equals("Asthma"), p.getAsthma().getStage_string.equals("CRISIS"), treatment_list.isEmpty()==true, age >5, string_comorbidities.contains("diabetes")==false, 
+        p : Patient(getRespiratorydisease().equals("Asthma"), p.getAsthma().getStage_string().equalsIgnoreCase("CRISIS")==true, treatment_list.isEmpty()==true, age >5, string_comorbidities.contains("diabetes")==false, 
         string_comorbidities.contains("glaucoma")==false, string_comorbidities.contains("cardiovascular disease")==false, string_comorbidities.contains("hypertiroidism")==false, 
         string_comorbidities.contains("infecction")==false, string_comorbidities.contains("osteoporosis")==false, string_comorbidities.contains("peptic ulcer")==false, getAsthma().PS>7, getAsthma().PS<9, getAsthma().PEF<60, getAsthma().SAT_O2<91)
     then
@@ -902,7 +902,7 @@ end
 rule "BAAC + Sistemic Corticoids + Suplementary O2 2"
     dialect "java"
     when
-        p : Patient(getRespiratorydisease().equals("Asthma"), p.getAsthma().getStage_string.equals("CRISIS"), treatment_list.isEmpty()==true, age <=5, string_comorbidities.contains("diabetes")==false, 
+        p : Patient(getRespiratorydisease().equals("Asthma"), p.getAsthma().getStage_string().equalsIgnoreCase("CRISIS")==true, treatment_list.isEmpty()==true, age <=5, string_comorbidities.contains("diabetes")==false, 
         string_comorbidities.contains("glaucoma")==false, string_comorbidities.contains("cardiovascular disease")==false, string_comorbidities.contains("hypertiroidism")==false, 
         string_comorbidities.contains("infecction")==false, string_comorbidities.contains("osteoporosis")==false, string_comorbidities.contains("peptic ulcer")==false, 
         getAsthma().PS>7, getAsthma().PS<9, getAsthma().PEF<60, getAsthma().SAT_O2<91)
@@ -916,7 +916,7 @@ end
 rule "BAAC on demand Rule"
     dialect "java"
     when
-        p : Patient(getRespiratorydisease().equals("Asthma"), p.getAsthma().getStage_string.equals("INTERMITTENT") ||  p.getAsthma().getStage_string.equals("MILD PERSISTENT") ||  p.getAsthma().getStage_string.equals("MODERATE PERSISTENT") || p.getAsthma().getStage_string.equals("SEVERE PERSISTENT"), string_comorbidities.contains("diabetes")==false, 
+        p : Patient(getRespiratorydisease().equals("Asthma"), p.getAsthma().getStage_string().equalsIgnoreCase("INTERMITTENT")==true ||  p.getAsthma().getStage_string().equalsIgnoreCase("MILD PERSISTENT")==true ||  p.getAsthma().getStage_string().equalsIgnoreCase("MODERATE PERSISTENT")==true || p.getAsthma().getStage_string().equalsIgnoreCase("SEVERE PERSISTENT")==true, string_comorbidities.contains("diabetes")==false, 
         string_comorbidities.contains("glaucoma")==false, string_comorbidities.contains("cardiovascular disease")==false, string_comorbidities.contains("hypertiroidism")==false)
     then
         
@@ -927,7 +927,7 @@ end
 rule "Hospitalization Rule"
     dialect "java"
     when
-        p : Patient(getRespiratorydisease().equals("Asthma"), treatment_list.isEmpty()==false, p.getAsthma().getStage_string.equals("SEVERE PERSISTENT"),treat_stage==6, symptoms_controlled==false)
+        p : Patient(getRespiratorydisease().equals("Asthma"), treatment_list.isEmpty()==false, p.getAsthma().getStage_string().equalsIgnoreCase("SEVERE PERSISTENT")==true,treat_stage==6, symptoms_controlled==false)
     then
         p.setHospitalization(true);
         System.out.println("The patient needs to be hospitalized");

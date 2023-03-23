@@ -5,10 +5,13 @@
 package db.sqlite;
 
 import db.interfaces.AsthmaManager;
+import java.rmi.NotBoundException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import pojos.Asthma;
 
 /**
@@ -45,6 +48,8 @@ public class SQLiteAsthmaManager implements AsthmaManager{
             preparedStatement.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
+        } catch (NotBoundException ex) {
+            Logger.getLogger(SQLiteAsthmaManager.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
