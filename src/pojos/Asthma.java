@@ -63,11 +63,9 @@ public class Asthma {
         this.stage = stage;
     }
 
-    public String getStage_string() throws NotBoundException {
-        if (this.stage_string == null){
-            setStage_string("NONE");
-        }
-        return this.stage_string;
+    public String getStage_string()  {
+        
+        return stage_string;
     }
 
     public void setStage_string(String stage_string) throws NotBoundException {

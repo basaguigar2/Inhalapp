@@ -299,7 +299,7 @@ end
 rule "Cardiovascular disease"
     dialect "java"
     when
-        p: Patient(getRespiratorydisease().equals("EPOC"), getEpoc().getCondition_string().equalsIgnoreCase("NONE")==true, string_comorbidities.contains("cardiovascular diseases")==true, string_comorbidities.contains("vision disorders")==false)
+        p: Patient(getRespiratorydisease().equals("EPOC"), getEpoc().getCondition_string().equalsIgnoreCase("NONE")==true, string_comorbidities.contains("cardiovascular disease")==true, string_comorbidities.contains("vision disorders")==false)
     then 
         p.addTreatment(Treatment.AZIMOTRICINE);
         System.out.println("The patient has to be treated with 250 mg/day of Azimotricine ");
@@ -308,7 +308,7 @@ end
 rule "Vision disorders"
     dialect "java"
     when
-        p: Patient(getRespiratorydisease().equals("EPOC"), getEpoc().getCondition_string().equalsIgnoreCase("NONE")==true, string_comorbidities.contains("cardiovascular diseases")==true, string_comorbidities.contains("vision disorders")==true)
+        p: Patient(getRespiratorydisease().equals("EPOC"), getEpoc().getCondition_string().equalsIgnoreCase("NONE")==true, string_comorbidities.contains("cardiovascular disease")==true, string_comorbidities.contains("vision disorders")==true)
     then 
         p.addTreatment(Treatment.CHRONIC_OXIGEN_THERAPY);
         System.out.println("The patient has to be treated with Chronic home oxygen therapy");
@@ -348,7 +348,7 @@ end
 rule "No medication 3"
     dialect "java"
     when
-        p : Patient(getRespiratorydisease().equals("Asthma"), treatment_list.isEmpty()==true, getAsthma().getStage_string().equalsIgnoreCase("NONE")==true, symptoms_controlled==true, age > 5, string_comorbidities.contains("hypertension")==false, getAsthma().dayTimeSymptoms_w < 2, getAsthma().rescueMedication_w < 2, getAsthma().nocturnalSymptoms_w < 1, getAsthma().limitations==0, getAsthma().pulmonar_function > 80, getAsthma().exarcebations_y==0)
+        p : Patient(getRespiratorydisease().equals("Asthma"), treatment_list.isEmpty()==true, getAsthma().getStage_string().equalsIgnoreCase("NONE")==true,  age > 5, string_comorbidities.contains("hypertension")==false, getAsthma().dayTimeSymptoms_w < 2, getAsthma().rescueMedication_w < 2, getAsthma().nocturnalSymptoms_w < 1, getAsthma().limitations==0, getAsthma().pulmonar_function > 80, getAsthma().exarcebations_y==0)
     then
         p.addTreatment(Treatment.NO_MED);
         p.setTreatment_stage(1);
@@ -497,7 +497,7 @@ end
 rule "GCI high dosis + ARLT 1"
     dialect "java"
     when
-        p : Patient(getRespiratorydisease().equals("Asthma"),getAsthma().getStage_string().equalsIgnoreCase("SEVERE PERSISTENT")==true, treatment_list.isEmpty()==false, treat_stage==4, age <=5, symptoms_controlled==false, string_comorbidities.contains("viral infection")==false, string_comorbidities.contains("pulmonary tuberculosis")==false, string_comorbidities.contains("cardiovascular diseases")==false)
+        p : Patient(getRespiratorydisease().equals("Asthma"),getAsthma().getStage_string().equalsIgnoreCase("SEVERE PERSISTENT")==true, treatment_list.isEmpty()==false, treat_stage==4, age <=5, symptoms_controlled==false, string_comorbidities.contains("viral infection")==false, string_comorbidities.contains("pulmonary tuberculosis")==false, string_comorbidities.contains("cardiovascular disease")==false)
     then
         
         p.addTreatment(Treatment.GCI_HIGH_C);
@@ -509,7 +509,7 @@ end
 rule "GCI high dosis + ARLT 2"
     dialect "java"
     when
-        p : Patient(getRespiratorydisease().equals("Asthma"), getAsthma().getStage_string().equalsIgnoreCase("SEVERE PERSISTENT")==true,treatment_list.isEmpty()==false, treat_stage==6, age <=5, symptoms_controlled==true, string_comorbidities.contains("viral infection")==false, string_comorbidities.contains("pulmonary tuberculosis")==false, string_comorbidities.contains("cardiovascular diseases")==false)
+        p : Patient(getRespiratorydisease().equals("Asthma"), getAsthma().getStage_string().equalsIgnoreCase("SEVERE PERSISTENT")==true,treatment_list.isEmpty()==false, treat_stage==6, age <=5, symptoms_controlled==true, string_comorbidities.contains("viral infection")==false, string_comorbidities.contains("pulmonary tuberculosis")==false, string_comorbidities.contains("cardiovascular disease")==false)
     then
         p.addTreatment(Treatment.GCI_HIGH_C);
         p.addTreatment(Treatment.ARLT_C);

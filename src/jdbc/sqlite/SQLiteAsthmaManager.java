@@ -50,8 +50,6 @@ public class SQLiteAsthmaManager implements AsthmaManager{
             System.out.println("SE ha anadido");
         } catch (SQLException ex) {
             ex.printStackTrace();
-        } catch (NotBoundException ex) {
-            Logger.getLogger(SQLiteAsthmaManager.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

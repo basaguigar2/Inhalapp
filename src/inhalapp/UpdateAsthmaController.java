@@ -58,8 +58,8 @@ public class UpdateAsthmaController implements Initializable{
     private TextField daySymptomsTextField, rescueMedTextField, nocturnalSymptomsTextField, exacerbationsTextField, pulmonarFunctionTextField, satTextField, pefTextField, psTextField;
     
     @FXML
-    private CheckBox cardioDIsease_tab1, tuberculosis_tab1, viralInfection_tab1, glaucoma_tab1, urinary_tab1, hss_tab1, dbs_tab1, diabetes_tab1, 
-            hypertiroidism_tab1, pUlcer_tab1, osteoporosis_tab1, osteoporosis_tab2, pUlcer_tab2, hypertiroidism_tab2, diaetes_tab2, hss_tab2, 
+    private CheckBox cardioDisease_tab1, tuberculosis_tab1, viralInfection_tab1, glaucoma_tab1, urinary_tab1, hss_tab1, dbs_tab1, diabetes_tab1, 
+            hypertiroidism_tab1, pUlcer_tab1, osteoporosis_tab1, osteoporosis_tab2, pUlcer_tab2, hypertiroidism_tab2, diabetes_tab2, hss_tab2, 
             urinary_tab2, glaucoma_tab2, viralInfection_tab2, tuberculosis_tab2, cardioDisease_tab2, dbd_tab2;
     
     @FXML
@@ -93,6 +93,13 @@ public class UpdateAsthmaController implements Initializable{
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         this.selectedPatient = MenuUserController.getP();
+        if(selectedPatient.getTreatment_List().isEmpty()){
+        TabPane.getSelectionModel().select(Update_Asthma1);
+        Update_Asthma2.setDisable(true);
+        }else{
+        TabPane.getSelectionModel().select(Update_Asthma2);
+        Update_Asthma1.setDisable(true);
+        }
         
         this.backButton.setDisable(false);
         this.backButton2.setDisable(false);
@@ -118,36 +125,36 @@ public class UpdateAsthmaController implements Initializable{
         System.out.println("inside check asthma");
         Comorbidity c = new Comorbidity();
 
-        /*if (cardioDIsease_tab1.isSelected()){
-            c.setComorbidityName("Cardiovascular disease");
+        if (cardioDisease_tab1.isSelected()){
+            c.setComorbidityName("cardiovascular disease");
             selectedPatient.addComorbidity(c);
             comorbiditymanager.addComorbidity(c);
             int comorbidity_id = dbManager.getLastId();
             patientmanager.introduceComorbidity(this.selectedPatient.getId(), comorbidity_id);
-        } */
+        } 
         if (tuberculosis_tab1.isSelected()){
-            c.setComorbidityName("Tuberculosis");
+            c.setComorbidityName("pulmonary tuberculosis");
             selectedPatient.addComorbidity(c);
             comorbiditymanager.addComorbidity(c);
             int comorbidity_id = dbManager.getLastId();
             patientmanager.introduceComorbidity(this.selectedPatient.getId(), comorbidity_id);
         }
         if (viralInfection_tab1.isSelected()){
-            c.setComorbidityName("Viral Infection");
+            c.setComorbidityName("viral Infection");
             selectedPatient.addComorbidity(c);
             comorbiditymanager.addComorbidity(c);
             int comorbidity_id = dbManager.getLastId();
             patientmanager.introduceComorbidity(selectedPatient.getId(), comorbidity_id);
         }
         if (glaucoma_tab1.isSelected()){
-            c.setComorbidityName("Glaucoma");
+            c.setComorbidityName("glaucoma");
             selectedPatient.addComorbidity(c);
             comorbiditymanager.addComorbidity(c);
             int comorbidity_id = dbManager.getLastId();
             patientmanager.introduceComorbidity(selectedPatient.getId(), comorbidity_id);
         }
         if (urinary_tab1.isSelected()){
-            c.setComorbidityName("Urinary retention");
+            c.setComorbidityName("urinary retention");
             selectedPatient.addComorbidity(c);
             comorbiditymanager.addComorbidity(c);
             int comorbidity_id = dbManager.getLastId();
@@ -161,14 +168,14 @@ public class UpdateAsthmaController implements Initializable{
             patientmanager.introduceComorbidity(selectedPatient.getId(), comorbidity_id);
         }
         if (dbs_tab1.isSelected()){
-            c.setComorbidityName("Decreased bone density");
+            c.setComorbidityName("Decreased bone mineral density");
             selectedPatient.addComorbidity(c);
             comorbiditymanager.addComorbidity(c);
             int comorbidity_id = dbManager.getLastId();
             patientmanager.introduceComorbidity(selectedPatient.getId(), comorbidity_id);
         }
         if (diabetes_tab1.isSelected()){
-            c.setComorbidityName("Diabetes");
+            c.setComorbidityName("diabetes");
             selectedPatient.addComorbidity(c);
             comorbiditymanager.addComorbidity(c);
             int comorbidity_id = dbManager.getLastId();
@@ -182,14 +189,14 @@ public class UpdateAsthmaController implements Initializable{
             patientmanager.introduceComorbidity(selectedPatient.getId(), comorbidity_id);
         }
         if (pUlcer_tab1.isSelected()){
-            c.setComorbidityName("Peptic ulcer");
+            c.setComorbidityName("peptic ulcer");
             selectedPatient.addComorbidity(c);
             comorbiditymanager.addComorbidity(c);
             int comorbidity_id = dbManager.getLastId();
             patientmanager.introduceComorbidity(selectedPatient.getId(), comorbidity_id);
         }
         if (osteoporosis_tab1.isSelected()){
-            c.setComorbidityName("Osteoporosis");
+            c.setComorbidityName("osteoporosis");
             selectedPatient.addComorbidity(c);
             comorbiditymanager.addComorbidity(c);
             int comorbidity_id = dbManager.getLastId();
@@ -235,7 +242,8 @@ public class UpdateAsthmaController implements Initializable{
     @FXML
     public void checkAsthmaControlled(ActionEvent event) throws SQLException, NotBoundException {
         Comorbidity c = new Comorbidity();
-
+        int asthma_id=0;
+        a = asthmamanager.getAsthmaFromPatient(selectedPatient.getId());
         if (osteoporosis_tab2.isSelected()){
             c.setComorbidityName("Osteoporosis");
             selectedPatient.addComorbidity(c);
@@ -257,7 +265,7 @@ public class UpdateAsthmaController implements Initializable{
             int comorbidity_id = dbManager.getLastId();
             patientmanager.introduceComorbidity(selectedPatient.getId(), comorbidity_id);
         }
-        if (diaetes_tab2.isSelected()){
+        if (diabetes_tab2.isSelected()){
             c.setComorbidityName("Diabetes");
             selectedPatient.addComorbidity(c);
             comorbiditymanager.addComorbidity(c);
@@ -325,6 +333,10 @@ public class UpdateAsthmaController implements Initializable{
         if((symptoms_yes.isSelected()||symptoms_no.isSelected())) {
             this.checkTreatment4.setDisable(false);
             selectedPatient.setSymptoms_controlled(scontrolled);
+            selectedPatient.setAsthma(a);
+            asthmamanager.addAsthma(a);
+            asthma_id=asthmamanager.getLastId();
+            patientmanager.introduceAsthma(selectedPatient.getId(),asthma_id);
             checkTreatmentButtonPushed();
         } else {
             Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -388,29 +400,27 @@ public class UpdateAsthmaController implements Initializable{
         List<Treatment> treatment = selectedPatient.getTreatment_List();
         
                
-        if (treatment==null) {
+        if (treatment==null || treatment.isEmpty()) {
             alert.setHeaderText("No adequate treatment was found");
         } else {
-            alert.setHeaderText("The recommended treatment is: ");
-            alert.setHeaderText("Drug: " + selectedPatient.treatment_list.get(treatment.size() - 1).getDrug() + "\nDose: " + selectedPatient.treatment_list.get(treatment.size() - 1).getDose() + "\nTherapy: " + selectedPatient.treatment_list.get(treatment.size() - 1).getTherapy() + "\n");
-            alert.show(); 
+            int final_length = treatment.size() - initial_length;
+                String conc = "";
+                for (int i = treatment.size() - final_length; i < treatment.size(); i++) {
+                    System.out.println(treatment.get(i));
+                    conc += treatment.get(i) + "\n";
+                }
+            
+            alert.setTitle("The recommended treatment is: ");
+            alert.setHeaderText(conc);
+            alert.show();
             treatmentmanager.addTreatment(selectedPatient.treatment_list.get(treatment.size()-1));
             int treatmentId = dbManager.getLastId();
-            selectedPatient.setHospitalization(true);
+           
             patientmanager.introduceTreatment(selectedPatient.getId(), treatmentId);
              
           
             
-            /*for (int i =0; i < treatment.size(); i++){
-                Treatment t= new Treatment();
-                t.setDrug(selectedPatient.treatment_list.get(i).getDrug());
-                t.setDose(selectedPatient.treatment_list.get(i).getDose());
-                t.setDose(selectedPatient.treatment_list.get(i).getTherapy());
-                treatmentmanager.addTreatment(t);
-                int treatmentId = dbManager.getLastId();
-                patientmanager.introduceTreatment(selectedPatient.medical_card_number, treatmentId);
-                alert.setHeaderText("Drug: " + selectedPatient.treatment_list.get(final_length-i).getDrug() + "\nDose: " + selectedPatient.treatment_list.get(final_length-i).getDose()+ "\n");
-            }*/
+           
         }
     }
     
@@ -465,7 +475,7 @@ public class UpdateAsthmaController implements Initializable{
         this.exacerbationsTextField.clear();
         this.pulmonarFunctionTextField.clear();
         this.LimitationsChoiceBox.setValue(0);
-        //this.cardioDIsease_tab1.setSelected(false);
+        this.cardioDisease_tab1.setSelected(false);
         this.tuberculosis_tab1.setSelected(false);
         this.viralInfection_tab1.setSelected(false);
         this.glaucoma_tab1.setSelected(false);
@@ -483,7 +493,7 @@ public class UpdateAsthmaController implements Initializable{
         this.osteoporosis_tab2.setSelected(false);
         this.pUlcer_tab2.setSelected(false);
         this.hypertiroidism_tab2.setSelected(false);
-        this.diaetes_tab2.setSelected(false);
+        this.diabetes_tab2.setSelected(false);
         this.hss_tab2.setSelected(false);
         this.urinary_tab2.setSelected(false);
         this.glaucoma_tab2.setSelected(false);
