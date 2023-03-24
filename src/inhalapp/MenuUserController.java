@@ -67,7 +67,7 @@ public class MenuUserController implements Initializable {
     private Tab ListPatient, AddPatient;
 
     @FXML
-    private TextField filter_patient, medical_card_tab4, name_tab4;
+    private TextField medical_card_tab4, name_tab4;
 
     @FXML
     private TableView<Patient> patientTable;
@@ -82,7 +82,7 @@ public class MenuUserController implements Initializable {
     private TableColumn<Patient, String> diseaseCol;
 
     @FXML
-    private Button obtainTreatmentButton, seePatientButton, addPatientButton;
+    private Button seePatientButton, addPatientButton;
 
     @FXML
     private ComboBox<String> sex_comboBox;
@@ -184,45 +184,6 @@ public class MenuUserController implements Initializable {
     }
 
     @FXML
-    public void obtainTreatmentButtonPushed(ActionEvent event) throws SQLException {
-
-        p = this.patientTable.getSelectionModel().getSelectedItem();
-        int initial_length = p.treatment_list.size();
-
-        KieServices ks = KieServices.Factory.get();
-        KieContainer kc = ks.getKieClasspathContainer();
-
-        KieSession ksession = kc.newKieSession("diagnosisKS");
-
-        ksession.insert(p);
-
-        ksession.fireAllRules();
-        ksession.dispose();
-
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Information Message");
-        List<String> treatment = p.getString_treatments();
-        int final_length = treatment.size() + initial_length;
-
-        if (treatment == null) {
-            alert.setHeaderText("No adequate treatment was found");
-        } else {
-            alert.setHeaderText("The recommended treatment is: ");
-            for (int i = 0; i < treatment.size(); i++) {
-                Treatment t = new Treatment();
-                t.setDrug(p.treatment_list.get(i).getDrug());
-                t.setDose(p.treatment_list.get(i).getDose());
-                t.setDose(p.treatment_list.get(i).getTherapy());
-                treatmentmanager.addTreatment(t);
-                int treatmentId = dbManager.getLastId();
-                patientmanager.introduceTreatment(p.medical_card_number, treatmentId);
-                String mensaje = "Drug: " + p.treatment_list.get(final_length - i).getDrug() + "\nDose: " + p.treatment_list.get(final_length - i).getDose() + "\nTherapy: " + p.treatment_list.get(final_length - i).getTherapy() + "";
-                alert.setContentText(mensaje);
-            }
-        }
-    }
-
-    @FXML
     public void addPatientButtonPushed(ActionEvent event) throws NotBoundException, SQLException {
         String name = name_tab4.getText();
         Integer medCard = Integer.parseInt(medical_card_tab4.getText());
@@ -272,8 +233,8 @@ public class MenuUserController implements Initializable {
             TabPane.getSelectionModel().select(ListPatient);
         } else {
             Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Missing data");
-            alert.setHeaderText("Please, fulfill all the sections");
+            alert.setTitle("Missing or incompatible data");
+            alert.setHeaderText("Please, fulfill all the sections correctly");
             alert.showAndWait();
         }
         clearData();
@@ -298,6 +259,9 @@ public class MenuUserController implements Initializable {
         if (this.medical_card_tab4.getText().equals("")) {
             validData = false;
             this.medCardError.setText("*");
+        }
+        if (this.sex_comboBox.getValue().equalsIgnoreCase("Male") && this.pregnancy_tab4.isSelected() == true){
+            validData = false;
         }
         return validData;
     }

@@ -32,12 +32,11 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="410.0" prefWidth="630.0">
                      <children>
-                        <Label layoutX="79.0" layoutY="49.0" prefHeight="20.0" prefWidth="104.0" text="Search by name:">
+                        <Label layoutX="89.0" layoutY="64.0" prefHeight="27.0" prefWidth="408.0" text="Please, select the patient you want to consult:" textFill="#0e016f">
                            <font>
-                              <Font size="14.0" />
+                              <Font name="System Bold" size="18.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="filter_patient" layoutX="192.0" layoutY="47.0" prefHeight="5.0" prefWidth="420.0" promptText="Introduce the patient's name" />
                         <TableView fx:id="patientTable" layoutX="83.0" layoutY="110.0" prefHeight="270.0" prefWidth="541.0">
                           <columns>
                             <TableColumn fx:id="medCol" prefWidth="190.0" text="MedCard" />
@@ -45,19 +44,7 @@
                               <TableColumn fx:id="diseaseCol" prefWidth="149.0" text="Respiratory Disease" />
                           </columns>
                         </TableView>
-                        <Button fx:id="obtainTreatmentButton" layoutX="370.0" layoutY="400.0" mnemonicParsing="false" onAction="#obtainTreatmentButtonPushed" prefHeight="24.0" prefWidth="190.0" text="Obtain Treatment">
-                           <effect>
-                              <Blend mode="BLUE">
-                                 <topInput>
-                                    <Bloom />
-                                 </topInput>
-                              </Blend>
-                           </effect>
-                           <font>
-                              <Font name="System Bold" size="14.0" />
-                           </font>
-                        </Button>
-                        <Button fx:id="seePatientButton" layoutX="147.0" layoutY="400.0" mnemonicParsing="false" onAction="#seePatientButtonPushed" prefHeight="24.0" prefWidth="190.0" text="See Patient">
+                        <Button fx:id="seePatientButton" layoutX="259.0" layoutY="400.0" mnemonicParsing="false" onAction="#seePatientButtonPushed" prefHeight="24.0" prefWidth="190.0" text="See Patient">
                            <effect>
                               <Blend mode="BLUE">
                                  <topInput>

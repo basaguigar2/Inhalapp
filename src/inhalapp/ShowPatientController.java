@@ -114,7 +114,7 @@ public class ShowPatientController implements Initializable, Controller{
         
         if(selectedPatient.getRespiratorydisease().equalsIgnoreCase("Asthma")){
             this.updateCOPD.setDisable(true);
-        } else if (selectedPatient.getRespiratorydisease().equalsIgnoreCase("COPD")){
+        } else if (selectedPatient.getRespiratorydisease().equalsIgnoreCase("EPOC")){
             this.updateAsthma.setDisable(true);
         }
         this.nameSurnameTextField.setEditable(false);
