@@ -32,7 +32,7 @@ public class Comorbidity {
         this.cid = cid;
     }
 
-    public String getComorbidityName() {
+    public String getCname() {
         return cname;
     }
 

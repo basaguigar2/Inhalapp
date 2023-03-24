@@ -325,9 +325,10 @@ public class Patient {
     }
     
     public void addComorbidity(Comorbidity comorbidity){
-        if(this.comorbidity.contains(comorbidity)==false && this.string_comorbidities.contains(comorbidity.getComorbidityName())==false){
+        if(this.string_comorbidities.contains(comorbidity.getCname())==false){
+            System.out.println("Añado " + comorbidity.getCname());
             this.comorbidity.add(comorbidity);
-            this.string_comorbidities.add(comorbidity.getComorbidityName());
+            this.string_comorbidities.add(comorbidity.getCname());
         }
     }
     public List<String> getString_comorbidities() {
@@ -336,16 +337,16 @@ public class Patient {
 
     public void setString_comorbidities(List<Comorbidity> string_comorbidities) {
         for (int i = 0; i < this.comorbidity.size(); i++) {
-                String c = this.comorbidity.get(i).getComorbidityName();
+                String c = this.comorbidity.get(i).getCname();
                 this.string_comorbidities.add(c);
         }
     }
-    
-    
 
     @Override
     public String toString() {
-        return "Patient{" + "medical_card_number=" + medical_card_number + ", name=" + name + '}';
+        return "Patient{" + "medical_card_number=" + medical_card_number + ", name=" + name + ", string_comorbidities=" + string_comorbidities + '}';
     }
+    
+    
 
 }

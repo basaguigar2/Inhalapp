@@ -1,15 +1,11 @@
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package inhalapp;
 
-import jdbc.interfaces.AsthmaManager;
-import jdbc.interfaces.ComorbidityManager;
-import jdbc.interfaces.DBManager;
-import jdbc.interfaces.PatientManager;
-import jdbc.interfaces.TreatmentManager;
-import jdbc.sqlite.SQLiteManager;
+
 import java.net.URL;
 import java.rmi.NotBoundException;
 import java.sql.SQLException;
@@ -30,6 +26,11 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
+import jdbc.interfaces.AsthmaManager;
+import jdbc.interfaces.ComorbidityManager;
+import jdbc.interfaces.DBManager;
+import jdbc.interfaces.PatientManager;
+import jdbc.interfaces.TreatmentManager;
 import org.kie.api.KieServices;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
@@ -91,9 +92,8 @@ public class UpdateAsthmaController implements Initializable{
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        this.checkTreatmentButton3.setDisable(true);
-        this.checkTreatment4.setDisable(true);
-        this.checkTreatmentButton5.setDisable(true);
+        this.selectedPatient = MenuUserController.getP();
+        
         this.backButton.setDisable(false);
         this.backButton2.setDisable(false);
         this.backButton3.setDisable(false);
@@ -110,7 +110,7 @@ public class UpdateAsthmaController implements Initializable{
         symptoms_yes.setToggleGroup(symptoms_controlled);
         symptoms_no.setToggleGroup(symptoms_controlled);
 
-        this.selectedPatient = MenuUserController.getP();
+        
     }
     
     @FXML
@@ -118,13 +118,13 @@ public class UpdateAsthmaController implements Initializable{
         System.out.println("inside check asthma");
         Comorbidity c = new Comorbidity();
 
-        if (cardioDIsease_tab1.isSelected()){
+        /*if (cardioDIsease_tab1.isSelected()){
             c.setComorbidityName("Cardiovascular disease");
             selectedPatient.addComorbidity(c);
             comorbiditymanager.addComorbidity(c);
             int comorbidity_id = dbManager.getLastId();
             patientmanager.introduceComorbidity(this.selectedPatient.getId(), comorbidity_id);
-        }
+        } */
         if (tuberculosis_tab1.isSelected()){
             c.setComorbidityName("Tuberculosis");
             selectedPatient.addComorbidity(c);
@@ -207,20 +207,20 @@ public class UpdateAsthmaController implements Initializable{
         Boolean validData = validateAsthma(dayS, rm, nightS, exacerbations, pf);
         
         if (validData == true && LimitationsChoiceBox.getValue() != null) {
-            this.daySError.setText("");
-            this.rmError.setText("");
-            this.nightSError.setText("");
-            this.exacerbationError.setText("");
-            this.pfError.setText("");
-            this.checkTreatmentButton3.setDisable(false);
+            
             a.setDayTimeSymptoms_w(dayS);
             a.setrescueMedication_w(rm);
             a.setnocturnalSymptoms_w(nightS);
             a.setexarcebations_y(exacerbations);
             a.setpulmonar_function(pf);
             a.setlimitations(limitations);
+            a.setStage_string("NONE");
+            
             asthmamanager.addAsthma(a);
-            patientmanager.introduceAsthma(selectedPatient.getMedical_card_number(), a.getAsthma_id());
+            int asthma_Id = asthmamanager.getLastId();
+            
+            patientmanager.introduceAsthma(selectedPatient.getId(), asthma_Id);
+            selectedPatient.setAsthma(a);
             this.checkTreatmentButton3.setDisable(false);
             checkTreatmentButtonPushed();
         } else {
@@ -345,15 +345,20 @@ public class UpdateAsthmaController implements Initializable{
         Boolean validData = validateAsthmaCrisis(sat, pef, ps);
         
         if (validData == true) {
-            this.satError.setText("");
-            this.pefError.setText("");
-            this.psError.setText("");
+            
+            
             this.checkTreatmentButton5.setDisable(false);
             a.setSAT_O2(sat);
             a.setPEF(pef);
             a.setPS(ps);
+            a.setStage_string("CRISIS");
             asthmamanager.addAsthma(a);
-            patientmanager.introduceAsthma(selectedPatient.getId(), a.getAsthma_id());
+            
+            int asthma_Id = asthmamanager.getLastId();
+            
+            patientmanager.introduceAsthma(selectedPatient.getId(), asthma_Id);
+            selectedPatient.setAsthma(a);
+            
             checkTreatmentButtonPushed();
         } else {
             Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -367,6 +372,7 @@ public class UpdateAsthmaController implements Initializable{
     public void checkTreatmentButtonPushed() throws SQLException {
         
         int initial_length = selectedPatient.treatment_list.size();
+        System.out.println(selectedPatient.getAsthma());
         KieServices ks = KieServices.Factory.get();
         KieContainer kc = ks.getKieClasspathContainer();
 
@@ -379,14 +385,23 @@ public class UpdateAsthmaController implements Initializable{
         
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Information Message");
-        List<String> treatment = selectedPatient.getString_treatments();
-        int final_length = treatment.size() + initial_length;
+        List<Treatment> treatment = selectedPatient.getTreatment_List();
+        
                
         if (treatment==null) {
             alert.setHeaderText("No adequate treatment was found");
         } else {
             alert.setHeaderText("The recommended treatment is: ");
-            for (int i =0; i < treatment.size(); i++){
+            alert.setHeaderText("Drug: " + selectedPatient.treatment_list.get(treatment.size() - 1).getDrug() + "\nDose: " + selectedPatient.treatment_list.get(treatment.size() - 1).getDose() + "\nTherapy: " + selectedPatient.treatment_list.get(treatment.size() - 1).getTherapy() + "\n");
+            alert.show(); 
+            treatmentmanager.addTreatment(selectedPatient.treatment_list.get(treatment.size()-1));
+            int treatmentId = dbManager.getLastId();
+            selectedPatient.setHospitalization(true);
+            patientmanager.introduceTreatment(selectedPatient.getId(), treatmentId);
+             
+          
+            
+            /*for (int i =0; i < treatment.size(); i++){
                 Treatment t= new Treatment();
                 t.setDrug(selectedPatient.treatment_list.get(i).getDrug());
                 t.setDose(selectedPatient.treatment_list.get(i).getDose());
@@ -395,22 +410,22 @@ public class UpdateAsthmaController implements Initializable{
                 int treatmentId = dbManager.getLastId();
                 patientmanager.introduceTreatment(selectedPatient.medical_card_number, treatmentId);
                 alert.setHeaderText("Drug: " + selectedPatient.treatment_list.get(final_length-i).getDrug() + "\nDose: " + selectedPatient.treatment_list.get(final_length-i).getDose()+ "\n");
-            }
+            }*/
         }
     }
     
     public boolean validateAsthma(int dayS, int rm, int nightS, int exacerbations, int pf) {
         boolean validData = true;
         
-        if (this.daySymptomsTextField.getText().equals("") || Integer.parseInt(this.daySymptomsTextField.getText()) < 1 || Integer.parseInt(this.daySymptomsTextField.getText()) > 10 ) {
+        if (this.daySymptomsTextField.getText().equals("") || Integer.parseInt(this.daySymptomsTextField.getText()) < 0 || Integer.parseInt(this.daySymptomsTextField.getText()) > 10 ) {
             validData = false;
             this.daySError.setText("*");
         }
-        if (this.rescueMedTextField.getText().equals("") || Integer.parseInt(this.rescueMedTextField.getText()) < 1 || Integer.parseInt(this.rescueMedTextField.getText()) > 10) {
+        if (this.rescueMedTextField.getText().equals("") || Integer.parseInt(this.rescueMedTextField.getText()) < 0 || Integer.parseInt(this.rescueMedTextField.getText()) > 10) {
             validData = false;
             this.rmError.setText("*");
         }
-        if (this.nocturnalSymptomsTextField.getText().equals("") || Integer.parseInt(this.nocturnalSymptomsTextField.getText()) < 1 || Integer.parseInt(this.nocturnalSymptomsTextField.getText()) > 10) {
+        if (this.nocturnalSymptomsTextField.getText().equals("") || Integer.parseInt(this.nocturnalSymptomsTextField.getText()) < 0 || Integer.parseInt(this.nocturnalSymptomsTextField.getText()) > 10) {
             validData = false;
             this.nightSError.setText("*");
         }
@@ -432,7 +447,7 @@ public class UpdateAsthmaController implements Initializable{
             validData = false;
             this.satError.setText("*");
         }
-        if (this.pefTextField.getText().equals("") || Integer.parseInt(this.pefError.getText()) < 0 || Integer.parseInt(this.pefTextField.getText()) > 100) {
+        if (this.pefTextField.getText().equals("") || Integer.parseInt(this.pefTextField.getText()) < 0 || Integer.parseInt(this.pefTextField.getText()) > 100) {
             validData = false;
             this.pefError.setText("*");
         }
@@ -450,7 +465,7 @@ public class UpdateAsthmaController implements Initializable{
         this.exacerbationsTextField.clear();
         this.pulmonarFunctionTextField.clear();
         this.LimitationsChoiceBox.setValue(0);
-        this.cardioDIsease_tab1.setSelected(false);
+        //this.cardioDIsease_tab1.setSelected(false);
         this.tuberculosis_tab1.setSelected(false);
         this.viralInfection_tab1.setSelected(false);
         this.glaucoma_tab1.setSelected(false);

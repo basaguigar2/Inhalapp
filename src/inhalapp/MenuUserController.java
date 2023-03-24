@@ -113,8 +113,7 @@ public class MenuUserController implements Initializable {
     private static User u;
     private static Patient p;
 
-    private ObservableList<Patient> patients = FXCollections.observableArrayList(
-            new Patient(1234, "Gisela", "EPOC"));
+    private ObservableList<Patient> patients = FXCollections.observableArrayList();
 
     @FXML
     private void go_to_addPatient(ActionEvent event) {
@@ -129,8 +128,11 @@ public class MenuUserController implements Initializable {
     @FXML
     public void seePatientButtonPushed(ActionEvent event) {
         try {
+            
             sc = new SceneChanger();
             p = this.patientTable.getSelectionModel().getSelectedItem();
+            p.setTreatment_List(treatmentmanager.getTreatmentFromPatient(p.getId()));
+            p.setComorbidity(comorbiditymanager.getComorbiditiesFromPatient(p.getId()));
             Parent root = FXMLLoader.load(getClass().getResource("showPatient.fxml"));
             Scene scene = new Scene(root);
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -149,14 +151,11 @@ public class MenuUserController implements Initializable {
         nameCol.setCellValueFactory(new PropertyValueFactory<Patient, String>("name"));
         diseaseCol.setCellValueFactory(new PropertyValueFactory<Patient, String>("respiratorydisease"));
         ArrayList<Patient> p = patientmanager.selectAllPatients(u.getUserId());
-        System.out.println("Lista de pacientes" + p);
         patients.addAll(p);
-        System.out.println(patients.get(0));
         patientTable.setEditable(true);
         patientTable.setItems(patients);
-        //listPatients(filter_patient.getText());
         sex_comboBox.getItems().addAll("Male", "Female");
-        //Creation of raioButtons groups
+        //Creation of radioButtons groups
         respiratory_disease_tab4 = new ToggleGroup();
         copd_tab4.setToggleGroup(respiratory_disease_tab4);
         asthma_tab4.setToggleGroup(respiratory_disease_tab4);
@@ -164,23 +163,6 @@ public class MenuUserController implements Initializable {
         previously_diagnosed = new ToggleGroup();
         pD_true.setToggleGroup(previously_diagnosed);
         pD_false.setToggleGroup(previously_diagnosed);
-    }
-
-    public void listPatients(String name) {
-        List<Patient> patientList = new ArrayList<Patient>();
-        patientList = patientmanager.ListPatients(name);
-        Patient p = new Patient();
-
-        for (int i = 0; i < patientList.size(); i++) {
-            List<Comorbidity> comorbidities = new ArrayList<Comorbidity>();
-            List<Treatment> treatments = new ArrayList<Treatment>();
-
-            p = patientList.get(i);
-            p.setComorbidity(comorbiditymanager.getComorbiditiesFromPatient(p.getId()));
-            p.setTreatment_List(treatmentmanager.getTreatmentFromPatient(p.getId()));
-
-            this.patients.add(p);
-        }
     }
 
     @FXML

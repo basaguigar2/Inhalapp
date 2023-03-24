@@ -32,6 +32,7 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
+import javafx.stage.Window;
 import org.kie.api.KieServices;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
@@ -40,6 +41,7 @@ import pojos.EPOC;
 import pojos.Patient;
 import pojos.PulmonaryCondition;
 import pojos.Treatment;
+import static pojos.Treatment.INFLUENZAV;
 
 /**
  *
@@ -137,32 +139,33 @@ public class UpdateEPOCController implements Initializable {
             selectedPatient.setPneumonia_vaccine(true);
         }
         if (cardiovascular_tab5.isSelected()) {
-            c.setComorbidityName("Cardiovascular disease");
+            c.setComorbidityName("cardiovascular diseases");
             selectedPatient.addComorbidity(c);
             comorbiditymanager.addComorbidity(c);
             int comorbidity_id = dbManager.getLastId();
             patientmanager.introduceComorbidity(selectedPatient.getId(), comorbidity_id);
         }
         if (tuberculosis_tab5.isSelected()) {
-            c.setComorbidityName("Tuberculosis");
+            c.setComorbidityName("pulmonary tuberculosis");
             selectedPatient.addComorbidity(c);
             comorbiditymanager.addComorbidity(c);
             int comorbidity_id = dbManager.getLastId();
             patientmanager.introduceComorbidity(selectedPatient.getId(), comorbidity_id);
         }
         if (viral_tab5.isSelected()) {
-            c.setComorbidityName("Viral Infection");
+            c.setComorbidityName("viral infection");
             selectedPatient.addComorbidity(c);
             comorbiditymanager.addComorbidity(c);
             int comorbidity_id = dbManager.getLastId();
             patientmanager.introduceComorbidity(selectedPatient.getId(), comorbidity_id);
         }
         if (vision_tab5.isSelected()) {
-            c.setComorbidityName("Vision Disorder");
+            c.setComorbidityName("vision disorders");
             selectedPatient.addComorbidity(c);
             comorbiditymanager.addComorbidity(c);
             int comorbidity_id = dbManager.getLastId();
             patientmanager.introduceComorbidity(selectedPatient.getId(), comorbidity_id);
+            System.out.println(selectedPatient.getString_comorbidities());
         }
 
         String condition = pulmonary_condition_comboBox.getValue().toString();
@@ -204,6 +207,8 @@ public class UpdateEPOCController implements Initializable {
     @FXML
     public void checkCOPDWithDeterioration(ActionEvent event) throws SQLException {
         Comorbidity c = new Comorbidity();
+        int epoc_Id = 0;
+        e = epocmanager.getEPOCFromPatient(selectedPatient.getId());
         if (influenza_tab.isSelected()) {
             selectedPatient.setInfluenza_vaccine(true);
         } else {
@@ -215,28 +220,28 @@ public class UpdateEPOCController implements Initializable {
             selectedPatient.setPneumonia_vaccine(false);
         }
         if (cardiovascular_tab.isSelected()) {
-            c.setComorbidityName("Cardiovascular disease");
+            c.setComorbidityName("cardiovascular diseases");
             selectedPatient.addComorbidity(c);
             comorbiditymanager.addComorbidity(c);
             int comorbidity_id = dbManager.getLastId();
             patientmanager.introduceComorbidity(selectedPatient.getId(), comorbidity_id);
         }
         if (tuberculosis_tab.isSelected()) {
-            c.setComorbidityName("Tuberculosis");
+            c.setComorbidityName("pulmonary tuberculosis");
             selectedPatient.addComorbidity(c);
             comorbiditymanager.addComorbidity(c);
             int comorbidity_id = dbManager.getLastId();
             patientmanager.introduceComorbidity(selectedPatient.getId(), comorbidity_id);
         }
         if (viral_tab.isSelected()) {
-            c.setComorbidityName("Viral Infection");
+            c.setComorbidityName("viral infection");
             selectedPatient.addComorbidity(c);
             comorbiditymanager.addComorbidity(c);
             int comorbidity_id = dbManager.getLastId();
             patientmanager.introduceComorbidity(selectedPatient.getId(), comorbidity_id);
         }
         if (vision_tab.isSelected()) {
-            c.setComorbidityName("Vision Disorder");
+            c.setComorbidityName("vision disorders");
             selectedPatient.addComorbidity(c);
             comorbiditymanager.addComorbidity(c);
             int comorbidity_id = dbManager.getLastId();
@@ -265,13 +270,20 @@ public class UpdateEPOCController implements Initializable {
             e.setDisnea(disnea);
             e.setExacerbations(exacerbation);
             e.setExa(exa);
-            System.out.println(e);
-            epocmanager.addEPOC(e);
-            patientmanager.editPatient(selectedPatient.getId(), null, selectedPatient.isInfluenza_vaccine(), selectedPatient.isPneumonia_vaccine(), null);
-            int epoc_Id = epocmanager.getLastId();
-            patientmanager.introduceEPOC(selectedPatient.getId(), epoc_Id);
+            
             selectedPatient.setEpoc(e);
-            checkTreatmentButtonPushed();
+            if (selectedPatient.getEpoc().getEOS() == null) {
+                epocmanager.addEPOC2(e);
+                patientmanager.editPatient(selectedPatient.getId(), selectedPatient.isInfluenza_vaccine(), null, selectedPatient.isPneumonia_vaccine(), null);
+                epoc_Id = epocmanager.getLastId();
+                patientmanager.introduceEPOC(selectedPatient.getId(), epoc_Id);
+                checkTreatmentButtonPushed();
+            } else {
+                patientmanager.editPatient(selectedPatient.getId(), selectedPatient.isInfluenza_vaccine(), null, selectedPatient.isPneumonia_vaccine(), null);
+                epocmanager.editEPOC(epoc_Id, EOS, FEV, exa, exacerbation);
+                selectedPatient.setEpoc(e);
+                checkTreatmentButtonPushed();
+            }
         } else {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Missing data");
@@ -282,9 +294,8 @@ public class UpdateEPOCController implements Initializable {
     }
 
     public void checkTreatmentButtonPushed() throws SQLException {
-
+        Window window = TabPane.getScene().getWindow();
         int initial_length = selectedPatient.treatment_list.size();
-        System.out.println(selectedPatient.getEpoc());
         KieServices ks = KieServices.Factory.get();
         KieContainer kc = ks.getKieClasspathContainer();
 
@@ -296,26 +307,30 @@ public class UpdateEPOCController implements Initializable {
         ksession.dispose();
 
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Information Message");
         List<Treatment> treatment = selectedPatient.getTreatment_List();
-        
-        if (treatment == null) {
-            alert.setHeaderText("No adequate treatment was found");
+        System.out.println(selectedPatient.getTreatment_List());
+        if (treatment.isEmpty()) {
+            showAlert(Alert.AlertType.INFORMATION, window, "No treatment available", "Change device and investigate other symptoms");
         } else {
-            alert.setHeaderText("The recommended treatment is: ");
-            alert.setHeaderText("Drug: " + selectedPatient.treatment_list.get(treatment.size() - 1).getDrug() + "\nDose: " + selectedPatient.treatment_list.get(treatment.size() - 1).getDose() + "\nTherapy: " + selectedPatient.treatment_list.get(treatment.size() - 1).getTherapy() + "\n");
-            alert.show();
-            treatmentmanager.addTreatment(selectedPatient.treatment_list.get(treatment.size()-1));
-            int treatmentId = dbManager.getLastId();
-            selectedPatient.setHospitalization(true);
-            patientmanager.introduceTreatment(selectedPatient.getId(), treatmentId);
-            /*for (int i = 0; i < treatment.size(); i++) {
-                Treatment t = new Treatment();
-                t.setDrug(selectedPatient.treatment_list.get(i).getDrug());
-                t.setDose(selectedPatient.treatment_list.get(i).getDose());
-                t.setDose(selectedPatient.treatment_list.get(i).getTherapy());
-
-            }*/
+            if (treatment == null) {
+                alert.setHeaderText("No adequate treatment was found");
+            } else {
+                int final_length = treatment.size() - initial_length;
+                String conc = "";
+                for (int i = treatment.size() - final_length; i < treatment.size(); i++) {
+                    System.out.println(treatment.get(i));
+                    conc += treatment.get(i) + "\n";
+                }
+                
+                alert.setTitle("The recommended treatment is: ");
+                alert.setHeaderText(conc);
+                alert.show();
+                treatmentmanager.addTreatment(selectedPatient.treatment_list.get(treatment.size() - 1));
+                int treatmentId = dbManager.getLastId();
+                selectedPatient.setHospitalization(true);
+                patientmanager.editPatient(selectedPatient.getId(), null, selectedPatient.isHospitalization(), null, null);
+                patientmanager.introduceTreatment(selectedPatient.getId(), treatmentId);
+            }
         }
     }
 
@@ -324,15 +339,12 @@ public class UpdateEPOCController implements Initializable {
 
         if (this.mMRC_tab5.getText().equals("") || Integer.parseInt(this.mMRC_tab5.getText()) < 0 || Integer.parseInt(this.mMRC_tab5.getText()) > 4) {
             validData = false;
-            this.mMRCError.setText("*");
         }
         if (this.CAT_tab5.getText().equals("") || Integer.parseInt(this.CAT_tab5.getText()) < 0 || Integer.parseInt(this.CAT_tab5.getText()) > 40) {
             validData = false;
-            this.CATError.setText("*");
         }
         if (this.exacer_tab5.getText().equals("") || Integer.parseInt(this.exacer_tab5.getText()) < 0 || Integer.parseInt(this.exacer_tab5.getText()) > 2) {
             validData = false;
-            this.exaError.setText("*");
         }
         return validData;
     }
@@ -342,15 +354,12 @@ public class UpdateEPOCController implements Initializable {
 
         if (this.eos_tab6.getText().equals("")) {
             validData = false;
-            this.EOSError.setText("*");
         }
         if (this.exacer_tab6.getText().equals("") || Integer.parseInt(this.exacer_tab6.getText()) < 0 || Integer.parseInt(this.exacer_tab6.getText()) > 2) {
             validData = false;
-            this.exaError.setText("*");
         }
         if (this.fev_tab6.getText().equals("")) {
             validData = false;
-            this.FEVError.setText("*");
         }
         return validData;
     }

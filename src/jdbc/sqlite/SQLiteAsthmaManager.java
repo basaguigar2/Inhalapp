@@ -30,22 +30,24 @@ public class SQLiteAsthmaManager implements AsthmaManager{
     }
 
     @Override
-    public void addAsthma(Asthma a) throws SQLException {
+    public void addAsthma(Asthma a)  {
         try{
-            String sq1 = "INSERT INTO asthma (stage, PS, PEF, SAT_O2, dayTimeSymptoms, rescueMedication,  nocturnalSymptoms, limitations, pulmonar_function, exacerbations) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            System.out.println("hello" + a);
+            String sq1 = "INSERT INTO asthma (stage, dayTimeSymptoms, rescueMedication,  nocturnalSymptoms, limitations, pulmonar_function, exacerbations) VALUES (?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement preparedStatement = c.prepareStatement(sq1);
             preparedStatement.setString(1, a.getStage_string());
-            preparedStatement.setInt(2, a.getPS());
-            preparedStatement.setInt(3, a.getPEF());
-            preparedStatement.setInt(4, a.getSAT_O2());
-            preparedStatement.setInt(5, a.getDayTimeSymptoms_w());
-            preparedStatement.setInt(6, a.getrescueMedication_w());
-            preparedStatement.setInt(7, a.getnocturnalSymptoms_w());
-            preparedStatement.setInt(8, a.getlimitations());
-            preparedStatement.setInt(9, a.getpulmonar_function());
-            preparedStatement.setInt(10, a.getexarcebations_y());
+            //preparedStatement.setInt(2, a.getPS());
+            //preparedStatement.setInt(3, a.getPEF());
+            //preparedStatement.setInt(4, a.getSAT_O2());
+            preparedStatement.setInt(2, a.getDayTimeSymptoms_w());
+            preparedStatement.setInt(3, a.getrescueMedication_w());
+            preparedStatement.setInt(4, a.getnocturnalSymptoms_w());
+            preparedStatement.setInt(5, a.getlimitations());
+            preparedStatement.setInt(6, a.getpulmonar_function());
+            preparedStatement.setInt(7, a.getexarcebations_y());
             preparedStatement.executeUpdate();	
             preparedStatement.close();
+            System.out.println("SE ha anadido");
         } catch (SQLException ex) {
             ex.printStackTrace();
         } catch (NotBoundException ex) {
@@ -91,5 +93,18 @@ public class SQLiteAsthmaManager implements AsthmaManager{
             return null;
         }
     }
+    public int getLastId() {
+        int result = 0;
+        try {
+            String query = "SELECT last_insert_rowid() AS lastId";
+            PreparedStatement p = c.prepareStatement(query);
+            ResultSet rs = p.executeQuery();
+            result = rs.getInt("lastId");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
     
 }

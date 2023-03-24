@@ -15,4 +15,5 @@ public interface AsthmaManager {
     public void addAsthma(Asthma a) throws SQLException;
     public Asthma selectAsthma(Integer asthma_id);
     public Asthma getAsthmaFromPatient(Integer patientId);
+    public int getLastId();
 }

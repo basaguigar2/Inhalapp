@@ -17,4 +17,5 @@ public interface EpocManager {
     public EPOC selectEPOC(Integer EPOC_id);
     public EPOC getEPOCFromPatient(Integer patientId);
     public int getLastId();
+    public void editEPOC(Integer id,Integer eos,Integer fev,Integer exa, Boolean exacerbations);
 }

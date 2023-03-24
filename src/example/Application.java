@@ -8,11 +8,13 @@ package example;
 import jdbc.interfaces.DBManager;
 import jdbc.sqlite.SQLiteManager;
 import java.rmi.NotBoundException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.kie.api.KieServices;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
+import pojos.Comorbidity;
 import pojos.EPOC;
 import pojos.Patient;
 
@@ -26,7 +28,12 @@ public class Application {
             Patient p = new Patient();
             p.setRespiratorydisease("EPOC");
             EPOC e = new EPOC();
-            e.setCondition_string("Severe chronic hypoxemia");
+            e.setCondition_string("NONE");
+            Comorbidity c = new Comorbidity("cardiovascular diseases");
+            p.addComorbidity(c);
+            c = new Comorbidity("vision disorders");
+            p.addComorbidity(c);
+            System.out.println(p.getString_comorbidities());
             p.setEpoc(e);
             ksession.insert(p);
             ksession.fireAllRules();

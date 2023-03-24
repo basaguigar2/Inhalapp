@@ -45,12 +45,21 @@ public class Treatment {
     public static final Treatment SYSTEMIC_CORTICOIDS_C;
     public static final Treatment SYSTEMIC_CORTICOIDS_A;
     public static final Treatment SUPLEMENTARY_O2;
+    public static final Treatment INFLUENZAV;
+    public static final Treatment PNEUMONIAV;
     
     static{
     String therapy="Chronic home oxygen therapy";
     CHRONIC_OXIGEN_THERAPY= new Treatment(therapy);
     }
-    
+    static {
+    String therapy = "You should get the influenza vaccine";
+    INFLUENZAV = new Treatment(therapy);
+    }
+    static {
+    String therapy = "You should get the pneumonia vaccine";
+    PNEUMONIAV = new Treatment(therapy);
+    }
     static{
     String therapy="Bullectomy";
     BULLECTOMY= new Treatment(therapy);

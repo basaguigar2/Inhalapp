@@ -80,13 +80,12 @@ public class SQLiteTreatmentManager implements TreatmentManager {
      */
     @Override
     public ArrayList<Treatment> getTreatmentFromPatient(Integer patientId) {
+        ArrayList<Treatment> tList = new ArrayList<Treatment>();
         try {
             String sql = "SELECT * FROM treatment_patient WHERE patient_id = ?";
             PreparedStatement p = c.prepareStatement(sql);
             p.setInt(1, patientId);
             ResultSet rs = p.executeQuery();
-            ArrayList<Treatment> tList = new ArrayList<Treatment>();
-            
             while (rs.next()) {
                 tList.add(selectTreatment(rs.getInt("treatment_id")));
             }
@@ -94,8 +93,7 @@ public class SQLiteTreatmentManager implements TreatmentManager {
             rs.close();
             return tList;
         } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
+            return tList;
         }
     }
 }

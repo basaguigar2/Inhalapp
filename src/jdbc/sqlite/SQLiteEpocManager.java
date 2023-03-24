@@ -29,7 +29,6 @@ public class SQLiteEpocManager implements EpocManager{
     @Override
     public void addEPOC(EPOC e) throws SQLException {
         try{
-            System.out.println(e);
             String sq1 = "INSERT INTO EPOC (condition, mMRC,CAT, exa, eosinophilia) VALUES (?, ?, ?, ?, ?)";
             PreparedStatement preparedStatement = c.prepareStatement(sq1);
             preparedStatement.setString(1, e.getCondition_string());
@@ -46,22 +45,58 @@ public class SQLiteEpocManager implements EpocManager{
     }
     
     @Override
-    public void addEPOC2(EPOC e) throws SQLException {
+    public void addEPOC2(EPOC e) {
         try{
-            String sq1 = "INSERT INTO EPOC (condition, mMRC, EOS, CAT, exa, exacerbations,eosinophilia, FEV) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+            String sq1 = "INSERT INTO EPOC ( EOS,FEV,exa,exacerbations) VALUES ( ?, ?, ?, ?)";
             PreparedStatement preparedStatement = c.prepareStatement(sq1);
-            preparedStatement.setString(1, e.getCondition_string());
-            preparedStatement.setInt(2, e.getmMRC());
-            preparedStatement.setInt(3, e.getEOS());
-            preparedStatement.setInt(4, e.getCAT());
-            preparedStatement.setInt(5, e.getExa());
-            preparedStatement.setBoolean(6, e.isExacerbations());
-            preparedStatement.setBoolean(7, e.isEosinophilia());
-            preparedStatement.setInt(8, e.getFEV());
+            preparedStatement.setInt(1, e.getEOS());
+            preparedStatement.setInt(2, e.getFEV());
+            preparedStatement.setInt(3, e.getExa());
+            preparedStatement.setBoolean(4, e.isExacerbations());
+            
             preparedStatement.executeUpdate();	
             preparedStatement.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
+        }
+    }
+    
+    @Override
+    public void editEPOC(Integer id,Integer eos,Integer fev,Integer exa, Boolean exacerbations){
+        String sql;
+        PreparedStatement pStatement;
+        try {
+            if (eos != null) {
+                sql = "UPDATE EPOC SET EOS = ? WHERE EPOC_id = ?";
+                pStatement = c.prepareStatement(sql);
+                pStatement.setInt(1, eos);
+                pStatement.setInt(2, id);
+                pStatement.executeUpdate();
+            }
+            
+            if (fev != null) {
+                sql = "UPDATE EPOC SET FEV = ? WHERE EPOC_id = ?";
+                pStatement = c.prepareStatement(sql);
+                pStatement.setInt(1, fev);
+                pStatement.setInt(2, id);
+                pStatement.executeUpdate();
+            }
+            if (exa != null) {
+                sql = "UPDATE EPOC SET exa = ? WHERE EPOC_id = ?";
+                pStatement = c.prepareStatement(sql);
+                pStatement.setInt(1, exa);
+                pStatement.setInt(2, id);
+                pStatement.executeUpdate();
+            }
+            if (exacerbations != null) {
+                sql = "UPDATE EPOC SET exacerbations = ? WHERE EPOC_id = ?";
+                pStatement = c.prepareStatement(sql);
+                pStatement.setBoolean(1, exacerbations);
+                pStatement.setInt(2, id);
+                pStatement.executeUpdate();
+            }
+        } catch (SQLException update_patient_error) {
+            update_patient_error.printStackTrace();
         }
     }
     @Override

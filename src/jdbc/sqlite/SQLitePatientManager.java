@@ -201,14 +201,6 @@ public class SQLitePatientManager implements PatientManager {
         String sql;
         PreparedStatement pStatement;
         try {
-            if (hospitalization != null) {
-                sql = "UPDATE patient SET hospitalization = ? WHERE patientid = ?";
-                pStatement = c.prepareStatement(sql);
-                pStatement.setBoolean(1, influenzaV);
-                pStatement.setInt(2, id);
-                pStatement.executeUpdate();
-            }
-            
             if (influenzaV != null) {
                 sql = "UPDATE patient SET influenzaV = ? WHERE patientid = ?";
                 pStatement = c.prepareStatement(sql);
@@ -216,15 +208,23 @@ public class SQLitePatientManager implements PatientManager {
                 pStatement.setInt(2, id);
                 pStatement.executeUpdate();
             }
+            
+            if (hospitalization != null) {
+                sql = "UPDATE patient SET hospitalization = ? WHERE patientid = ?";
+                pStatement = c.prepareStatement(sql);
+                pStatement.setBoolean(1, hospitalization);
+                pStatement.setInt(2, id);
+                pStatement.executeUpdate();
+            }
             if (pneumoniaV != null) {
-                sql = "UPDATE patient SET pneumoniaV = ? WHERE medical_card_number = ?";
+                sql = "UPDATE patient SET pneumoniaV = ? WHERE patientid = ?";
                 pStatement = c.prepareStatement(sql);
                 pStatement.setBoolean(1, pneumoniaV);
                 pStatement.setInt(2, id);
                 pStatement.executeUpdate();
             }
             if (treatment_stage != null) {
-                sql = "UPDATE patient SET treatment_stage = ? WHERE medical_card_number = ?";
+                sql = "UPDATE patient SET treatment_stage = ? WHERE patientid = ?";
                 pStatement = c.prepareStatement(sql);
                 pStatement.setInt(1, treatment_stage);
                 pStatement.setInt(2, id);

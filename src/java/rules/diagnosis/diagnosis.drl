@@ -80,6 +80,7 @@ rule "Influenza vaccine Rule"
         p: Patient (getRespiratorydisease().equals("EPOC"), getEpoc().getCondition_string().equalsIgnoreCase("NONE")==true,  influenza_vaccine == false)
     then 
         p.setInfluenza_vaccine(true);
+        p.addTreatment(Treatment.INFLUENZAV);
         System.out.println("You should put influenza vaccine");
 end
 
@@ -89,6 +90,7 @@ rule "Pneumonia vaccine Rule"
         p: Patient (getRespiratorydisease().equals("EPOC"), getEpoc().getCondition_string().equalsIgnoreCase("NONE")==true, pneumonia_vaccine == false, age>65)
     then 
         p.setPneumonia_vaccine(true);
+        p.addTreatment(Treatment.PNEUMONIAV);
         System.out.println("You should put pneumonia vaccine");
 end
 
@@ -104,7 +106,7 @@ end
 rule "LABA/LAMA Rule"
     dialect "java"
     when 
-        p: Patient(getRespiratorydisease().equals("EPOC"), getEpoc().getCondition_string().equalsIgnoreCase("NONE")==true, treatment_list.isEmpty() == true, hospitalization == false, getEpoc().getExa()>1, getString_comorbidities().contains("cardiovascular diseases") == false, getEpoc().getmMRC() > 1, getEpoc().getCAT() > 10)
+        p: Patient(getRespiratorydisease().equals("EPOC"), getEpoc().getCondition_string().equalsIgnoreCase("NONE")==true, treatment_list.isEmpty() == true, hospitalization == false, getEpoc().getExa()<2, getString_comorbidities().contains("cardiovascular diseases") == false, getEpoc().getmMRC() > 1, getEpoc().getCAT() > 10)
     then 
         
         p.addTreatment(Treatment.LABA_LAMA);

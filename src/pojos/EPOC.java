@@ -114,7 +114,7 @@ public class EPOC {
         this.mMRC = mMRC;
     }
 
-    public int getEOS() {
+    public Integer getEOS() {
         return EOS;
     }
 

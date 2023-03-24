@@ -126,8 +126,6 @@ public class ShowPatientController implements Initializable, Controller{
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        /*this.updateAsthma.setDisable(true);
-        this.updateCOPD.setDisable(true);*/
         this.backButton.setDisable(false);
 
         dbManager = InhalApp.getDBManager();

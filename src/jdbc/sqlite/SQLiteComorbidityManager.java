@@ -37,7 +37,7 @@ public class SQLiteComorbidityManager implements ComorbidityManager{
         try{
             String sq1 = "INSERT INTO comorbidity (cname) VALUES (?)";
             PreparedStatement preparedStatement = c.prepareStatement(sq1);
-            preparedStatement.setString(1, cm.getComorbidityName());
+            preparedStatement.setString(1, cm.getCname());
             preparedStatement.executeUpdate();	
             preparedStatement.close();
         } catch (SQLException ex) {
@@ -76,12 +76,13 @@ public class SQLiteComorbidityManager implements ComorbidityManager{
      */
     @Override
     public ArrayList<Comorbidity> getComorbiditiesFromPatient(Integer patientId) {
+        ArrayList<Comorbidity> cList = new ArrayList<Comorbidity>();
         try {
             String sql = "SELECT * FROM comorbidity_patient WHERE patient_id = ?";
             PreparedStatement p = c.prepareStatement(sql);
             p.setInt(1, patientId);
             ResultSet rs = p.executeQuery();
-            ArrayList<Comorbidity> cList = new ArrayList<Comorbidity>();
+            
             
             while (rs.next()) {
                 cList.add(selectComorbidity(rs.getInt("comorbidity_id")));
@@ -90,8 +91,7 @@ public class SQLiteComorbidityManager implements ComorbidityManager{
             rs.close();
             return cList;
         } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
+            return cList;
         }
     }
     
