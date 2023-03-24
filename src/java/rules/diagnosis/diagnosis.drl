@@ -163,7 +163,7 @@ end
 rule "LABA+LAMA Rule 2"
     dialect "java"
     when
-        p: Patient(getRespiratorydisease().equals("EPOC"), getEpoc().getCondition_string.equalsIgnoreCase("NONE"), symptoms_controlled == false, treatment_list.isEmpty() == false, string_treatments.contains("LABA/LAMA") == true, string_comorbidities.contains("disnea") == true, getString_comorbidities().contains("cardiovascular diseases") == false)
+        p: Patient(getRespiratorydisease().equals("EPOC"), getEpoc().getCondition_string.equalsIgnoreCase("NONE"), symptoms_controlled == false, treatment_list.isEmpty() == false, string_treatments.contains("LABA/LAMA") == true, getEpoc().isDisnea() == true, getString_comorbidities().contains("cardiovascular diseases") == false)
     then
         p.addTreatment(Treatment.LABA);
         p.addTreatment(Treatment.LAMA);
@@ -173,7 +173,7 @@ end
 rule "LABA+LAMA+IC Rule 1"
     dialect "java"
     when
-        p: Patient(getRespiratorydisease().equals("EPOC"), getEpoc().getCondition_string.equalsIgnoreCase("NONE"), symptoms_controlled==false, treatment_list.isEmpty() == false, string_treatments.contains("LABA/LAMA") == true, string_comorbidities.contains("disnea") == true, string_comorbidities.contains("cardiovascular diseases") == false, string_comorbidities.contains("pulmonar tuberculosis") == false,  string_comorbidities.contains("viral infection") == false)
+        p: Patient(getRespiratorydisease().equals("EPOC"), getEpoc().getCondition_string.equalsIgnoreCase("NONE"), symptoms_controlled==false, treatment_list.isEmpty() == false, string_treatments.contains("LABA/LAMA") == true, getEpoc().isDisnea() == true, string_comorbidities.contains("cardiovascular diseases") == false, string_comorbidities.contains("pulmonar tuberculosis") == false,  string_comorbidities.contains("viral infection") == false)
     then
         p.addTreatment(Treatment.LABA);
         p.addTreatment(Treatment.LAMA);
@@ -184,7 +184,7 @@ end
 rule "Change device Rule 1"
     dialect "java"
     when
-        p: Patient(getRespiratorydisease().equals("EPOC"), symptoms_controlled==false, treatment_list.isEmpty() == false, string_treatments.contains("LABA") == true, string_treatments.contains("LAMA") == true, string_comorbidities.contains("disnea") == true)
+        p: Patient(getRespiratorydisease().equals("EPOC"), symptoms_controlled==false, treatment_list.isEmpty() == false, string_treatments.contains("LABA") == true, string_treatments.contains("LAMA") == true, getEpoc().isDisnea() == true)
     then
         System.out.println("Change device and investigate other causes");
 end
@@ -192,7 +192,7 @@ end
 rule "Change device Rule 2"
     dialect "java"
     when
-        p: Patient(getRespiratorydisease().equals("EPOC"), symptoms_controlled==false, treatment_list.isEmpty()==false, string_treatments.contains("LABA")==true, string_treatments.contains("LAMA")==true, string_treatments.contains("IC")==true, string_comorbidities.contains("disnea")==true)
+        p: Patient(getRespiratorydisease().equals("EPOC"), symptoms_controlled==false, treatment_list.isEmpty()==false, string_treatments.contains("LABA")==true, string_treatments.contains("LAMA")==true, string_treatments.contains("IC")==true, getEpoc().isDisnea() == true)
     then
         System.out.println("Change device and investigate other causes");
 end
@@ -200,7 +200,7 @@ end
 rule "LABA+IC Rule 2"
     dialect "java"
     when
-        p: Patient(getRespiratorydisease().equals("EPOC"), getEpoc().getCondition_string().equalsIgnoreCase("NONE")==true, symptoms_controlled==false, treatment_list.isEmpty()==false, string_comorbidities.contains("cardiovascular diseases")==false, string_comorbidities.contains("pulmonar tuberculosis")==false,  string_comorbidities.contains("viral infection")==false, getEpoc().exacerbations == true, getEpoc().EOS >= 300 || (getEpoc().EOS >= 100 && getEpoc().exa == 2))
+        p: Patient(getRespiratorydisease().equals("EPOC"), getEpoc().getCondition_string().equalsIgnoreCase("NONE")==true, symptoms_controlled==false, treatment_list.isEmpty()==false, string_comorbidities.contains("cardiovascular diseases")==false, string_comorbidities.contains("pulmonar tuberculosis")==false,  string_comorbidities.contains("viral infection")==false, getEpoc().isDisnea() == false, getEpoc().EOS >= 300 || (getEpoc().EOS >= 100 && getEpoc().exa == 2))
     then
         p.addTreatment(Treatment.LABA);
         p.addTreatment(Treatment.IC);
@@ -210,7 +210,7 @@ end
 rule "LABA+LAMA Rule 3"
     dialect "java"
     when
-        p: Patient(getRespiratorydisease().equals("EPOC"), getEpoc().getCondition_string().equalsIgnoreCase("NONE")==true, symptoms_controlled==false, treatment_list.isEmpty()==false, string_comorbidities.contains("cardiovascular diseases")==false, getEpoc().exacerbations == true, getEpoc().EOS < 300 || getEpoc().exa < 2)
+        p: Patient(getRespiratorydisease().equals("EPOC"), getEpoc().getCondition_string().equalsIgnoreCase("NONE")==true, symptoms_controlled==false, treatment_list.isEmpty()==false, string_comorbidities.contains("cardiovascular diseases")==false, getEpoc().isDisnea() == false, getEpoc().EOS < 300 || getEpoc().exa < 2)
     then
         p.addTreatment(Treatment.LABA);
         p.addTreatment(Treatment.LAMA);
@@ -220,7 +220,7 @@ end
 rule "Azimotricine Rule 1"
     dialect "java"
     when
-        p: Patient(getRespiratorydisease().equals("EPOC"), getEpoc().getCondition_string().equalsIgnoreCase("NONE")==true, symptoms_controlled==false, treatment_list.isEmpty()==false, smoker==false, string_treatments.contains("LABA")==true, string_treatments.contains("LAMA")==true, string_comorbidities.contains("cardiovascular diseases")==false, string_comorbidities.contains("vision disorders")==false, getEpoc().exacerbations == true, getEpoc().EOS < 100)
+        p: Patient(getRespiratorydisease().equals("EPOC"), getEpoc().getCondition_string().equalsIgnoreCase("NONE")==true, symptoms_controlled==false, treatment_list.isEmpty()==false, smoker==false, string_treatments.contains("LABA")==true, string_treatments.contains("LAMA")==true, string_comorbidities.contains("cardiovascular diseases")==false, string_comorbidities.contains("vision disorders")==false,getEpoc().isDisnea() == false, getEpoc().EOS < 100)
     then
         
         p.addTreatment(Treatment.AZIMOTRICINE);
@@ -230,7 +230,7 @@ end
 rule "Roflumilast Rule 1"
     dialect "java"
     when
-        p: Patient(getRespiratorydisease().equals("EPOC"), getEpoc().getCondition_string().equalsIgnoreCase("NONE")==true, symptoms_controlled==false, treatment_list.isEmpty() == false, smoker==true, string_treatments.contains("LABA")==true, string_treatments.contains("LAMA")==true, string_comorbidities.contains("cardiovascular diseases")==false, getEpoc().exacerbations == true, getEpoc().EOS < 100, getEpoc().FEV < 50)
+        p: Patient(getRespiratorydisease().equals("EPOC"), getEpoc().getCondition_string().equalsIgnoreCase("NONE")==true, symptoms_controlled==false, treatment_list.isEmpty() == false, smoker==true, string_treatments.contains("LABA")==true, string_treatments.contains("LAMA")==true, string_comorbidities.contains("cardiovascular diseases")==false, getEpoc().isDisnea() == false, getEpoc().EOS < 100, getEpoc().FEV < 50)
     then
         
         p.addTreatment(Treatment.ROFLUMILAST);
@@ -240,7 +240,7 @@ end
 rule "Change device Rule 3"
     dialect "java"
     when
-        p: Patient(getRespiratorydisease().equals("EPOC"), getEpoc().getCondition_string().equalsIgnoreCase("NONE")==true, symptoms_controlled==false, treatment_list.isEmpty()==false, smoker==true, string_treatments.contains("LABA")==true, string_treatments.contains("LAMA")==true, getEpoc().exacerbations == true, getEpoc().EOS < 100, getEpoc().FEV > 50)
+        p: Patient(getRespiratorydisease().equals("EPOC"), getEpoc().getCondition_string().equalsIgnoreCase("NONE")==true, symptoms_controlled==false, treatment_list.isEmpty()==false, smoker==true, string_treatments.contains("LABA")==true, string_treatments.contains("LAMA")==true, getEpoc().isDisnea() == false, getEpoc().EOS < 100, getEpoc().FEV > 50)
     then
         System.out.println("Change device and investigate other causes");
 end
@@ -248,7 +248,7 @@ end
 rule "LABA+LAMA+IC Rule 2"
     dialect "java"
     when
-        p: Patient(getRespiratorydisease().equals("EPOC"), getEpoc().getCondition_string().equalsIgnoreCase("NONE")==true, symptoms_controlled==false, treatment_list.isEmpty()==false, string_treatments.contains("LABA")==true, string_treatments.contains("LAMA")==true, string_comorbidities.contains("cardiovascular diseases")==false, getEpoc().exacerbations == true, getEpoc().EOS > 100)
+        p: Patient(getRespiratorydisease().equals("EPOC"), getEpoc().getCondition_string().equalsIgnoreCase("NONE")==true, symptoms_controlled==false, treatment_list.isEmpty()==false, string_treatments.contains("LABA")==true, string_treatments.contains("LAMA")==true, string_comorbidities.contains("cardiovascular diseases")==false, getEpoc().isDisnea() == false, getEpoc().EOS > 100)
     then
         p.addTreatment(Treatment.LABA);
         p.addTreatment(Treatment.LAMA);
@@ -259,7 +259,7 @@ end
 rule "Azimotricine Rule 2"
     dialect "java"
     when
-        p: Patient(getRespiratorydisease().equals("EPOC"), getEpoc().getCondition_string().equalsIgnoreCase("NONE")==true, symptoms_controlled==false, treatment_list.isEmpty()==false, smoker==false, string_treatments.contains("LABA")==true, string_treatments.contains("LAMA")==true, string_treatments.contains("IC")==true, string_comorbidities.contains("cardiovascular diseases")==false, string_comorbidities.contains("pulmonar tuberculosis")==false,  string_comorbidities.contains("viral infection")==false, string_comorbidities.contains("vision disorders")==false, getEpoc().exacerbations == true, getEpoc().EOS > 100)
+        p: Patient(getRespiratorydisease().equals("EPOC"), getEpoc().getCondition_string().equalsIgnoreCase("NONE")==true, symptoms_controlled==false, treatment_list.isEmpty()==false, smoker==false, string_treatments.contains("LABA")==true, string_treatments.contains("LAMA")==true, string_treatments.contains("IC")==true, string_comorbidities.contains("cardiovascular diseases")==false, string_comorbidities.contains("pulmonar tuberculosis")==false,  string_comorbidities.contains("viral infection")==false, string_comorbidities.contains("vision disorders")==false, getEpoc().isDisnea() == false, getEpoc().EOS > 100)
     then
         p.addTreatment(Treatment.AZIMOTRICINE);
         System.out.println("The patient has to be treated with 250 mg/day of Azimotricine ");
@@ -268,7 +268,7 @@ end
 rule "Roflumilast Rule 2"
     dialect "java"
     when
-        p: Patient(getRespiratorydisease().equals("EPOC"), getEpoc().getCondition_string().equalsIgnoreCase("NONE")==true, symptoms_controlled==false, treatment_list.isEmpty()==false, smoker==true, string_treatments.contains("LABA")==true, string_treatments.contains("LAMA")==true, string_treatments.contains("IC")==true, string_comorbidities.contains("cardiovascular diseases")==false, string_comorbidities.contains("pulmonar tuberculosis")==false,  string_comorbidities.contains("viral infection")==false, getEpoc().exacerbations == true, getEpoc().EOS > 100, getEpoc().FEV < 50)
+        p: Patient(getRespiratorydisease().equals("EPOC"), getEpoc().getCondition_string().equalsIgnoreCase("NONE")==true, symptoms_controlled==false, treatment_list.isEmpty()==false, smoker==true, string_treatments.contains("LABA")==true, string_treatments.contains("LAMA")==true, string_treatments.contains("IC")==true, string_comorbidities.contains("cardiovascular diseases")==false, string_comorbidities.contains("pulmonar tuberculosis")==false,  string_comorbidities.contains("viral infection")==false, getEpoc().isDisnea() == false, getEpoc().EOS > 100, getEpoc().FEV < 50)
     then
         p.addTreatment(Treatment.ROFLUMILAST);
         System.out.println("The patient has to be treated with 500 mcg/day of Roflumilast");
@@ -277,7 +277,7 @@ end
 rule "Change device Rule 4"
     dialect "java"
     when
-        p: Patient(getRespiratorydisease().equals("EPOC"), getEpoc().getCondition_string().equalsIgnoreCase("NONE")==true, symptoms_controlled==false, treatment_list.isEmpty()==false, smoker==true, string_treatments.contains("LABA")==true, string_treatments.contains("LAMA")==true, string_treatments.contains("IC")==true, getEpoc().exacerbations == true, getEpoc().EOS > 100, getEpoc().FEV > 50)
+        p: Patient(getRespiratorydisease().equals("EPOC"), getEpoc().getCondition_string().equalsIgnoreCase("NONE")==true, symptoms_controlled==false, treatment_list.isEmpty()==false, smoker==true, string_treatments.contains("LABA")==true, string_treatments.contains("LAMA")==true, string_treatments.contains("IC")==true,getEpoc().isDisnea() == false, getEpoc().EOS > 100, getEpoc().FEV > 50)
     then
         System.out.println("Change device and investigate other causes");
 end
@@ -285,7 +285,7 @@ end
 rule "LABA+LAMA+IC Rule 3"
     dialect "java"
     when
-        p: Patient(getRespiratorydisease().equals("EPOC"), getEpoc().getCondition_string().equalsIgnoreCase("NONE")==true, symptoms_controlled==false, treatment_list.isEmpty()==false, string_treatments.contains("LABA")==true, string_treatments.contains("IC")==true, string_comorbidities.contains("cardiovascular diseases")==false, string_comorbidities.contains("pulmonar tuberculosis")==false,  string_comorbidities.contains("viral infection")==false, getEpoc().exacerbations == true)
+        p: Patient(getRespiratorydisease().equals("EPOC"), getEpoc().getCondition_string().equalsIgnoreCase("NONE")==true, symptoms_controlled==false, treatment_list.isEmpty()==false, string_treatments.contains("LABA")==true, string_treatments.contains("IC")==true, string_comorbidities.contains("cardiovascular diseases")==false, string_comorbidities.contains("pulmonar tuberculosis")==false,  string_comorbidities.contains("viral infection")==false, getEpoc().isDisnea() == false)
     then
         p.addTreatment(Treatment.LABA);
         p.addTreatment(Treatment.LAMA);

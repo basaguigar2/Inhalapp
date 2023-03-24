@@ -246,7 +246,7 @@ public class SQLitePatientManager implements PatientManager {
     @Override
     public void createLinkUserPatient(int userId, int medCardNumber) {
         try {
-            String sql1 = "UPDATE patient SET userId = ? WHERE medical_card_number = ? ";
+            String sql1 = "UPDATE patient SET userId = ? WHERE patientid = ? ";
             PreparedStatement pStatement = c.prepareStatement(sql1);
             pStatement.setInt(1, userId);
             pStatement.setInt(2, medCardNumber);

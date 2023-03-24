@@ -144,7 +144,7 @@ public class MenuUserController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         u = LogInController.getUser();
-        System.out.println(u.getUserId());
+        System.out.println("Id user en menu "+ u.getUserId());
         medCol.setCellValueFactory(new PropertyValueFactory<Patient, Integer>("medical_card_number"));
         nameCol.setCellValueFactory(new PropertyValueFactory<Patient, String>("name"));
         diseaseCol.setCellValueFactory(new PropertyValueFactory<Patient, String>("respiratorydisease"));
@@ -266,7 +266,7 @@ public class MenuUserController implements Initializable {
             Patient p = new Patient(medCard, name, age, gender, pregnancy, smoker, hospitalization, respiratoryDisease);
             patientmanager.addPatient(p);
             p.setId(patientmanager.getLastId());
-            patientmanager.createLinkUserPatient(u.getUserId(), medCard);
+            patientmanager.createLinkUserPatient(u.getUserId(), p.getId());
             patients.add(p);
             patientTable.setItems(patients);
             TabPane.getSelectionModel().select(ListPatient);

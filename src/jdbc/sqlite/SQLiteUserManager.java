@@ -64,7 +64,6 @@ public class SQLiteUserManager implements UserManager {
             rs.close();
             return user;
         } catch (SQLException ex) {
-            ex.printStackTrace();
             user = null;
             return user;
         }

@@ -29,7 +29,7 @@ public class LogInController {
     
     private static DBManager manager = InhalApp.getDBManager();
     private static UserManager userman = manager.getUserManager();
-    private static User user = new User();
+    private static User user;
     
     @FXML
     private PasswordField passwordlogin;
@@ -55,17 +55,15 @@ public class LogInController {
 
         String username = usernamelogin.getText();
         String password = passwordlogin.getText();
-
-        int id = userman.getId(username);
-        if(id == -1){
+        user = userman.checkPassword(username, password);
+        if(user == null){
             infoMessage("Incorrect username", null, "Failed");
             return;
         } else{
             user.setUserId(userman.getId(username));
         }
-        
-        user = userman.checkPassword(username, password);
-
+        int id = userman.getId(username);
+        System.out.println("El id del usuario " + id);
         if (user == null) {
             infoMessage("Please enter correct username or password", null, "Failed");
             return;
