@@ -132,10 +132,10 @@ public class SQLitePatientManager implements PatientManager {
             ResultSet rs = p.executeQuery();
             Patient patient = null;
             if (rs.next()) {
-                patient = new Patient(rs.getInt("patientid"),rs.getInt("medical_card_number"), rs.getString("name"),
-                        rs.getInt("age"), rs.getString("gender"), rs.getBoolean("pregnancy"),rs.getBoolean("influenzaV"), 
-                        rs.getBoolean("pneumoniaV"),rs.getInt("treatment_stage"), rs.getBoolean("smoker"),rs.getBoolean("symptoms_controlled"), 
-                        rs.getBoolean("hospitalization"),rs.getString("respiratorydisease"));
+                patient = new Patient(rs.getInt("patientid"), rs.getInt("medical_card_number"), rs.getString("name"),
+                        rs.getInt("age"), rs.getString("gender"), rs.getBoolean("pregnancy"), rs.getBoolean("influenzaV"),
+                        rs.getBoolean("pneumoniaV"), rs.getInt("treatment_stage"), rs.getBoolean("smoker"), rs.getBoolean("symptoms_controlled"),
+                        rs.getBoolean("hospitalization"), rs.getString("respiratorydisease"));
             }
             p.close();
             rs.close();
@@ -161,10 +161,10 @@ public class SQLitePatientManager implements PatientManager {
             ResultSet rs = p.executeQuery();
             ArrayList<Patient> pList = new ArrayList<Patient>();
             while (rs.next()) {
-                pList.add(new Patient(rs.getInt("patientid"),rs.getInt("medical_card_number"), rs.getString("name"),
-                        rs.getInt("age"), rs.getString("gender"), rs.getBoolean("pregnancy"),rs.getBoolean("influenzaV"), 
-                        rs.getBoolean("pneumoniaV"),rs.getInt("treatment_stage"), rs.getBoolean("smoker"),rs.getBoolean("symptoms_controlled"), 
-                        rs.getBoolean("hospitalization"),rs.getString("respiratorydisease")));
+                pList.add(new Patient(rs.getInt("patientid"), rs.getInt("medical_card_number"), rs.getString("name"),
+                        rs.getInt("age"), rs.getString("gender"), rs.getBoolean("pregnancy"), rs.getBoolean("influenzaV"),
+                        rs.getBoolean("pneumoniaV"), rs.getInt("treatment_stage"), rs.getBoolean("smoker"), rs.getBoolean("symptoms_controlled"),
+                        rs.getBoolean("hospitalization"), rs.getString("respiratorydisease")));
                 System.out.println(rs.getString("name"));
             }
             p.close();
@@ -175,7 +175,7 @@ public class SQLitePatientManager implements PatientManager {
             return null;
         }
     }
-    
+
     @Override
     public ArrayList<Patient> ListPatients(String name) {
         ArrayList<Patient> pList = new ArrayList<Patient>();
@@ -185,10 +185,10 @@ public class SQLitePatientManager implements PatientManager {
             p.setString(1, name);
             ResultSet rs = p.executeQuery();
             while (rs.next()) {
-                pList.add(new Patient(rs.getInt("patientid"),rs.getInt("medical_card_number"), rs.getString("name"),
-                        rs.getInt("age"), rs.getString("gender"), rs.getBoolean("pregnancy"),rs.getBoolean("influenzaV"), 
-                        rs.getBoolean("pneumoniaV"),rs.getInt("treatment_stage"), rs.getBoolean("smoker"),rs.getBoolean("symptoms_controlled"), 
-                        rs.getBoolean("hospitalization"),rs.getString("respiratorydisease")));
+                pList.add(new Patient(rs.getInt("patientid"), rs.getInt("medical_card_number"), rs.getString("name"),
+                        rs.getInt("age"), rs.getString("gender"), rs.getBoolean("pregnancy"), rs.getBoolean("influenzaV"),
+                        rs.getBoolean("pneumoniaV"), rs.getInt("treatment_stage"), rs.getBoolean("smoker"), rs.getBoolean("symptoms_controlled"),
+                        rs.getBoolean("hospitalization"), rs.getString("respiratorydisease")));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -197,79 +197,37 @@ public class SQLitePatientManager implements PatientManager {
     }
 
     @Override
-    public boolean editPatient(Integer medCardNum, String name, Integer age, String gender, boolean pregnancy, boolean smoker, boolean symptoms_controlled, boolean hospitalization, String respiratorydisease, Integer treatment_stage) {
+    public boolean editPatient(int id, Boolean influenzaV,Boolean hospitalization, Boolean pneumoniaV, Integer treatment_stage) {
         String sql;
         PreparedStatement pStatement;
         try {
-            if (name != null) {
-                sql = "UPDATE patient SET name = ? WHERE medical_card_number = ?";
+            if (hospitalization != null) {
+                sql = "UPDATE patient SET hospitalization = ? WHERE patientid = ?";
                 pStatement = c.prepareStatement(sql);
-                pStatement.setString(1, name);
-                pStatement.setInt(2, medCardNum);
+                pStatement.setBoolean(1, influenzaV);
+                pStatement.setInt(2, id);
                 pStatement.executeUpdate();
             }
-
-            if (age != null) {
-                sql = "UPDATE patient SET age = ? WHERE medical_card_number = ?";
+            
+            if (influenzaV != null) {
+                sql = "UPDATE patient SET influenzaV = ? WHERE patientid = ?";
                 pStatement = c.prepareStatement(sql);
-                pStatement.setInt(1, age);
-                pStatement.setInt(2, medCardNum);
+                pStatement.setBoolean(1, influenzaV);
+                pStatement.setInt(2, id);
                 pStatement.executeUpdate();
             }
-
-            if (gender != null) {
-                sql = "UPDATE patient SET gender = ? WHERE medical_card_number = ?";
+            if (pneumoniaV != null) {
+                sql = "UPDATE patient SET pneumoniaV = ? WHERE medical_card_number = ?";
                 pStatement = c.prepareStatement(sql);
-                pStatement.setString(1, gender);
-                pStatement.setInt(2, medCardNum);
+                pStatement.setBoolean(1, pneumoniaV);
+                pStatement.setInt(2, id);
                 pStatement.executeUpdate();
             }
-
-            if (String.valueOf(pregnancy) != null) {
-                sql = "UPDATE patient SET pregnancy = ? WHERE medical_card_number = ?";
-                pStatement = c.prepareStatement(sql);
-                pStatement.setBoolean(1, pregnancy);
-                pStatement.setInt(2, medCardNum);
-                pStatement.executeUpdate();
-            }
-
-            if (String.valueOf(smoker) != null) {
-                sql = "UPDATE patient SET smoker = ? WHERE medical_card_number = ?";
-                pStatement = c.prepareStatement(sql);
-                pStatement.setBoolean(1, smoker);
-                pStatement.setInt(2, medCardNum);
-                pStatement.executeUpdate();
-            }
-
-            if (String.valueOf(symptoms_controlled) != null) {
-                sql = "UPDATE patient SET symptoms_controlled = ? WHERE medical_card_number = ?";
-                pStatement = c.prepareStatement(sql);
-                pStatement.setBoolean(1, symptoms_controlled);
-                pStatement.setInt(2, medCardNum);
-                pStatement.executeUpdate();
-            }
-
-            if (String.valueOf(hospitalization) != null) {
-                sql = "UPDATE patient SET hospitalization = ? WHERE medical_card_number = ?";
-                pStatement = c.prepareStatement(sql);
-                pStatement.setBoolean(1, hospitalization);
-                pStatement.setInt(2, medCardNum);
-                pStatement.executeUpdate();
-            }
-
-            if (String.valueOf(respiratorydisease) != null) {
-                sql = "UPDATE patient SET respiratorydisease = ? WHERE medical_card_number = ?";
-                pStatement = c.prepareStatement(sql);
-                pStatement.setString(1, respiratorydisease);
-                pStatement.setInt(2, medCardNum);
-                pStatement.executeUpdate();
-            }
-
             if (treatment_stage != null) {
                 sql = "UPDATE patient SET treatment_stage = ? WHERE medical_card_number = ?";
                 pStatement = c.prepareStatement(sql);
                 pStatement.setInt(1, treatment_stage);
-                pStatement.setInt(2, medCardNum);
+                pStatement.setInt(2, id);
                 pStatement.executeUpdate();
             }
             return true;
@@ -301,7 +259,7 @@ public class SQLitePatientManager implements PatientManager {
 
     @Override
     public ArrayList patient_names(int user_id) {
-          try {
+        try {
             ArrayList<String> names = new ArrayList<>();
             String sql = "SELECT name FROM patient WHERE id_doctor = ?";
             PreparedStatement pStatement = c.prepareStatement(sql);
@@ -310,7 +268,7 @@ public class SQLitePatientManager implements PatientManager {
             while (rs.next()) {
                 names.add(rs.getString("name"));
             }
-            
+
             pStatement.close();
             rs.close();
             return names;
@@ -318,5 +276,19 @@ public class SQLitePatientManager implements PatientManager {
             Logger.getLogger(SQLitePatientManager.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
+    }
+    
+    @Override
+    public int getLastId() {
+        int result = 0;
+        try {
+            String query = "SELECT last_insert_rowid() AS lastId";
+            PreparedStatement p = c.prepareStatement(query);
+            ResultSet rs = p.executeQuery();
+            result = rs.getInt("lastId");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 }

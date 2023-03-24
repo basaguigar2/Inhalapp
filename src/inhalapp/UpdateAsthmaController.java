@@ -325,7 +325,6 @@ public class UpdateAsthmaController implements Initializable{
         if((symptoms_yes.isSelected()||symptoms_no.isSelected())) {
             this.checkTreatment4.setDisable(false);
             selectedPatient.setSymptoms_controlled(scontrolled);
-            patientmanager.editPatient(selectedPatient.getMedical_card_number(), selectedPatient.getName(), selectedPatient.getPatientAge(), selectedPatient.getPatientGender(), selectedPatient.isPregnant(), selectedPatient.isSmoker(), selectedPatient.isSymptoms_controlled(), selectedPatient.isHospitalization(), selectedPatient.getRespiratorydisease(), selectedPatient.getTreatment_stage());
             checkTreatmentButtonPushed();
         } else {
             Alert alert = new Alert(Alert.AlertType.WARNING);

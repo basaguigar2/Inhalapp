@@ -42,7 +42,7 @@ public class SQLiteManager implements DBManager {
     public void connect() {
         try {
             Class.forName("org.sqlite.JDBC");
-            c = DriverManager.getConnection("jdbc:sqlite:./db/InhalApp4.db");
+            c = DriverManager.getConnection("jdbc:sqlite:./db/InhalApp5.db");
             c.createStatement().execute("PRAGMA foreign_keys=ON");
             patient = new SQLitePatientManager(c);
             treatment = new SQLiteTreatmentManager(c);
@@ -145,8 +145,7 @@ public class SQLiteManager implements DBManager {
                             + "(tid INTEGER PRIMARY KEY AUTOINCREMENT, "
                             + "drug TEXT , "
                             + "dose TEXT , "
-                            + "therapy TEXT , "
-                            + "id_patient FOREING KEY REFERENCES patient(patientid) ON UPDATE CASCADE ON DELETE SET NULL)";
+                            + "therapy TEXT)";
                     stmt5.executeUpdate(sql5);
                     stmt5.close();
                     
@@ -160,8 +159,7 @@ public class SQLiteManager implements DBManager {
                             + "exa INTEGER, "
                             + "exacerbations BOOLEAN, "
                             + "eosinophilia BOOLEAN, "
-                            + "FEV INTEGER, "
-                            + "id_patient FOREING KEY REFERENCES patient(patientid) ON UPDATE CASCADE ON DELETE SET NULL)";
+                            + "FEV INTEGER)";
                     stmt6.executeUpdate(sql6);
                     stmt6.close();
                     
@@ -177,16 +175,14 @@ public class SQLiteManager implements DBManager {
                             + "nocturnalSymptoms INTEGER, "
                             + "limitations INTEGER, "
                             + "pulmonar_function INTEGER, "
-                            + "exacerbations INTEGER, "
-                            + "id_patient FOREING KEY REFERENCES patient(patientid) ON UPDATE CASCADE ON DELETE SET NULL)";
+                            + "exacerbations INTEGER)";
                     stmt7.executeUpdate(sql7);
                     stmt7.close();
                     
                     Statement stmt8 = c.createStatement();
                     String sql8 = "CREATE TABLE comorbidity "
                             + "(cid INTEGER PRIMARY KEY AUTOINCREMENT, "
-                            + "cname TEXT NOT NULL, "
-                            + "id_patient FOREING KEY REFERENCES patient(patientid) ON UPDATE CASCADE ON DELETE SET NULL)";
+                            + "cname TEXT NOT NULL)";
                     stmt8.executeUpdate(sql8);
                     stmt8.close();
                     

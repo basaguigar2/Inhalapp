@@ -7,14 +7,36 @@ package example;
  */
 import db.interfaces.DBManager;
 import db.sqlite.SQLiteManager;
-
-
+import java.rmi.NotBoundException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.kie.api.KieServices;
+import org.kie.api.runtime.KieContainer;
+import org.kie.api.runtime.KieSession;
+import pojos.EPOC;
+import pojos.Patient;
 
 public class Application {
-    
-    private static DBManager db = new SQLiteManager();
-    private static Testing t = new Testing(db);
+
     public static void main(String[] args) {
-        db.connect();
+        try {
+            KieServices ks = KieServices.Factory.get();
+            KieContainer kc = ks.getKieClasspathContainer();
+            KieSession ksession = kc.newKieSession("diagnosisKS");
+            Patient p = new Patient();
+            p.setRespiratorydisease("EPOC");
+            EPOC e = new EPOC();
+            e.setCondition_string("Severe chronic hypoxemia");
+            p.setEpoc(e);
+            ksession.insert(p);
+            ksession.fireAllRules();
+            ksession.dispose();
+            
+            System.out.println(p.getTreatment_List());
+        } catch (NotBoundException ex) {
+            Logger.getLogger(Application.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
+
 }
+

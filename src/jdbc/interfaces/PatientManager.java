@@ -21,8 +21,9 @@ public interface PatientManager {
     public void introduceAsthma(int medCardNumber, int asthmaId);
     public Patient selectPatient(int medCardNumber);
     public ArrayList<Patient> selectAllPatients(int userId);
-    public boolean editPatient(Integer medCardNum, String name, Integer age, String gender, boolean pregnancy, boolean smoker, boolean symptoms_controlled, boolean hospitalization, String respiratorydisease, Integer treatment_stage);
+    public boolean editPatient(int id, Boolean influenzaV, Boolean hospitalization,Boolean pneumoniaV, Integer treatment_stage);
     public void createLinkUserPatient(int userId, int medCardNumber);
     public ArrayList patient_names(int doc_id);
     public ArrayList<Patient> ListPatients(String name);
+    public int getLastId();
 }

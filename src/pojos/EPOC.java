@@ -80,19 +80,19 @@ public class EPOC {
     }
 
     public void setCondition_string(String condition_string) throws NotBoundException {
-        if(condition_string.equalsIgnoreCase("Severe chronic hypoxemia")){
+        if(condition_string.equalsIgnoreCase("SEVERE_CHRONIC_HYPOXEMIA")){
             setCondition(this.condition.SEVERE_CHRONIC_HYPOXEMIA);
             this.condition_string = "Severe chronic hypoxemia";
         } else if(condition_string.equalsIgnoreCase("Bulla")){
             setCondition(this.condition.BULLA);
             this.condition_string = "Bulla";
-        } else if(condition_string.equalsIgnoreCase("Severe heterogeneous emphysema in upper lobes")){
+        } else if(condition_string.equalsIgnoreCase("SEVERE_HETEROGENEOUS_EMPHYSEMA_IN_UPPER_LOBES")){
             setCondition(this.condition.SEVERE_HETEROGENEOUS_EMPHYSEMA_IN_UPPER_LOBES);
             this.condition_string = "Severe heterogeneous emphysema in upper lobes";
-        } else if(condition_string.equalsIgnoreCase("Advanced emphysema")){
+        } else if(condition_string.equalsIgnoreCase("ADVANCED_EMPHYSEMA")){
             setCondition(this.condition.ADVANCED_EMPHYSEMA);
             this.condition_string = "Advanced emphysema";
-        } else if(condition_string.equalsIgnoreCase("Severe COPD")){
+        } else if(condition_string.equalsIgnoreCase("SEVERE_COPD")){
             setCondition(this.condition.SEVERE_COPD);
             this.condition_string = "Severe COPD";
         } else if(condition_string.equalsIgnoreCase("NONE")){

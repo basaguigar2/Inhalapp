@@ -114,7 +114,7 @@ public class MenuUserController implements Initializable {
     private static Patient p;
 
     private ObservableList<Patient> patients = FXCollections.observableArrayList(
-            new Patient(1234, "Gisela", "COPD"));
+            new Patient(1234, "Gisela", "EPOC"));
 
     @FXML
     private void go_to_addPatient(ActionEvent event) {
@@ -250,7 +250,7 @@ public class MenuUserController implements Initializable {
         if (!copd_tab4.isSelected()) {
             respiratoryDisease = "Asthma";
         } else {
-            respiratoryDisease = "COPD";
+            respiratoryDisease = "EPOC";
         }
 
         if (!pD_true.isSelected()) {
@@ -265,6 +265,7 @@ public class MenuUserController implements Initializable {
 
             Patient p = new Patient(medCard, name, age, gender, pregnancy, smoker, hospitalization, respiratoryDisease);
             patientmanager.addPatient(p);
+            p.setId(patientmanager.getLastId());
             patientmanager.createLinkUserPatient(u.getUserId(), medCard);
             patients.add(p);
             patientTable.setItems(patients);
