@@ -5,8 +5,8 @@ package example;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-import db.interfaces.DBManager;
-import db.sqlite.SQLiteManager;
+import jdbc.interfaces.DBManager;
+import jdbc.sqlite.SQLiteManager;
 import java.rmi.NotBoundException;
 import java.util.logging.Level;
 import java.util.logging.Logger;

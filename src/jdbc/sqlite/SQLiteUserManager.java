@@ -35,7 +35,7 @@ public class SQLiteUserManager implements UserManager {
     @Override
     public void addUser(User u) {
         try {
-            String sq1 = "INSERT INTO users ( userName, userPassword, name) VALUES (?, ?, ?)";
+            String sq1 = "INSERT INTO users (userName, userPassword, name) VALUES (?, ?, ?)";
             PreparedStatement preparedStatement = c.prepareStatement(sq1);
             preparedStatement.setString(1, u.getUsername());
             preparedStatement.setString(2, u.getPassword());
@@ -58,18 +58,16 @@ public class SQLiteUserManager implements UserManager {
             preparedStatement.setString(2, password);
 
             ResultSet rs = preparedStatement.executeQuery();
-            if (rs.next()) {
-                user.setPassword(rs.getString("userPassword"));
-                user.setUsername(rs.getString("userName"));
-            }
+            user.setPassword(rs.getString("userPassword"));
+            user.setUsername(rs.getString("userName"));
             preparedStatement.close();
             rs.close();
             return user;
         } catch (SQLException ex) {
             ex.printStackTrace();
             user = null;
+            return user;
         }
-        return user;
     }
 
     @Override
@@ -84,6 +82,7 @@ public class SQLiteUserManager implements UserManager {
             id = rs.getInt("userid");
         } catch (SQLException ex) {
             ex.printStackTrace();
+            return -1;
         }
         return id;
     }

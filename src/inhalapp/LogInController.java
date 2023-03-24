@@ -18,6 +18,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import jdbc.interfaces.UserManager;
 import pojos.User;
 
 /**
@@ -26,8 +27,9 @@ import pojos.User;
  */
 public class LogInController {
     
-    private static DBManager userman = InhalApp.getDBManager();
-    private static User user;
+    private static DBManager manager = InhalApp.getDBManager();
+    private static UserManager userman = manager.getUserManager();
+    private static User user = new User();
     
     @FXML
     private PasswordField passwordlogin;
@@ -54,10 +56,19 @@ public class LogInController {
         String username = usernamelogin.getText();
         String password = passwordlogin.getText();
 
-        user = userman.getUserManager().checkPassword(username, password);
-        user.setUserId(userman.getUserManager().getId(username));
+        int id = userman.getId(username);
+        if(id == -1){
+            infoMessage("Incorrect username", null, "Failed");
+            return;
+        } else{
+            user.setUserId(userman.getId(username));
+        }
+        
+        user = userman.checkPassword(username, password);
+
         if (user == null) {
             infoMessage("Please enter correct username or password", null, "Failed");
+            return;
         } else {
             infoMessage("Successfull log in !!", null, "Message");
             try{

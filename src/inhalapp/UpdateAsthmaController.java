@@ -4,12 +4,12 @@
  */
 package inhalapp;
 
-import db.interfaces.AsthmaManager;
-import db.interfaces.ComorbidityManager;
-import db.interfaces.DBManager;
-import db.interfaces.PatientManager;
-import db.interfaces.TreatmentManager;
-import db.sqlite.SQLiteManager;
+import jdbc.interfaces.AsthmaManager;
+import jdbc.interfaces.ComorbidityManager;
+import jdbc.interfaces.DBManager;
+import jdbc.interfaces.PatientManager;
+import jdbc.interfaces.TreatmentManager;
+import jdbc.sqlite.SQLiteManager;
 import java.net.URL;
 import java.rmi.NotBoundException;
 import java.sql.SQLException;

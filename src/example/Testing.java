@@ -4,8 +4,8 @@
  */
 package example;
 
-import db.interfaces.DBManager;
-import db.sqlite.SQLiteManager;
+import jdbc.interfaces.DBManager;
+import jdbc.sqlite.SQLiteManager;
 
 /**
  *
