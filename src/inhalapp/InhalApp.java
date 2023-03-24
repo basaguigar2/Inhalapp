@@ -4,8 +4,8 @@
  */
 package inhalapp;
 
-import db.interfaces.DBManager;
-import db.sqlite.SQLiteManager;
+import jdbc.interfaces.DBManager;
+import jdbc.sqlite.SQLiteManager;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import javafx.application.Application;

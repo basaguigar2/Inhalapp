@@ -4,8 +4,8 @@
  */
 package inhalapp;
 
-import db.interfaces.*;
-import db.sqlite.SQLiteManager;
+import jdbc.interfaces.*;
+import jdbc.sqlite.SQLiteManager;
 import java.io.IOException;
 import java.net.URL;
 import java.rmi.NotBoundException;

@@ -4,15 +4,14 @@
  */
 package inhalapp;
 
-import db.interfaces.DBManager;
-import db.interfaces.UserManager;
-import db.sqlite.SQLiteManager;
-import db.sqlite.SQLiteUserManager;
+import jdbc.interfaces.DBManager;
+import jdbc.interfaces.UserManager;
+import jdbc.sqlite.SQLiteManager;
+import jdbc.sqlite.SQLiteUserManager;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.security.MessageDigest;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Properties;
@@ -100,10 +99,7 @@ public class RegisterController implements Initializable {
                 if (userRepeated) {
                     infoMessage("ERROR, existing user", null, "Failed");
                 } else {
-                    MessageDigest md = MessageDigest.getInstance("MD5");
-                    md.update(password.getBytes());
-                    byte[] hash = md.digest();
-                    User user = new User(username, Arrays.toString(hash), email);
+                    User user = new User(username, password, email);
                     userman.getUserManager().addUser(user);
                     //sendEmail("Welcome to Inhalapp!", "Your user is: " + username + "\n" + "Your password is: " + password, email);
                     Parent root = FXMLLoader.load(getClass().getResource("logIn.fxml"));

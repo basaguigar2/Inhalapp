@@ -2,9 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package db.interfaces;
+package jdbc.interfaces;
 
-import db.sqlite.SQLiteUserManager;
+import jdbc.sqlite.SQLiteUserManager;
 import java.sql.Connection;
 
 /**

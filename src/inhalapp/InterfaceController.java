@@ -4,7 +4,7 @@
  */
 package inhalapp;
 
-import db.interfaces.DBManager;
+import jdbc.interfaces.DBManager;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;

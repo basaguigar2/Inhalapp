@@ -4,7 +4,7 @@
  */
 package inhalapp;
 
-import db.interfaces.DBManager;
+import jdbc.interfaces.DBManager;
 import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

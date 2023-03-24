@@ -2,19 +2,19 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package db.sqlite;
+package jdbc.sqlite;
 
-import db.interfaces.AsthmaManager;
-import db.interfaces.ComorbidityManager;
-import db.interfaces.DBManager;
-import db.interfaces.PatientManager;
-import db.interfaces.TreatmentManager;
-import db.interfaces.UserManager;
+import jdbc.interfaces.AsthmaManager;
+import jdbc.interfaces.ComorbidityManager;
+import jdbc.interfaces.DBManager;
+import jdbc.interfaces.PatientManager;
+import jdbc.interfaces.TreatmentManager;
+import jdbc.interfaces.UserManager;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
-import db.interfaces.EpocManager;
+import jdbc.interfaces.EpocManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.logging.Level;

@@ -2,10 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package db.sqlite;
+package jdbc.sqlite;
 
-import db.interfaces.DBManager;
-import db.interfaces.UserManager;
+import jdbc.interfaces.DBManager;
+import jdbc.interfaces.UserManager;
 import java.rmi.NotBoundException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
@@ -127,20 +127,6 @@ public class SQLiteUserManager implements UserManager {
         } catch (NotBoundException ex) {
             ex.printStackTrace();
             return null;
-        }
-    }
-
-    @Override
-    public void createLinkUserRole(int roleId, int userId) {
-        try {
-            String sql1 = "UPDATE users SET userRoleid = ? WHERE userid = ? ";
-            PreparedStatement pStatement = c.prepareStatement(sql1);
-            pStatement.setInt(1, roleId);
-            pStatement.setInt(2, userId);
-            pStatement.executeUpdate();
-            pStatement.close();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
         }
     }
 

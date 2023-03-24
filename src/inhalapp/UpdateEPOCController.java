@@ -4,12 +4,12 @@
  */
 package inhalapp;
 
-import db.interfaces.ComorbidityManager;
-import db.interfaces.DBManager;
-import db.interfaces.EpocManager;
-import db.interfaces.PatientManager;
-import db.interfaces.TreatmentManager;
-import db.sqlite.SQLiteManager;
+import jdbc.interfaces.ComorbidityManager;
+import jdbc.interfaces.DBManager;
+import jdbc.interfaces.EpocManager;
+import jdbc.interfaces.PatientManager;
+import jdbc.interfaces.TreatmentManager;
+import jdbc.sqlite.SQLiteManager;
 import static inhalapp.RegisterController.showAlert;
 import java.net.URL;
 import java.rmi.NotBoundException;
