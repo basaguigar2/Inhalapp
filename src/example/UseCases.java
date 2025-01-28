@@ -58,29 +58,22 @@ private static DBManager dbManager = new SQLiteManager();
         //Regarding the symptomatological indicators, he presents a socre of 14 in CAT and 2 in MRC.
         //Hospitalization=true?
         //Expected LABA + IC + Influenza vaccine
-        Patient p1 = new Patient (1, "Sujeto 1", 25, "MALE", false,false, false, "EPOC");
-        p1.setSymptoms_controlled(false);
+       /* Patient p1 = new Patient (1, "Sujeto 1", 25, "MALE", false,false, false, "EPOC");
         
         List <Treatment> treatments1 = new ArrayList<>();
-        Treatment t1 = new Treatment("LABA", "1-2 inhalations/day");
-        Treatment t2 = new Treatment("LAMA", "1-2 inhalations/day");
+        Treatment t1 = new Treatment("BAAL", "1-2 inhalations/day");
         treatments1.add(t1);
-        treatments1.add(t2);
         p1.setTreatment_List(treatments1);
         
         EPOC e1 = new EPOC();
-        e1.setCondition_string("NONE");
-        e1.setDisnea(false);
-        e1.setEOS(200);
-        e1.setExa(2);
-        
-        p1.setEpoc(e1);
+        e1.setCondition_string("Severe chronic hypoxemia");
+        p1.setEpoc(e1);*/
         
         //2. We receive a patient, that suffers from COPD and severe chronic hypoxemia. The patient is a female of 40 years old, she is not pregnant,
         // she does not smoke either, and is not hospitalized.
         //Expected: Chronic home oxygen therapy
         Patient p2 = new Patient (2, "Sujeto 2", 40, "FEMALE", false,false, false, "EPOC");
-        
+        Treatment t1 = new Treatment("BAAL", "1-2 inhalations/day");
         EPOC e2 = new EPOC();
         e2.setCondition_string("SEVERE_CHRONIC_HYPOXEMIA");
         
@@ -89,7 +82,7 @@ private static DBManager dbManager = new SQLiteManager();
         //3. We receive a patient that suffers from COPD. The patient is a male of 60 years old that haas receive LABA/LAMA as previous
         // treatment, but his/her symptoms have not been controlled. The patient also suffers from dyspnea.
         //Expected: Change device and investigate other causes.
-        Patient p3 = new Patient (3, "Sujeto 3", 60, "MALE", false,false, false, "EPOC");
+        /*Patient p3 = new Patient (3, "Sujeto 3", 60, "MALE", false,false, false, "EPOC");
         p3.setSymptoms_controlled(false);
         
         List <Treatment> treatments = new ArrayList<>();
@@ -191,18 +184,18 @@ private static DBManager dbManager = new SQLiteManager();
         a4.setPS(8);
         a4.setPEF(50);
         a4.setSAT_O2(90);
-        p8.setAsthma(a4);
+        p8.setAsthma(a4);*/
         
         
-        ksession.insert(p1);
         ksession.insert(p2);
-        ksession.insert(p3);
+        ksession.insert(t1);
+      /*ksession.insert(p3);
         ksession.insert(p4);
         ksession.insert(p5);
         ksession.insert(p6);
         ksession.insert(p7);
         ksession.insert(p8);
-        
+        */
         // and fire the rules
         ksession.fireAllRules();
         
